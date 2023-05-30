@@ -33,6 +33,12 @@ npm install
 npm run dev
 ```
 
+### To run the application use
+
+```sh
+npm start
+```
+
 ### Type-Check, Compile and Minify for Production
 
 ```sh
