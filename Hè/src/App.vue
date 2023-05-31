@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router'
 import HelloWorld from './components/HelloWorld.vue'
+
+//import NotificationView from './views/NotificationView.vue'
 </script>
 
 <template>
@@ -9,7 +11,7 @@ import HelloWorld from './components/HelloWorld.vue'
     
     <div class="wrapper">
       <HelloWorld msg="Hè" />
-
+      <NotificationView/>
       <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">Chi siamo</RouterLink>
@@ -19,8 +21,9 @@ import HelloWorld from './components/HelloWorld.vue'
 
         <RouterLink to="/register">Register</RouterLink>
         <RouterLink to="/login">Login</RouterLink>
-
+        <RouterLink to="/notification">Mess</RouterLink>
       </nav>
+      
     </div>
   </header>
   <RouterView />
