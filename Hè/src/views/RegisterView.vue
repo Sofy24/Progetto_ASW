@@ -16,6 +16,13 @@
       <input type="email" id="email" v-model="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
     </div>
     <div>
+      <label for="password">Password:</label>
+      <input type="password" id="password" v-model="password" required>
+      <span v-if="!isPasswordValid" class="password-requirements">
+          La password deve avere almeno 8 caratteri di cui almeno una maiuscola, una minuscola, un numero e un simbolo.
+      </span>
+    </div>
+    <div>
       <label for="municipality">Comune di Residenza:</label>
       <select id="municipality" v-model="municipality" required>
           <option value="">Seleziona il tuo Comune</option>
@@ -28,7 +35,14 @@
   </form>
 </template>
 
-<script>
+<style>
+.password-requirements {
+  color: red;
+  font-size: 0.8em;
+}
+</style>
+
+<script lang="ts">
 //import areas from '@/assets/comuni.json'
 import axios from 'axios';
 
@@ -39,7 +53,8 @@ export default {
       surname: '',
       email: '',
       municipality: '',
-      municipalities: [],
+      password: '',
+      municipalities: [] as string[],
       searchQuery: '',
     };
   },
@@ -47,6 +62,10 @@ export default {
     this.fetchMunicipalityNames();
   },
   computed: {
+    isPasswordValid() {
+      const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
+      return passwordRegex.test(this.password);
+    },
     filteredOptions() {
       const query = this.searchQuery.toLowerCase();
       return this.municipalities.filter((option) =>
@@ -60,10 +79,19 @@ export default {
         name: this.name,
         surname: this.surname,
         email: this.email,
+        password: this.password,
         municipality: this.municipality,
       };
-      // Do something with the form data, such as sending it to the server
+      
       console.log(formData);
+      
+      axios.post('http://localhost:3000/user/register', formData)
+        .then(response => {
+          console.log('Form data sent and stored successfully:', response.data);
+        })
+        .catch(error => {
+          console.error('Error sending form data:', error);
+        });
     },
     fetchMunicipalityNames() {
       axios.get('http://localhost:3000/municipality/names')
