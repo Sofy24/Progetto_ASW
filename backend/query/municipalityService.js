@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const municipalitySchema = new mongoose.Schema({
     name: { type: String, required: true },
     users: { type: Number, required: true },
-}, { collection: 'Comuni' });
+}, { collection: 'Municipalities' });
   
-const Municipality = mongoose.model('Comuni', municipalitySchema);
+const Municipality = mongoose.model('Municipalities', municipalitySchema);
 
 async function getAllMunicipalityNames() {
     try {

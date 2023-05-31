@@ -36,7 +36,7 @@ function loadData() {
         const areaSchema = new mongoose.Schema({
           name: { type: String, required: true },
           users: { type: Number, required: true },
-        }, { collection: 'Comuni' });
+        }, { collection: 'Municipalities' });
         const Area = mongoose.model('Area', areaSchema);
     
         // Use insertMany() to insert the areas into the collection
@@ -75,6 +75,7 @@ app.get('/municipality/names', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve municipalities' });
   }
 });
+
 
 app.get('/data', async (req, res) => {
   try {
@@ -222,6 +223,12 @@ app.get('/options', async (req, res) => {
     console.error('Error retrieving municipalities:', error);
     res.status(500).json({ error: 'Failed to retrieve municipalities' });
   }
+});
+//register user
+app.post('/user/register', async (req, res) => {
+  const formData = req.body;
+  console.log(formData);
+
 });
 
 
