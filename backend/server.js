@@ -9,7 +9,7 @@ const path = require('path');
 global.appRoot = path.resolve(__dirname);
 const PORT = 3000;
 
-mongoose.connect('mongodb://localhost:27017/He')
+mongoose.connect('mongodb://0.0.0.0:27017/He')
     .then(()=> console.log("connected to db"))
     .catch((e)=>console.error('Error connecting to MongoDB:', e));
 
