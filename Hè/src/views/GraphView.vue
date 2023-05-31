@@ -1,7 +1,11 @@
+<script setup lang="ts">
+import Graph from '../components/Graphs.vue'
+</script>
+
 <template>
-  <div class="graph">
-    <h1>This is a graph page</h1>
-  </div>
+  <main>
+    <Graph />
+  </main>
 </template>
 
 <style>
@@ -9,7 +13,7 @@
   .graph {
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: start;
   }
 }
 </style>
