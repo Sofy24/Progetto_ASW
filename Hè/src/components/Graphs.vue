@@ -1,13 +1,50 @@
-<script setup lang="ts">
+<script lang="ts">
 import WelcomeItem from './WelcomeItem.vue'
 import DocumentationIcon from './icons/IconDocumentation.vue'
-import ToolingIcon from './icons/IconTooling.vue'
+
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
-import SupportIcon from './icons/IconSupport.vue'
+
 import GrafoProva from './Prova.vue'
 import GrafoProva2 from './Prova2.vue'
+//import areas from '@/assets/comuni.json'
+import axios from 'axios'
 
+export default {
+  data() {
+    return {
+      chartOptions: '',
+      series: '',
+      searchQuery: '',
+    }
+  },
+  onMounted() {
+    this.fetchData()
+    this.fetchOptions()
+  },
+  methods: {
+    
+    fetchData() {
+      axios.get('http://localhost:3000/data')
+        .then((response) => {
+          this.series = response.data
+          console.log(this.series)
+        })
+        .catch((error) => {
+          console.error('Error retrieving municipalities names:', error)
+        })
+    },
+    fetchOptions() {
+      axios.get('http://localhost:3000/options')
+        .then((response) => {
+          this.chartOptions = response.data
+        })
+        .catch((error) => {
+          console.error('Error retrieving municipalities names:', error)
+        });
+    },
+  },
+}
 </script>
 
 <template>
@@ -145,13 +182,9 @@ import GrafoProva2 from './Prova2.vue'
   </WelcomeItem>
 
   <WelcomeItem>
-    <template #icon>
-      <SupportIcon />
-    </template>
-    <template #heading>Support Vue</template>
-
-    As an independent project, Vue relies on community backing for its sustainability. You can help
-    us by
-    <a href="https://vuejs.org/sponsor/" target="_blank" rel="noopener">becoming a sponsor</a>.
+    <div id="chart">
+      <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+    </div>
   </WelcomeItem>
 </template>
+
