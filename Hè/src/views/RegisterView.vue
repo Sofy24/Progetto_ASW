@@ -42,66 +42,61 @@
 }
 </style>
 
-<script lang="ts">
-//import areas from '@/assets/comuni.json'
-import axios from 'axios';
+<script setup lang="ts">
+import { ref, onMounted, computed } from 'vue'
+import axios from 'axios'
 
-export default {
-  data() {
-    return {
-      name: '',
-      surname: '',
-      email: '',
-      municipality: '',
-      password: '',
-      municipalities: [] as string[],
-      searchQuery: '',
-    };
-  },
-  mounted() {
-    this.fetchMunicipalityNames();
-  },
-  computed: {
-    isPasswordValid() {
-      const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
-      return passwordRegex.test(this.password);
-    },
-    filteredOptions() {
-      const query = this.searchQuery.toLowerCase();
-      return this.municipalities.filter((option) =>
-        option.toLowerCase().includes(query)
-      );
-    },
-  },
-  methods: {
-    submitForm() {
-      const formData = {
-        name: this.name,
-        surname: this.surname,
-        email: this.email,
-        password: this.password,
-        municipality: this.municipality,
-      };
-      
-      console.log(formData);
-      
-      axios.post('http://localhost:3000/user/register', formData)
-        .then(response => {
-          console.log('Form data sent and stored successfully:', response.data);
-        })
-        .catch(error => {
-          console.error('Error sending form data:', error);
-        });
-    },
-    fetchMunicipalityNames() {
-      axios.get('http://localhost:3000/municipality/names')
-        .then((response) => {
-          this.municipalities = response.data;
-        })
-        .catch((error) => {
-          console.error('Error retrieving municipalities names:', error);
-        });
-    },
-  },
+const name = ref('')
+const surname = ref('')
+const email = ref('')
+const municipality = ref('')
+const password = ref('')
+const municipalities = ref([] as string[])
+const searchQuery = ref('')
+
+onMounted(() => {
+  fetchMunicipalityNames()
+});
+
+const filteredOptions = computed(() => {
+  const query = searchQuery.value.toLowerCase();
+  return municipalities.value.filter((option) =>
+    option.toLowerCase().includes(query)
+  );
+});
+
+const isPasswordValid = computed(() => {
+  const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/);
+  return passwordRegex.test(password.value);
+});
+
+const submitForm = () => {
+  const formData = {
+    name: name.value,
+    surname: surname.value,
+    email: email.value,
+    municipality: municipality.value,
+    password: password.value,
+  };
+
+  console.log(formData)
+
+  axios.post('http://localhost:3000/user/register', formData)
+    .then((response) => {
+      console.log('Form data sent and stored successfully:', response.data)
+    })
+    .catch((error) => {
+      console.error('Error sending form data:', error)
+    });
+};
+
+const fetchMunicipalityNames = () => {
+  axios.get('http://localhost:3000/municipality/names')
+    .then((response) => {
+      municipalities.value = response.data;
+    })
+    .catch((error) => {
+      console.error('Error retrieving municipalities names:', error)
+    })
 };
 </script>

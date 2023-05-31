@@ -78,8 +78,13 @@ app.get('/municipality/names', async (req, res) => {
 
 //register user
 app.post('/user/register', async (req, res) => {
+  try {
   const formData = req.body;
   console.log(formData);
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Failed to register user' });
+  }
 });
 
 
