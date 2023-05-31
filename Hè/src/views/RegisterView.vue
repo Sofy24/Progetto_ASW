@@ -16,17 +16,21 @@
       <input type="email" id="email" v-model="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
     </div>
     <div>
-      <label for="area">Comune di Residenza:</label>
-      <select id="area" v-model="area" required>
-        <option v-for="option in areas" :value="option" :key="option">{{ option }}</option>
-      </select>
-    </div>
+      <label for="municipality">Comune di Residenza:</label>
+      <select id="municipality" v-model="municipality" required>
+          <option value="">Seleziona il tuo Comune</option>
+          <option v-for="option in filteredOptions" :value="option" :key="option">
+            {{ option}}
+          </option>
+        </select>
+      </div>
     <button type="submit">Registrati</button>
   </form>
 </template>
 
 <script>
-import areas from '@/assets/comuni.json'
+//import areas from '@/assets/comuni.json'
+import axios from 'axios';
 
 export default {
   data() {
@@ -34,12 +38,21 @@ export default {
       name: '',
       surname: '',
       email: '',
-      area: '',
-      areas: [],
+      municipality: '',
+      municipalities: [],
+      searchQuery: '',
     };
   },
-  created() {
-    this.areas = areas;
+  mounted() {
+    this.fetchMunicipalityNames();
+  },
+  computed: {
+    filteredOptions() {
+      const query = this.searchQuery.toLowerCase();
+      return this.municipalities.filter((option) =>
+        option.toLowerCase().includes(query)
+      );
+    },
   },
   methods: {
     submitForm() {
@@ -47,10 +60,19 @@ export default {
         name: this.name,
         surname: this.surname,
         email: this.email,
-        area: this.area,
+        municipality: this.municipality,
       };
       // Do something with the form data, such as sending it to the server
       console.log(formData);
+    },
+    fetchMunicipalityNames() {
+      axios.get('http://localhost:3000/municipality/names')
+        .then((response) => {
+          this.municipalities = response.data;
+        })
+        .catch((error) => {
+          console.error('Error retrieving municipalities names:', error);
+        });
     },
   },
 };

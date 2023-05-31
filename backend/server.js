@@ -6,6 +6,10 @@ const cors = require('cors')
 const fs = require('fs');
 const path = require('path');
 //const moviesRouter = require('./src/routes/moviesRoutes');
+//query 
+const municipalityService = require('./query/municipalityService');
+
+
 
 global.appRoot = path.resolve(__dirname);
 const PORT = 3000;
@@ -13,10 +17,11 @@ const PORT = 3000;
 mongoose.connect('mongodb://0.0.0.0:27017/He')
   .then(() => {
     console.log('Connected to MongoDB');
-    loadData();
+    //loadData();
   })
   .catch((e)=>console.error('Error connecting to MongoDB:', e));
 
+// Funzione per popolare il db, cambire il nome del file json e lo schema sulla base si cosa si inserisce e decommentare loadData() nella connessione  
 function loadData() {
   const areasDataPath = path.join(__dirname, 'comuni.json');
   fs.readFile(areasDataPath, 'utf8', (error, data) => {
@@ -59,6 +64,18 @@ app.use(express.json());
 /*app.use((req, res)=> {
   res.status(404).send({url: req.originalUrl + ' not found'})
 });*/
+
+//get municipality names
+app.get('/municipality/names', async (req, res) => {
+  try {
+    const municipalityNames = await municipalityService.getAllMunicipalityNames();
+    res.json(municipalityNames);
+  } catch (error) {
+    console.error('Error retrieving municipalities:', error);
+    res.status(500).json({ error: 'Failed to retrieve municipalities' });
+  }
+});
+
 
 app.listen(PORT,() =>{
   console.log('Node API server started on port '+PORT);
