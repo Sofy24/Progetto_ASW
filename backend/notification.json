@@ -1,0 +1,42 @@
+[
+    {
+        "email": "ciao@gmail.com",
+        "date": {
+            "month": 4,
+            "year": 2011
+          },
+        "category": "plastica",
+        "weight": 50,
+        "money": 40
+    },
+    {
+        "email": "hey@gmail.com",
+        "date": {
+            "month": 3,
+            "year": 2020
+          },
+        "category": "carta",
+        "weight": 20,
+        "money": 10
+    },
+    {
+        "email": "hola@gmail.com",
+        "date": {
+            "month": 5,
+            "year": 2023
+          },
+        "category": "vetro",
+        "weight": 30,
+        "money": 30
+    },
+    {
+        "email": "aloha@gmail.com",
+        "date": {
+            "month": 2,
+            "year": 2021
+          },
+        "category": "organico",
+        "weight": 20,
+        "money": 10
+    }
+]
