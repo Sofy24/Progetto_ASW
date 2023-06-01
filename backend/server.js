@@ -8,6 +8,7 @@ const path = require('path');
 //const moviesRouter = require('./src/routes/moviesRoutes');
 //query 
 const municipalityService = require('./query/municipalityService');
+const userService = require('./query/userService');
 
 
 
@@ -64,17 +65,6 @@ app.use(express.json());
 /*app.use((req, res)=> {
   res.status(404).send({url: req.originalUrl + ' not found'})
 });*/
-
-//get municipality names
-app.get('/municipality/names', async (req, res) => {
-  try {
-    const municipalityNames = await municipalityService.getAllMunicipalityNames();
-    res.json(municipalityNames);
-  } catch (error) {
-    console.error('Error retrieving municipalities:', error);
-    res.status(500).json({ error: 'Failed to retrieve municipalities' });
-  }
-});
 
 
 app.get('/data', async (req, res) => {
@@ -224,13 +214,29 @@ app.get('/options', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve municipalities' });
   }
 });
+
+
+//get municipality names
+app.get('/municipality/names', async (req, res) => {
+  try {
+    const municipalityNames = await municipalityService.getAllMunicipalityNames();
+    res.json(municipalityNames);
+  } catch (error) {
+    console.error('Error retrieving municipalities:', error);
+    res.status(500).json({ error: 'Failed to retrieve municipalities' });
+  }
+});
 //register user
-/*app.post('/user/register', async (req, res) => {
+app.post('/user/register', async (req, res) => {
   try {
   const formData = req.body;
   console.log(formData);
-
-}});*/
+  userService.registerUser(req.body);
+  } catch (error) {
+    console.error('Error registering user:', error);
+    res.status(500).json({ error: 'Failed to register user' });
+  }
+});
 
 
 app.listen(PORT,() =>{
