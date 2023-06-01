@@ -38,16 +38,18 @@ const submitForm = () => {
 
   console.log(formData)
 
-  axios.post('http://localhost:3000/user/register', formData)
+  axios.post('http://localhost:3000/register', formData)
     .then((response) => {
       console.log('Form data sent and stored successfully:', response.data)
       console.log("good"+response.statusText)
       //TODO redirect to crrect page 
     })
     .catch((error) => {
-      console.error('Error sending form data:', error)
-      console.log("bad"+error.statusText)
-      errorMessage.value = "Email già registrata"
+      if (error.response.status == 409) {
+        errorMessage.value = "Email già registrata"
+      } else {
+        console.error('Error sending form data:', error)
+      }
     });
 };
 
@@ -66,11 +68,11 @@ const fetchMunicipalityNames = () => {
   <form @submit.prevent="submitForm">
     <div>
       <label for="name">Nome:</label>
-      <input type="text" id="name" v-model="name" required>
+      <input type="text" id="name" v-model="name" required pattern="[A-Za-z]+">
     </div>
     <div>
       <label for="surname">Cognome:</label>
-      <input type="text" id="surname" v-model="surname" required>
+      <input type="text" id="surname" v-model="surname" required pattern="[A-Za-z]+">
     </div>
     <div>
       <label for="email">Email:</label>
