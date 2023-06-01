@@ -27,7 +27,14 @@ onMounted(getLastMovie)*/
 </script>
 
 <template>
-    <h1>this is notification container</h1>
+    <Notification type="report" year="2023" month="aprile"/>
+    <Notification type="deposit" weight="50" category="plastica" money="40"/>
+    <Notification message="heey"/>
+    <Notification message="heey"/>
+    <Notification message="heey"/>
+    <Notification message="heey"/>
+    <Notification message="heey"/>
+    <Notification message="heey"/>
     <Notification message="heey"/>
   <!--<div class="notificationContainer">
     <div class="last">
