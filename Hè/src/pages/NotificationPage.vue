@@ -3,6 +3,7 @@ import NotificationContainer from "@/components/NotificationContainer.vue"
 </script>
 
 <template>
+  <h1>Notifiche</h1>
   <NotificationContainer />
 </template>
 
