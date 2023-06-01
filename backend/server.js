@@ -1,26 +1,23 @@
-//forse è typescript
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
 const cors = require('cors')
 const fs = require('fs');
 const path = require('path');
-//const moviesRouter = require('./src/routes/moviesRoutes');
-//query 
+const connectDB = require('./config/dbConn');
 const municipalityService = require('./query/municipalityService');
-const userService = require('./query/userService');
+const userService = require('./query/userService');app.use(cors());
+app.use('/static', express.static(path.join(__dirname, 'public')));
+app.use(express.json());
+
+
+connectDB();
+//routes
+app.use('/', require('./router/root'));
+app.use('/notification', require('./router/notificationRoute'));
 
 
 
-global.appRoot = path.resolve(__dirname);
-const PORT = 3000;
-
-mongoose.connect('mongodb://0.0.0.0:27017/He')
-  .then(() => {
-    console.log('Connected to MongoDB');
-    //loadData();
-  })
-  .catch((e)=>console.error('Error connecting to MongoDB:', e));
 
 // Funzione per popolare il db, cambire il nome del file json e lo schema sulla base si cosa si inserisce e decommentare loadData() nella connessione  
 function loadData() {
@@ -53,18 +50,7 @@ function loadData() {
       });
     }   
 
-app.use(cors());
-app.use('/static', express.static(path.join(__dirname, 'public')));
 
-//Per gestire i parametri passati nel corpo della richiesta http.
-
-app.use(express.json());
-//app.use('/movies',moviesRouter);
-
-
-/*app.use((req, res)=> {
-  res.status(404).send({url: req.originalUrl + ' not found'})
-});*/
 
 
 app.get('/datacolumn', async (req, res) => {
@@ -232,9 +218,13 @@ app.post('/login', async (req, res) => {
   console.log(req.body);
 });
 
-
+const PORT = 3000;
 app.listen(PORT,() =>{
   console.log('Node API server started on port '+PORT);
 });
 
+/*mongoose.connection.once('open', () => {
+    console.log('Connected to MongoDB');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+}); */
 
