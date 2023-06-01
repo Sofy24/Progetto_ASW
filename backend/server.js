@@ -225,12 +225,12 @@ app.get('/options', async (req, res) => {
   }
 });
 //register user
-app.post('/user/register', async (req, res) => {
+/*app.post('/user/register', async (req, res) => {
   try {
   const formData = req.body;
   console.log(formData);
 
-});
+}});*/
 
 
 app.listen(PORT,() =>{

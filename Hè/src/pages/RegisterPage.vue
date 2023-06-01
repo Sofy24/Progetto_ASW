@@ -1,6 +1,5 @@
 <script setup lang="ts">
-/*il from è sbagliato*/
-import RegisterContainer from "@/components/NotificationContainer.vue"
+  import RegisterContainer from "@/components/RegisterContainer.vue"
 </script>
 
 <template>
