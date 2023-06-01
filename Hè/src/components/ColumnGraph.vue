@@ -33,6 +33,31 @@ const fetchOptions = () =>{
       console.error('Error retrieving municipalities names:', error)
     });
 };*/
+const labels= ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+var res = [] as { x: string; y: number; goals:[{name: string,value:number,strokeDashArray:number,strokeColor:string}] }[]
+for(var i=0;i<labels.length;i++){
+  res[i]=({
+        x: labels[i],
+        y: 1292,
+        goals: [
+          {
+            name: 'Expected',
+            value: 1400,
+            strokeDashArray: 2,
+            strokeColor: '#ff0000'
+          }
+        ]
+      })
+}
+
+
+console.log(res)
+console.log(series)
+
+
+
+
+
 </script>
 
 <template>
@@ -42,27 +67,29 @@ const fetchOptions = () =>{
         height: 350,
         type: 'bar'
       },
+      colors:['#3625d2', '#edca3d', '#20b4e1','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
       plotOptions: {
         bar: {
+          distributed: true,
           columnWidth: '60%'
         }
       },
-      colors: ['#00E396'],
+      //colors: ['#00E396'],
       dataLabels: {
         enabled: false
       },
       legend: {
         show: true,
         showForSingleSeries: true,
-        customLegendItems: ['Actual', 'Expected'],
+        customLegendItems: [/*'Actual',*/ 'kg medi'],
         markers: {
-          fillColors: ['#00E396', '#775DD0']
+          fillColors: [/*'#00E396',*/ '#775DD0']
         }
       }
     }" :series="[
       {
         name: 'Actual',
-        data: series   }]"></apexchart>
+        data: res }]"></apexchart>
   </div>
   
 </template>

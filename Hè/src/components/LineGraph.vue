@@ -1,47 +1,22 @@
 <script setup lang="ts">
 
-  var series= [{
-            name: 'PRODUCT A',
-            data: [44, 55, 41, 67, 22, 43, 21, 49]
-          }, {
-            name: 'PRODUCT B',
-            data: [13, 23, 20, 8, 13, 27, 33, 12]
-          }, {
-            name: 'PRODUCT C',
-            data: [11, 17, 15, 15, 21, 14, 15, 13]
-          }]
-  var chartOptions= {
-            chart: {
-              type: 'bar',
-              height: 350,
-              stacked: true,
-              stackType: '100%'
-            },
-            responsive: [{
-              breakpoint: 480,
-              options: {
-                legend: {
-                  position: 'bottom',
-                  offsetX: -10,
-                  offsetY: 0
-                }
-              }
-            }],
-            xaxis: {
-              categories: ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2',
-                '2012 Q3', '2012 Q4'
-              ],
-            },
-            fill: {
-              opacity: 1
-            },
-            legend: {
-              position: 'right',
-              offsetX: 0,
-              offsetY: 50
-            },
-          }
+const series= [30, 40, 45, 50, 49, 60, 70, 91]
+const timelabels= [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+const labels= ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 
+var res = [] as { name: string; data: number[];}[]
+for(var i=0;i<labels.length;i++){
+  res[i]=({
+        name: labels[i],
+        data: [30, 40, 45, 50, 49, 60, 70, 91-i]
+      })
+}
+
+
+/*"[{
+        name: labels[0],
+        data: series
+      }]"*/
 </script>
 
 <template>
@@ -49,13 +24,12 @@
         chart: {
           id: 'vuechart-example'
         },
+        colors:['#3625d2', '#edca3d', '#20b4e1','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
         xaxis: {
-          categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+          categories: timelabels
         }
-      }" :series="[{
-        name: 'series-1',
-        data: [30, 40, 45, 50, 49, 60, 70, 91]
-      }]"></apexchart>
+      }" :series=res></apexchart>
+      
 </template>
 
 <style scoped>

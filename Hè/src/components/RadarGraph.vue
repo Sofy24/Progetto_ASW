@@ -1,11 +1,6 @@
 <script setup lang="ts">
-/*defineProps<{
-  series: { name: string; data: number[]; }[]
-  chartOptions: { chart: { height: number; type: string; dropShadow: { enabled: true; blur: number; left: number; top: number; }; }; title: { text: string; }; stroke: { width: number; }; fill: { opacity: number; }; markers: { size: number; }; xaxis: { categories:string[]; }; } 
-}>()*/
 import { ref, onMounted, reactive, toRaw } from 'vue'
 import axios from 'axios'
-import { arrayExpression } from '@babel/types';
 
 const props = defineProps<{
   path: string; 
