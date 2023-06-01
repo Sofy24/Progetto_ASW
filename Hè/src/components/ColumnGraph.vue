@@ -11,7 +11,7 @@ const series= ref('')
 const searchQuery= ref('')
 onMounted(()=>{
   fetchData()
-  fetchOptions()
+  //fetchOptions()
 }) 
 const fetchData = () => {
   axios.get(props.path)
@@ -23,6 +23,7 @@ const fetchData = () => {
       console.error('Error retrieving municipalities names:', error)
     })
 };
+/*
 const fetchOptions = () =>{
   axios.get('http://localhost:3000/options')
     .then((response) => {
@@ -31,13 +32,39 @@ const fetchOptions = () =>{
     .catch((error) => {
       console.error('Error retrieving municipalities names:', error)
     });
-};
+};*/
 </script>
 
 <template>
   <div id="chart">
-    <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
+    <apexchart type="bar" height="350" :options="{
+      chart: {
+        height: 350,
+        type: 'bar'
+      },
+      plotOptions: {
+        bar: {
+          columnWidth: '60%'
+        }
+      },
+      colors: ['#00E396'],
+      dataLabels: {
+        enabled: false
+      },
+      legend: {
+        show: true,
+        showForSingleSeries: true,
+        customLegendItems: ['Actual', 'Expected'],
+        markers: {
+          fillColors: ['#00E396', '#775DD0']
+        }
+      }
+    }" :series="[
+      {
+        name: 'Actual',
+        data: series   }]"></apexchart>
   </div>
+  
 </template>
 
 <style scoped>

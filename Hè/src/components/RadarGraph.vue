@@ -1,8 +1,70 @@
 <script setup lang="ts">
-defineProps<{
+/*defineProps<{
   series: { name: string; data: number[]; }[]
   chartOptions: { chart: { height: number; type: string; dropShadow: { enabled: true; blur: number; left: number; top: number; }; }; title: { text: string; }; stroke: { width: number; }; fill: { opacity: number; }; markers: { size: number; }; xaxis: { categories:string[]; }; } 
+}>()*/
+import { ref, onMounted, reactive, toRaw } from 'vue'
+import axios from 'axios'
+import { arrayExpression } from '@babel/types';
+
+const props = defineProps<{
+  path: string; 
 }>()
+
+const chartOptions={
+            chart: {
+              height: 350,
+              type: 'radar',
+              dropShadow: {
+                enabled: true,
+                blur: 1,
+                left: 1,
+                top: 1
+              }
+            },
+            title: {
+              text: 'Radar Chart - Multi Series'
+            },
+            stroke: {
+              width: 2
+            },
+            fill: {
+              opacity: 0.1
+            },
+            markers: {
+              size: 0
+            },
+            xaxis: {
+              categories: ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata']
+            }
+          }
+
+const radarvalues= ref([] as number[][])
+const series = ref([] as { name: string; data: number[]; }[])
+onMounted(()=>{
+  fetchData()
+  //fetchOptions()
+}) 
+const fetchData = () => {
+  axios.get(props.path)
+    .then((response) => {
+      radarvalues.value = response.data
+      console.log(toRaw(radarvalues.value))
+      console.log(radarvalues.value)
+      series.value=[{
+        name: 'This Month',
+        data: toRaw(radarvalues.value)[0],
+      }, {
+        name: 'Last month',
+        data: toRaw(radarvalues.value[1]),
+      }]
+      console.log(series)
+    })
+    .catch((error) => {
+      console.error('Error retrieving municipalities names:', error)
+    })
+};
+
 </script>
 
 <template>

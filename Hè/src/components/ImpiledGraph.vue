@@ -36,9 +36,9 @@
               opacity: 1
             },
             legend: {
-              position: 'right',
+              position: 'bottom',
               offsetX: 0,
-              offsetY: 50
+              offsetY: 0
             },
           }
 

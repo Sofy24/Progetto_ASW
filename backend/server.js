@@ -67,12 +67,9 @@ app.use(express.json());
 });*/
 
 
-app.get('/data', async (req, res) => {
+app.get('/datacolumn', async (req, res) => {
   try {
     const municipalityNames = [
-      {
-        name: 'Actual',
-        data: [
           {
             x: '2011',
             y: 1292,
@@ -155,6 +152,7 @@ app.get('/data', async (req, res) => {
                 name: 'Expected',
                 value: 8700,
                 strokeHeight: 5,
+                strokeDashArray: 2,
                 strokeColor: '#775DD0'
               }
             ]
@@ -172,9 +170,8 @@ app.get('/data', async (req, res) => {
               }
             ]
           }
-        ]
-      }
-    ];
+        ];
+
     res.json(municipalityNames);
   } catch (error) {
     console.error('Error retrieving municipalities:', error);
@@ -215,6 +212,16 @@ app.get('/options', async (req, res) => {
   }
 });
 
+app.get('/dataradar', async (req, res) => {
+  try {
+    const data = [[80, 50, 30, 40, 100, 20,100],[20, 30, 40, 80, 20, 80,50]];
+    console.log(data)
+    res.json(data);
+  } catch (error) {
+    console.error('Error retrieving municipalities:', error);
+    res.status(500).json({ error: 'Failed to retrieve municipalities' });
+  }
+});
 
 //get municipality names
 app.get('/municipality/names', async (req, res) => {
