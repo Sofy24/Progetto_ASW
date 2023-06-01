@@ -33,7 +33,7 @@ const fetchOptions = () =>{
       console.error('Error retrieving municipalities names:', error)
     });
 };*/
-const labels= ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 var res = [] as { x: string; y: number; goals:[{name: string,value:number,strokeDashArray:number,strokeColor:string}] }[]
 for(var i=0;i<labels.length;i++){
   res[i]=({
@@ -67,7 +67,7 @@ console.log(series)
         height: 350,
         type: 'bar'
       },
-      colors:['#3625d2', '#edca3d', '#20b4e1','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
+      colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
       plotOptions: {
         bar: {
           distributed: true,

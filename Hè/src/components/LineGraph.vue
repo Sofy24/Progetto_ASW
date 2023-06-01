@@ -2,7 +2,7 @@
 
 const series= [30, 40, 45, 50, 49, 60, 70, 91]
 const timelabels= [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
-const labels= ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 
 var res = [] as { name: string; data: number[];}[]
 for(var i=0;i<labels.length;i++){
@@ -24,7 +24,7 @@ for(var i=0;i<labels.length;i++){
         chart: {
           id: 'vuechart-example'
         },
-        colors:['#3625d2', '#edca3d', '#20b4e1','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
+        colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
         xaxis: {
           categories: timelabels
         }

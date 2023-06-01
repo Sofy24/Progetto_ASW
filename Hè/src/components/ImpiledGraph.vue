@@ -27,7 +27,7 @@ var chartOptions= {
             xaxis: {
               categories: timevalues,
             },
-            colors:['#3625d2', '#edca3d', '#20b4e1','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
+            colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
             fill: {
               opacity: 1
             },
@@ -51,7 +51,7 @@ var series= [{
   }]
 
 
-const labels= ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 var res = [] as { name: string; data: number[];}[]
 for(var i=0;i<labels.length;i++){
   res[i]=({

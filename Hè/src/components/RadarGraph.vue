@@ -30,7 +30,7 @@ const chartOptions={
               size: 0
             },
             xaxis: {
-              categories: ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata']
+              categories: ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
             }
           }
 

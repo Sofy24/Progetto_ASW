@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-var series=[44, 55, 41, 17, 15, 10, 10,20]
+var series=[44, 55, 41, 17, 15, 10, 10]
 </script>
 
 <template>
@@ -9,8 +9,8 @@ var series=[44, 55, 41, 17, 15, 10, 10,20]
             chart: {
               type: 'donut',
             },
-            labels: ['carta', 'plastica', 'lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio'],
-            colors:['#3625d2', '#edca3d', '#20b4e1','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
+            labels: ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio'],
+            colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
             //fill:{
               //colors:['#3d63ed', '#edca3d', '#ed663d','#3ded49','#742727','#742727','#bdbdbd']
             //},
