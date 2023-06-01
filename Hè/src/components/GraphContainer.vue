@@ -1,50 +1,44 @@
-<script lang="ts">
-import WelcomeItem from './WelcomeItem.vue'
+<script setup lang="ts">
+import WelcomeItem from "@/components/WelcomeItem.vue"
 import DocumentationIcon from './icons/IconDocumentation.vue'
 
 import EcosystemIcon from './icons/IconEcosystem.vue'
 import CommunityIcon from './icons/IconCommunity.vue'
 
-import GrafoProva from './Prova.vue'
-import GrafoProva2 from './Prova2.vue'
+import GrafoProva from '@/components/Prova.vue'
+import GrafoProva2 from '@/components/Prova2.vue'
 //import areas from '@/assets/comuni.json'
+import { ref, onMounted, computed } from 'vue'
 import axios from 'axios'
 
-export default {
-  data() {
-    return {
-      chartOptions: '',
-      series: '',
-      searchQuery: '',
-    }
-  },
-  onMounted() {
-    this.fetchData()
-    this.fetchOptions()
-  },
-  methods: {
-    
-    fetchData() {
-      axios.get('http://localhost:3000/data')
-        .then((response) => {
-          this.series = response.data
-          console.log(this.series)
-        })
-        .catch((error) => {
-          console.error('Error retrieving municipalities names:', error)
-        })
-    },
-    fetchOptions() {
-      axios.get('http://localhost:3000/options')
-        .then((response) => {
-          this.chartOptions = response.data
-        })
-        .catch((error) => {
-          console.error('Error retrieving municipalities names:', error)
-        });
-    },
-  },
-}
+
+const chartOptions= ref('')
+const series= ref('')
+const searchQuery= ref('')
+onMounted(()=>{
+  fetchData()
+  fetchOptions()
+}) 
+const fetchData = () => {
+  axios.get('http://localhost:3000/data')
+    .then((response) => {
+      series.value = response.data
+      console.log(series)
+    })
+    .catch((error) => {
+      console.error('Error retrieving municipalities names:', error)
+    })
+};
+const fetchOptions = () =>{
+  axios.get('http://localhost:3000/options')
+    .then((response) => {
+      chartOptions.value = response.data
+    })
+    .catch((error) => {
+      console.error('Error retrieving municipalities names:', error)
+    });
+};
+
 </script>
 
 <template>

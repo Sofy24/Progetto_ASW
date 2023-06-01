@@ -1,15 +1,10 @@
 <script setup lang="ts">
-import Graph from '../components/Graphs.vue'
+import GraphContainer from "@/components/GraphContainer.vue"
 </script>
 
-
-
 <template>
-  <main>
-    <Graph />
-  </main>
+  <GraphContainer />
 </template>
-
 
 
 <style>
