@@ -9,9 +9,9 @@ const userSchema = new mongoose.Schema({
     salt: { type: String, required: true },
     municipality: { type: String, required: true },
     date: {
-        month: { type: Number, required: true, },
-        year: { type: Number, required: true, },
-      },
+        month: { type: Number, required: true },
+        year: { type: Number, required: true }
+      }
   }, { collection: 'Users' });
 
 const User = mongoose.model('Users', userSchema);
@@ -21,6 +21,14 @@ const pepperValue = 'c7a3d8e9b2f541cb18f206e4108761c9';
 async function registerUser (formData) {
     try {
         const { name, surname, email, municipality, password } = formData;
+
+        const otheruser = await User.findOne({ email });
+        console.log(otheruser);
+        if (otheruser != null) {
+            console.log("fail");
+            return false;
+        }
+        console.log("good");
         const salt = await bcrypt.genSalt(10);
         // Apply salt and pepper to the password
         const PepperedPassword = password + pepperValue;
@@ -44,7 +52,17 @@ async function registerUser (formData) {
         });
         // Save the user document to the database
         await user.save();
-        return;
+        return true;
+    } catch (error) {
+        console.error('Error registering user:', error);
+        throw new Error('Failed to register user');
+    }
+}
+
+async function loginUser(formData) {
+    try {
+        const { email, password } = formData;
+        const user = await User.findOne({ email });
     } catch (error) {
         console.error('Error registering user:', error);
         throw new Error('Failed to register user');
@@ -52,6 +70,7 @@ async function registerUser (formData) {
 }
 
 module.exports = {
-    registerUser
+    registerUser,
+    loginUser,
 };
 

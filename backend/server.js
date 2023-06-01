@@ -231,7 +231,13 @@ app.post('/user/register', async (req, res) => {
   try {
   const formData = req.body;
   console.log(formData);
-  userService.registerUser(req.body);
+  if (await userService.registerUser(req.body)) {
+    console.log("true");
+    return res.status(200).json({ message: 'Registrazione eseguita con successo' });
+  } else {
+    console.log("false");
+    return res.status(409).json({ error: 'Email già registrata' });
+  }
   } catch (error) {
     console.error('Error registering user:', error);
     res.status(500).json({ error: 'Failed to register user' });
