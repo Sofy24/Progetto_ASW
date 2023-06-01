@@ -1,67 +1,18 @@
 <script setup lang="ts">
 import WelcomeItem from "@/components/WelcomeItem.vue"
 import DocumentationIcon from './icons/IconDocumentation.vue'
-
-import EcosystemIcon from './icons/IconEcosystem.vue'
-import CommunityIcon from './icons/IconCommunity.vue'
-
-import GrafoProva from '@/components/Prova.vue'
-import GrafoProva2 from '@/components/Prova2.vue'
+import GrafoProva from '@/components/ImpiledGraph.vue'
+import GrafoProva2 from '@/components/RadarGraph.vue'
+import ColumnGraph from '@/components/ColumnGraph.vue'
+import PieGraph from '@/components/PieGraph.vue'
 //import areas from '@/assets/comuni.json'
-import { ref, onMounted, computed } from 'vue'
-import axios from 'axios'
-
-
-const chartOptions= ref('')
-const series= ref('')
-const searchQuery= ref('')
-onMounted(()=>{
-  fetchData()
-  fetchOptions()
-}) 
-const fetchData = () => {
-  axios.get('http://localhost:3000/data')
-    .then((response) => {
-      series.value = response.data
-      console.log(series)
-    })
-    .catch((error) => {
-      console.error('Error retrieving municipalities names:', error)
-    })
-};
-const fetchOptions = () =>{
-  axios.get('http://localhost:3000/options')
-    .then((response) => {
-      chartOptions.value = response.data
-    })
-    .catch((error) => {
-      console.error('Error retrieving municipalities names:', error)
-    });
-};
-
 </script>
 
 <template>
     
-  <div>
-    <div id="chart">
-        <apexchart type="donut" :options="{
-            chart: {
-              type: 'donut',
-            },
-            responsive: [{
-              breakpoint: 480,
-              options: {
-                chart: {
-                  width: 200
-                },
-                legend: {
-                  position: 'bottom'
-                }
-              }
-            }]}" :series="[44, 55, 41, 17, 15]"></apexchart>
-      </div>
-  </div>
+  <WelcomeItem>
+    <PieGraph/>
+  </WelcomeItem>
   
 
   <WelcomeItem>
@@ -140,45 +91,9 @@ const fetchOptions = () =>{
           }" />
     </template>
   </WelcomeItem>
-
+  
   <WelcomeItem>
-    <template #icon>
-      <EcosystemIcon />
-    </template>
-    <template #heading>Ecosystem</template>
-
-    Get official tools and libraries for your project:
-    <a href="https://pinia.vuejs.org/" target="_blank" rel="noopener">Pinia</a>,
-    <a href="https://router.vuejs.org/" target="_blank" rel="noopener">Vue Router</a>,
-    <a href="https://test-utils.vuejs.org/" target="_blank" rel="noopener">Vue Test Utils</a>, and
-    <a href="https://github.com/vuejs/devtools" target="_blank" rel="noopener">Vue Dev Tools</a>. If
-    you need more resources, we suggest paying
-    <a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">Awesome Vue</a>
-    a visit.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <template #icon>
-      <CommunityIcon />
-    </template>
-    <template #heading>Community</template>
-
-    Got stuck? Ask your question on
-    <a href="https://chat.vuejs.org" target="_blank" rel="noopener">Vue Land</a>, our official
-    Discord server, or
-    <a href="https://stackoverflow.com/questions/tagged/vue.js" target="_blank" rel="noopener"
-      >StackOverflow</a
-    >. You should also subscribe to
-    <a href="https://news.vuejs.org" target="_blank" rel="noopener">our mailing list</a> and follow
-    the official
-    <a href="https://twitter.com/vuejs" target="_blank" rel="noopener">@vuejs</a>
-    twitter account for latest news in the Vue world.
-  </WelcomeItem>
-
-  <WelcomeItem>
-    <div id="chart">
-      <apexchart type="bar" height="350" :options="chartOptions" :series="series"></apexchart>
-    </div>
+    <ColumnGraph :path="'http://localhost:3000/data'" />
   </WelcomeItem>
 </template>
 
