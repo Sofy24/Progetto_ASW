@@ -9,6 +9,7 @@ const municipality = ref('')
 const password = ref('')
 const municipalities = ref([] as string[])
 const searchQuery = ref('')
+const errorMessage = ref('')
 
 onMounted(() => {
   fetchMunicipalityNames()
@@ -40,9 +41,13 @@ const submitForm = () => {
   axios.post('http://localhost:3000/user/register', formData)
     .then((response) => {
       console.log('Form data sent and stored successfully:', response.data)
+      console.log("good"+response.statusText)
+      //TODO redirect to crrect page 
     })
     .catch((error) => {
       console.error('Error sending form data:', error)
+      console.log("bad"+error.statusText)
+      errorMessage.value = "Email già registrata"
     });
 };
 
@@ -74,7 +79,7 @@ const fetchMunicipalityNames = () => {
     <div>
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="password" required>
-      <span v-if="!isPasswordValid" class="password-requirements">
+      <span v-if="!isPasswordValid" class="error-message">
           La password deve avere almeno 8 caratteri di cui almeno una maiuscola, una minuscola, un numero e un simbolo.
       </span>
     </div>
@@ -85,14 +90,15 @@ const fetchMunicipalityNames = () => {
           <option v-for="option in filteredOptions" :value="option" :key="option">
             {{ option}}
           </option>
-        </select>
-      </div>
+      </select>
+    </div>
+    <div v-if="errorMessage != ''" class="error-message">{{ errorMessage }}</div>
     <button type="submit">Registrati</button>
   </form>
 </template>
 
 <style>
-  .password-requirements {
+  .error-message {
     color: red;
     font-size: 0.8em;
   }
