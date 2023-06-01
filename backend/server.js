@@ -237,6 +237,10 @@ app.post('/user/register', async (req, res) => {
     res.status(500).json({ error: 'Failed to register user' });
   }
 });
+//login user
+app.post('/login', async (req, res) => {
+  console.log(req.body);
+});
 
 
 app.listen(PORT,() =>{
