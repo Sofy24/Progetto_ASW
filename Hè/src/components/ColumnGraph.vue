@@ -83,7 +83,7 @@ console.log(series)
         showForSingleSeries: true,
         customLegendItems: [/*'Actual',*/ 'kg medi'],
         markers: {
-          fillColors: [/*'#00E396',*/ '#775DD0']
+          fillColors: [/*'#00E396',*/ '#ff0000']
         }
       }
     }" :series="[
