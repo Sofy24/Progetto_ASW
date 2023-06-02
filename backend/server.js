@@ -5,20 +5,21 @@ const cors = require('cors')
 const fs = require('fs');
 const path = require('path');
 const connectDB = require('./config/dbConn');
-const municipalityService = require('./query/municipalityService');
-const userService = require('./query/userService');app.use(cors());
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
+app.use(cors());
 
 connectDB();
 //routes
 app.use('/', require('./router/root'));
 app.use('/notification', require('./router/notificationRoute'));
+app.use('/municipality', require('./router/municipalityRoute'));
+app.use('/register', require('./router/registerRoute'));
+app.use('/login', require('./router/loginRoute'));
 
 
-
-
+//NON CANCELLARE 
 // Funzione per popolare il db, cambire il nome del file json e lo schema sulla base si cosa si inserisce e decommentare loadData() nella connessione  
 function loadData() {
   const areasDataPath = path.join(__dirname, 'comuni.json');
@@ -49,7 +50,7 @@ function loadData() {
           });
       });
     }   
-
+//DA QUI IN POI SI PUO' CANCELLARE SE SERVE
 
 
 
@@ -85,38 +86,8 @@ app.get('/dataradar', async (req, res) => {
   }
 });
 
-//get municipality names
-app.get('/municipality/names', async (req, res) => {
-  try {
-    const municipalityNames = await municipalityService.getAllMunicipalityNames();
-    res.json(municipalityNames);
-  } catch (error) {
-    console.error('Error retrieving municipalities:', error);
-    res.status(500).json({ error: 'Failed to retrieve municipalities' });
-  }
-});
-//register user
-app.post('/user/register', async (req, res) => {
-  try {
-  const formData = req.body;
-  console.log(formData);
-  if (await userService.registerUser(req.body)) {
-    console.log("true");
-    return res.status(200).json({ message: 'Registrazione eseguita con successo' });
-  } else {
-    console.log("false");
-    return res.status(409).json({ error: 'Email già registrata' });
-  }
-  } catch (error) {
-    console.error('Error registering user:', error);
-    res.status(500).json({ error: 'Failed to register user' });
-  }
-});
-//login user
-app.post('/login', async (req, res) => {
-  console.log(req.body);
-});
 
+//NON CANCELLARE
 const PORT = 3000;
 app.listen(PORT,() =>{
   console.log('Node API server started on port '+PORT);
