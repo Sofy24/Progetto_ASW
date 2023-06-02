@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
+var random = require('mongoose-random');
 const cors = require('cors')
 const fs = require('fs');
 const path = require('path');
@@ -19,7 +20,7 @@ app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));
 
 
-
+//loadData();
 //NON CANCELLARE 
 // Funzione per popolare il db, cambire il nome del file json e lo schema sulla base si cosa si inserisce e decommentare loadData() nella connessione  
 function loadData() {
@@ -82,71 +83,52 @@ function loadData2() {
           });
       });
     }   
-const areasDataPath = path.join(__dirname, 'bidoni.json');
-//createData(areasDataPath)
-function createData(path){
-  var values="["
-  for(var i=0;i<30;i++){
-    if(i!=0){
-      values.concat(",")
-    }
-    values.concat({"typology":{
-      "type":"",
-      "ref":"Typology",
-      "required": true
-  },
-  "actual_kg":0,
-  "adress":"via 31 febbraio",
-  "municipality": { 
-      "type": "", 
-      "ref": "Municipalities", 
-      "required": true }
-    })
-  }
-  values.concat("]")
-  JSON.writeFile(path,values)
-}
+// UNCOMMENT THIS TO CREATE BINS FOR THE FIRST TIME!
+//createData();
+function createData(){
 
-function loadData3() {
+  const Bin = require('./model/Bin');
+  const Municipality = require('./model/Municipality');
+  const Typology = require('./model/Typology');
   
-  const areasDataPath = path.join(__dirname, 'bidoni.json');
-  createData(areasDataPath);
-  fs.readFile(areasDataPath, 'utf8', (error, data) => {
-    if (error) {
-      console.error('Error reading data file:', error);
-      process.exit(1);
+  var random = 0
+  Municipality.count().then( (count) =>{
+    console.log(count);
+    for(var i=0;i<30;i++){
+      const via = "via ".concat(i+1).concat(" luglio");
+      
+      random= Math.floor(Math.random() * count);
+
+      Municipality.findOne().skip(random).then( ( result) =>{
+
+        var pippo = result._id;
+        Typology.count().then( (count2) =>{
+          random = Math.floor(Math.random() * count2);
+
+          Typology.findOne().skip(random).then( ( resulttypology) =>{
+            
+            
+
+            const bin = new Bin({
+              typology:resulttypology._id,
+              actual_kg:0,
+              adress: via,
+              municipality: result._id,
+            });
+            bin.save();
+            
+          }).catch((err) => {});
+
+        });
+        
+        
+      }).catch((err) => {});
+      
     }
-    
-    const areas = JSON.parse(data);
-    
-    // Define the area schema and model (similar to the previous examples)
-        const areaSchema = new mongoose.Schema({
-          typology:{
-              type:"",
-              ref:"Typology",
-              required: true
-          },
-          actual_kg:Number,
-          adress:String,
-          municipality: { 
-              type: "", 
-              ref: "Municipalities", 
-              required: true }
-      }, { collection: 'Bins' });
-        const Area = mongoose.model('Area', areaSchema);
-    
-        // Use insertMany() to insert the areas into the collection
-        Area.insertMany(areas)
-          .then(() => {
-            console.log('Data loaded successfully');
-            mongoose.disconnect();
-          })
-          .catch((error) => {
-            console.error('Error loading data:', error);
-            mongoose.disconnect();
-          });
-      });
-    }   
+  }).catch((err) => {});
+  
+  
+}
 
 app.get('/datacolumn', async (req, res) => {
   try {
