@@ -1,26 +1,34 @@
 [
     {
-        "name": "vetro"
+        "name": "vetro",
+        "max_kg": 50
     },
     {
-        "name": "plastica"
+        "name": "plastica",
+        "max_kg": 10
     },
     {
-        "name": "carta"
+        "name": "carta",
+        "max_kg": 20
     },
     {
-        "name": "lattine"
+        "name": "lattine",
+        "max_kg": 30
     },
     {
-        "name": "organico"
+        "name": "organico",
+        "max_kg": 3
     },
     {
-        "name": "sfralci e potature"
+        "name": "sfralci e potature",
+        "max_kg": 25
     },
     {
-        "name": "olio"
+        "name": "olio",
+        "max_kg": 15
     },
     {
-        "name": "indifferenziata"
+        "name": "indifferenziata",
+        "max_kg": 4
     }
 ]
