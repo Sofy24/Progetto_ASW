@@ -6,7 +6,7 @@ const userSchema = new mongoose.Schema({
     email: { type: String, required: true },
     password: { type: String, required: true },
     salt: { type: String, required: true },
-    municipality: { type: String, required: true },
+    municipality: { type: mongoose.Schema.Types.ObjectId, ref: 'Municipalities', required: true },
     date: {
         month: { type: Number, required: true },
         year: { type: Number, required: true }

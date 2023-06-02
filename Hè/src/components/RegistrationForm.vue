@@ -40,6 +40,7 @@ const submitForm = () => {
 
   axios.post('http://localhost:3000/register', formData)
     .then((response) => {
+      errorMessage.value=""
       console.log('Form data sent and stored successfully:', response.data)
       console.log("good"+response.statusText)
       //TODO redirect to crrect page 
@@ -47,6 +48,8 @@ const submitForm = () => {
     .catch((error) => {
       if (error.response.status == 409) {
         errorMessage.value = "Email già registrata"
+      } else if (error.response.status == 400){
+        errorMessage.value = error.response.data.error
       } else {
         console.error('Error sending form data:', error)
       }
