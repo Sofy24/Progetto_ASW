@@ -1,6 +1,11 @@
 [
     {
         
-        "riempimento_kg":0
+        "riempimento_kg":0,
+        "indirizzo":"via 31 febbraio",
+        "comune": { 
+            "type": "", 
+            "ref": "Municipalities", 
+            "required": true }
     }
 ]
