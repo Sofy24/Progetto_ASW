@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
+  import { RouterLink, RouterView, useRoute } from 'vue-router'
+  import { computed } from 'vue'
+  import HelloWorld from './components/HelloWorld.vue'
 
 
-//import NotificationView from './views/NotificationView.vue'
+  const route = useRoute();
+
+  const isPersonalRoute = computed(() => route.name === 'personal');
 </script>
 
 <template>
@@ -12,8 +15,7 @@ import HelloWorld from './components/HelloWorld.vue'
     
     <div class="wrapper">
       <HelloWorld msg="Hè" />
-      <NotificationView/>
-      <nav>
+      <nav v-if="!isPersonalRoute">
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">Chi siamo</RouterLink>
 
@@ -24,11 +26,16 @@ import HelloWorld from './components/HelloWorld.vue'
         <RouterLink to="/login">Login</RouterLink>
         <RouterLink to="/notification">Mess</RouterLink>
       </nav>
-      
+      <nav v-else>
+        <p>Questo è il nav della pagina personale</p>
+        <!-- Display this navigation for personal route -->
+        <!-- Add your personal route specific links here -->
+      </nav>
     </div>
   </header>
   <RouterView />
   <RouterView name="personal"></RouterView>
+  <RouterView name="home"></RouterView>
 </template>
 
 <style scoped>
