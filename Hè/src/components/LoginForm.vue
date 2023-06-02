@@ -1,11 +1,13 @@
 <script lang="ts">
     import { defineComponent, ref } from 'vue'
     import axios from 'axios'
+    import router from '@/router'
 
     export default defineComponent({
     setup() {
         const email = ref('')
         const password = ref('')
+        const errorMessage = ref('')
 
         const submitForm = () => {
         const formData = {
@@ -16,21 +18,25 @@
         console.log(formData);
 
         // Send the login request to the server
-        axios
-            .post('http://localhost:3000/login', formData)
+        axios.post('http://localhost:3000/login', formData)
             .then(response => {
-            console.log('Login successful')
-            // Do something with the response, such as storing the user token
+                console.log('Login successful')
+                errorMessage.value = ''
+                router.push('personal');
             })
             .catch(error => {
-            console.error('Login failed:', error)
-            // Handle login failure, such as displaying an error message
+                if (error.response.status == 401){
+                    errorMessage.value = error.response.data.error
+                }
+                console.error('Login failed:', error)
+                // Handle login failure, such as displaying an error message
             })
         }
 
         return {
         email,
         password,
+        errorMessage,
         submitForm,
         }
     },
@@ -50,5 +56,6 @@
         </div>
         <button type="submit">Login</button>
     </form>
+    <div v-if="errorMessage != ''" class="error-message">{{ errorMessage }}</div>
 </template>
   

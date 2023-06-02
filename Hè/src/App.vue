@@ -28,6 +28,7 @@ import HelloWorld from './components/HelloWorld.vue'
     </div>
   </header>
   <RouterView />
+  <RouterView name="personal"></RouterView>
 </template>
 
 <style scoped>
