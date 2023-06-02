@@ -1,7 +1,7 @@
 const User = require('../model/User');
 const bcrypt = require('bcrypt');
-//const jwt = require('jsonwebtoken');
-//const secret_key =  "1a9c77f85d71868e86d7e8a0cfdaf8215b8e687d80442e8f99d7fc7fba5e3d53";
+const jwt = require('jsonwebtoken');
+const secretKey =  "1a9c77f85d71868e86d7e8a0cfdaf8215b8e687d80442e8f99d7fc7fba5e3d53";
 const pepperValue = 'c7a3d8e9b2f541cb18f206e4108761c9';
 
 const handleLogin = async (req, res) => {
@@ -18,7 +18,14 @@ const handleLogin = async (req, res) => {
             // Hash the password
             const hashedPassword = await bcrypt.hash(PepperedPassword, salt);
             if (hashedPassword === passwordUser) {
-                return res.status(200).json({ message: 'Login eseguito con successo' });
+                //payload for token creation
+                const payload = {
+                    id: user._id,
+                    email: user.email,
+                };
+                const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
+                console.log(token);
+                return res.status(200).json({ token });
             }
         }
         //unauthorized

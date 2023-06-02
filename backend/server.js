@@ -17,6 +17,7 @@ app.use('/notification', require('./router/notificationRoute'));
 app.use('/municipality', require('./router/municipalityRoute'));
 app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));
+app.use('/user', require('./router/userRoute'))
 
 
 

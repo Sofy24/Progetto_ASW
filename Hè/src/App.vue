@@ -3,9 +3,8 @@
   import { computed } from 'vue'
   import HelloWorld from './components/HelloWorld.vue'
 
-
   const route = useRoute();
-
+  //da aggionrare sulla base dei differenti nav
   const isPersonalRoute = computed(() => route.name === 'personal');
 </script>
 

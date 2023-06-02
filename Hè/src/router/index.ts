@@ -1,5 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomeView from '../pages/HomePage.vue'
+
+import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
+
+const requireAuth = (to: RouteLocationNormalized, from: RouteLocationNormalized, next: NavigationGuardNext) => {
+  const token = localStorage.getItem('token');
+  
+  if (token != null) {
+    // User is authorized, proceed with navigation
+    next();
+  } else {
+    // User is not authorized, redirect to login page or show an error message
+    next('/login');
+  }
+};
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -56,7 +71,8 @@ const router = createRouter({
     {
       path: '/personal',
       name: 'personal',
-      component: () => import ('../pages/PersonalPage.vue')
+      component: () => import ('../pages/PersonalPage.vue'),
+      beforeEnter: requireAuth
     }
   ]
 })

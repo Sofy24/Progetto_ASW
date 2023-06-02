@@ -21,7 +21,12 @@
         axios.post('http://localhost:3000/login', formData)
             .then(response => {
                 console.log('Login successful')
+                //save the auth token in local storage
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+                //reset errorMessage
                 errorMessage.value = ''
+                //go to personal page
                 router.push('personal');
             })
             .catch(error => {
