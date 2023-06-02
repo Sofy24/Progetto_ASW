@@ -1,70 +1,71 @@
 <script setup lang="ts">
-import { ref, onMounted, computed } from 'vue'
-import axios from 'axios'
+  import { ref, onMounted, computed } from 'vue'
+  import axios from 'axios'
+  import router from '@/router'
 
-const name = ref('')
-const surname = ref('')
-const email = ref('')
-const municipality = ref('')
-const password = ref('')
-const municipalities = ref([] as string[])
-const searchQuery = ref('')
-const errorMessage = ref('')
+  const name = ref('')
+  const surname = ref('')
+  const email = ref('')
+  const municipality = ref('')
+  const password = ref('')
+  const municipalities = ref([] as string[])
+  const searchQuery = ref('')
+  const errorMessage = ref('')
 
-onMounted(() => {
-  fetchMunicipalityNames()
-});
+  onMounted(() => {
+    fetchMunicipalityNames()
+  });
 
-const filteredOptions = computed(() => {
-  const query = searchQuery.value.toLowerCase()
-  return municipalities.value.filter((option) =>
-    option.toLowerCase().includes(query)
-  );
-});
+  const filteredOptions = computed(() => {
+    const query = searchQuery.value.toLowerCase()
+    return municipalities.value.filter((option) =>
+      option.toLowerCase().includes(query)
+    );
+  });
 
-const isPasswordValid = computed(() => {
-  const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)
-  return passwordRegex.test(password.value)
-});
+  const isPasswordValid = computed(() => {
+    const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/)
+    return passwordRegex.test(password.value)
+  });
 
-const submitForm = () => {
-  const formData = {
-    name: name.value,
-    surname: surname.value,
-    email: email.value,
-    municipality: municipality.value,
-    password: password.value,
+  const submitForm = () => {
+    const formData = {
+      name: name.value,
+      surname: surname.value,
+      email: email.value,
+      municipality: municipality.value,
+      password: password.value,
+    };
+
+    console.log(formData)
+
+    axios.post('http://localhost:3000/register', formData)
+      .then((response) => {
+        errorMessage.value=""
+        console.log('Form data sent and stored successfully:', response.data)
+        console.log("good"+response.statusText)
+        router.push('home');
+      })
+      .catch((error) => {
+        if (error.response.status == 409) {
+          errorMessage.value = "Email già registrata"
+        } else if (error.response.status == 400){
+          errorMessage.value = error.response.data.error
+        } else {
+          console.error('Error sending form data:', error)
+        }
+      });
   };
 
-  console.log(formData)
-
-  axios.post('http://localhost:3000/register', formData)
-    .then((response) => {
-      errorMessage.value=""
-      console.log('Form data sent and stored successfully:', response.data)
-      console.log("good"+response.statusText)
-      //TODO redirect to crrect page 
-    })
-    .catch((error) => {
-      if (error.response.status == 409) {
-        errorMessage.value = "Email già registrata"
-      } else if (error.response.status == 400){
-        errorMessage.value = error.response.data.error
-      } else {
-        console.error('Error sending form data:', error)
-      }
-    });
-};
-
-const fetchMunicipalityNames = () => {
-  axios.get('http://localhost:3000/municipality/names')
-    .then((response) => {
-      municipalities.value = response.data;
-    })
-    .catch((error) => {
-      console.error('Error retrieving municipalities names:', error)
-    })
-};
+  const fetchMunicipalityNames = () => {
+    axios.get('http://localhost:3000/municipality/names')
+      .then((response) => {
+        municipalities.value = response.data;
+      })
+      .catch((error) => {
+        console.error('Error retrieving municipalities names:', error)
+      })
+  };
 </script>
 
 <template>

@@ -6,6 +6,10 @@ const router = createRouter({
   routes: [
     {
       path: '/',
+      redirect: '/home'
+    },
+    {
+      path: '/home',
       name: 'home',
       component: HomeView
     },
@@ -48,6 +52,11 @@ const router = createRouter({
       path: '/notification',
       name: 'notification',
       component: () => import ('../pages/NotificationPage.vue')
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component: () => import ('../pages/PersonalPage.vue')
     }
   ]
 })
