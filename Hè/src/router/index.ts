@@ -73,6 +73,12 @@ const router = createRouter({
       name: 'personal',
       component: () => import ('../pages/PersonalPage.vue'),
       beforeEnter: requireAuth
+    },
+    {
+      path: '/report',
+      name: 'report',
+      component: () => import ('../pages/ReportPage.vue'),
+      beforeEnter: requireAuth
     }
   ]
 })

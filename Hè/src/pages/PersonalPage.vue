@@ -1,33 +1,24 @@
 <script setup lang="ts">
 import PersonalContainer from "@/components/PersonalContainer.vue"
 import { onMounted, ref } from 'vue'
-import axios from 'axios'
 import { useRouter } from 'vue-router'
+import { verifyToken } from '@/utils/tokenUtils';
 
 const userEmail = ref('')
 const router = useRouter()
 
 const logout = () => {
   localStorage.removeItem('token')
-  router.push('/login')
+  router.push('login')
 }
 
-
 onMounted(async () => {
-  const token = localStorage.getItem('token')
-  console.log('Token:', token)
-  axios.get('http://localhost:3000/user/verify', {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  }).then((response) => {
-    console.log("valid token" + response.data.email)
-    userEmail.value = response.data.email
-  }).catch((error) => {
-    console.log("wrong or expired token")
-    // Redirect to login
-    router.push('login')
-  })
+    verifyToken()
+    .then(result => {
+        userEmail.value = result;
+    }).catch(error => {
+        router.push('/login');
+    });
 })
 </script>
 
