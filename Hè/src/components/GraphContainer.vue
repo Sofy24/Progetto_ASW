@@ -38,7 +38,7 @@ import LineGraph from '@/components/LineGraph.vue'
     <template #heading>Grafo confronto mese scorso</template>
 
     <template #default>
-      <RadarGraph :path="'http://localhost:3000/dataradar'" />
+      <RadarGraph :path="'http://localhost:3000/graph/general/radar'" />
     </template>
   </WelcomeItem>
   

@@ -18,7 +18,7 @@ app.use('/notification', require('./router/notificationRoute'));
 app.use('/municipality', require('./router/municipalityRoute'));
 app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));
-
+app.use('/graph/general',require('./router/graphRoute'));
 
 //loadData();
 //NON CANCELLARE 
@@ -53,7 +53,8 @@ function loadData() {
       });
     }   
 
-//DA QUI IN POI SI PUO' CANCELLARE SE SERVE
+// UNCOMMENT THIS TO CREATE TYPOLOGY OF WASTE FOR THE FIRST TIME!
+//loadData2();
 function loadData2() {
   const areasDataPath = path.join(__dirname, 'tipologie.json');
   fs.readFile(areasDataPath, 'utf8', (error, data) => {
@@ -129,6 +130,24 @@ function createData(){
   
   
 }
+// CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
+//create1deposit();
+function create1deposit(){
+  const Bin = require('./model/Bin');
+  const User = require('./model/Municipality');
+  //const Typology = require('./model/Typology');
+  const Deposit = require('./model/Deposit');
+
+  //console.log(mongoose.Types.ObjectId('6479f8a6117b966054dc1a14'));
+  //var u = User.findById('6479f8a6117b966054dc1a14')._id
+  //var b = Bin.findOne({_id:ObjectId('6479f541056369bd03bbaf0f')})._id
+  const deposit = new Deposit({
+    user:'647b3f2dc34527bb4073be43',
+    kg:1,
+    bin: '647b3e04a4c6674f3e9fca1b' ,
+  });
+  deposit.save();
+}
 
 app.get('/datacolumn', async (req, res) => {
   try {
@@ -151,7 +170,7 @@ app.get('/options', async (req, res) => {
     res.status(500).json({ error: 'Failed to retrieve municipalities' });
   }
 });
-
+/*
 app.get('/dataradar', async (req, res) => {
   try {
     const data = [[80, 50, 30, 40, 100, 20,100],[20, 30, 40, 80, 20, 80,50]];
@@ -160,7 +179,7 @@ app.get('/dataradar', async (req, res) => {
     console.error('Error retrieving municipalities:', error);
     res.status(500).json({ error: 'Failed to retrieve municipalities' });
   }
-});
+});*/
 
 
 //NON CANCELLARE

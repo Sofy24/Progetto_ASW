@@ -4,16 +4,12 @@
         "max_kg": 50
     },
     {
-        "name": "plastica",
-        "max_kg": 10
+        "name": "plastica e lattine",
+        "max_kg": 15
     },
     {
         "name": "carta",
         "max_kg": 20
-    },
-    {
-        "name": "lattine",
-        "max_kg": 30
     },
     {
         "name": "organico",
