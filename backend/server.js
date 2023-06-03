@@ -1,11 +1,41 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose')
-var random = require('mongoose-random');
+//var random = require('mongoose-random');
 const cors = require('cors')
 const fs = require('fs');
 const path = require('path');
 const connectDB = require('./config/dbConn');
+
+
+const { createServer } = require("http");
+const { Server } = require("socket.io");
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+
+
+httpServer.listen(3001);
+
+io.on("connection", (socket) => {
+  socket.emit("hello", "world");
+});
+/*
+const Http = require("http").Server(express);
+const Socketio = require("socket.io")(Http, {
+  cors: {
+    origin: "http://localhost:3001",
+  },
+});
+Http.listen(3001, () => {
+  console.log("Server up and running...");
+});
+const message = {mesg:"hello"}
+Socketio.on("connection", (socket) => {
+  socket.emit("position", message);
+});*/
+
+
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 
