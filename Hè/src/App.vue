@@ -4,9 +4,18 @@
   import { onMounted, ref} from 'vue'
   import { verifyToken } from '@/utils/tokenUtils'
   import { useRouter } from 'vue-router';
+  import { computed } from '@vue/reactivity';
   
-  const router = useRouter();
+  const router = useRouter()
   const isAuthorized = ref(false)
+
+  const reportLink = computed(() => {
+    const currentDate = new Date();
+    const currentYear = currentDate.getFullYear();
+    const currentMonth = currentDate.getMonth() + 1; // months are zero-based (0 - 11)
+    return `/report/${currentYear}/${currentMonth}`;
+  })
+
   onMounted(() => { 
     checkAuthorization()
   })
@@ -48,7 +57,7 @@
         <RouterLink to="/notification">Mess</RouterLink>
 
         <RouterLink v-if="isAuthorized" to="/personal">MyPage</RouterLink>
-        <RouterLink v-if="isAuthorized" to="/report">Resoconto Mensile</RouterLink>
+        <RouterLink v-if="isAuthorized" :to="reportLink">Resoconto Mensile</RouterLink>
       </nav>
     </div>
   </header>

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
+import type { RouteRecordRaw } from 'vue-router';
 import HomeView from '../pages/HomePage.vue'
 
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
@@ -75,9 +75,13 @@ const router = createRouter({
       beforeEnter: requireAuth
     },
     {
-      path: '/report',
+      path: '/report/:year/:month',
       name: 'report',
       component: () => import ('../pages/ReportPage.vue'),
+      props: (route: RouteLocationNormalized) => ({
+        year: Number(route.params.year),
+        month: Number(route.params.month),
+      }),
       beforeEnter: requireAuth
     }
   ]
