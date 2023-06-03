@@ -1,6 +1,11 @@
-<script setup lang="ts">
+
+<script>/*
+ setup lang="ts">
 import { ref, onMounted, reactive, toRaw } from 'vue'
 import axios from 'axios'
+
+
+
 
 const props = defineProps<{
   path: string; 
@@ -60,6 +65,14 @@ const fetchData = () => {
     })
 };
 
+
+
+*/
+  /** SOCKET IO  */
+  import { socket } from "../socket.js";
+  socket.on("dataReturn", (arg) => {
+    console.log(arg); // world
+  });
 </script>
 
 <template>
