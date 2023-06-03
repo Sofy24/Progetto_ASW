@@ -19,6 +19,8 @@ app.use('/municipality', require('./router/municipalityRoute'));
 app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));
 app.use('/graph/general',require('./router/graphRoute'));
+app.use('/user', require('./router/userRoute'))
+
 
 //loadData();
 //NON CANCELLARE 

@@ -1,12 +1,33 @@
 <script setup lang="ts">
-  import { RouterLink, RouterView, useRoute } from 'vue-router'
-  import { computed } from 'vue'
+  import { RouterLink, RouterView} from 'vue-router'
   import HelloWorld from './components/HelloWorld.vue'
+  import { onMounted, ref} from 'vue'
+  import { verifyToken } from '@/utils/tokenUtils'
+  import { useRouter } from 'vue-router';
+  
+  const router = useRouter();
+  const isAuthorized = ref(false)
+  onMounted(() => { 
+    checkAuthorization()
+  })
+  router.beforeEach((to, from, next) => {
+      //every time i change route it check if it is still logged
+      checkAuthorization()
+      next();
+  })
 
-
-  const route = useRoute();
-
-  const isPersonalRoute = computed(() => route.name === 'personal');
+  async function checkAuthorization(): Promise<boolean> {
+    try {
+      await verifyToken();
+      console.log("True");
+      isAuthorized.value = true
+      return true;
+    } catch (error) {
+      console.log("False");
+      isAuthorized.value = false
+      return false;
+    }
+  } 
 </script>
 
 <template>
@@ -15,21 +36,19 @@
     
     <div class="wrapper">
       <HelloWorld msg="Hè" />
-      <nav v-if="!isPersonalRoute">
+      <nav>
         <RouterLink to="/">Home</RouterLink>
         <RouterLink to="/about">Chi siamo</RouterLink>
 
         <RouterLink to="/graph">Grafici</RouterLink>
         <RouterLink to="/classifica">Classifica</RouterLink>
 
-        <RouterLink to="/register">Register</RouterLink>
-        <RouterLink to="/login">Login</RouterLink>
+        <RouterLink v-if="!isAuthorized" to="/register">Register</RouterLink>
+        <RouterLink v-if="!isAuthorized" to="/login">Login</RouterLink>
         <RouterLink to="/notification">Mess</RouterLink>
-      </nav>
-      <nav v-else>
-        <p>Questo è il nav della pagina personale</p>
-        <!-- Display this navigation for personal route -->
-        <!-- Add your personal route specific links here -->
+
+        <RouterLink v-if="isAuthorized" to="/personal">MyPage</RouterLink>
+        <RouterLink v-if="isAuthorized" to="/report">Resoconto Mensile</RouterLink>
       </nav>
     </div>
   </header>
