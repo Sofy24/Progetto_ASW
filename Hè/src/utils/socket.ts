@@ -1,4 +1,4 @@
-import { reactive } from "vue";
+/*import { reactive } from "vue";
 import { io } from "socket.io-client";
 
 export const state = reactive({
@@ -27,3 +27,9 @@ socket.on("foo", (...args) => {
 socket.on("bar", (...args) => {
   state.barEvents.push(args);
 });
+*/
+import { io } from 'socket.io-client';
+
+const socket = io('http://localhost:3001'); // Replace with your server URL
+
+export default socket;

@@ -17,6 +17,8 @@
     "bcrypt": "^5.1.0",
     "jsonwebtoken": "^9.0.0",
     "primevue": "^3.29.2",
+    "socket.io": "^4.6.2",
+    "socket.io-client": "^4.6.2",
     "vue": "^3.3.2",
     "vue-apexcharts": "^1.6.2",
     "vue-autosuggest": "^2.2.0",

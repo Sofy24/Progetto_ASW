@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import type { RouteRecordRaw } from 'vue-router';
-import HomeView from '../pages/HomePage.vue'
+
 
 import type { NavigationGuardNext, RouteLocationNormalized } from 'vue-router';
 
@@ -26,7 +26,7 @@ const router = createRouter({
     {
       path: '/home',
       name: 'home',
-      component: HomePage
+      component: () => import('../pages/HomePage.vue')
     },
     {
       path: '/about',

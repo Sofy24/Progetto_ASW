@@ -7,18 +7,38 @@ const fs = require('fs');
 const path = require('path');
 const connectDB = require('./config/dbConn');
 
+app.use(cors());
 
-const { createServer } = require("http");
-const { Server } = require("socket.io");
-const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
+const http = require('http');
+const { Server } = require('socket.io');
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: 'http://localhost:5173', // Replace with the actual client origin
+    methods: ['GET', 'POST'], // Specify the allowed HTTP methods
+  },
+});
 
 
-
-httpServer.listen(3001);
-
-io.on("connection", (socket) => {
+/*io.on("connection", (socket) => {
   socket.emit("hello", "world");
+});*/
+
+//RAPYNO TRY
+io.on('connection', (socket) => { 
+  console.log("receive 1")
+  socket.on('getServerData', (data, callback) => {
+    console.log("receive 2")
+    // Perform the necessary actions to retrieve the server data
+    // Send the response back to the client
+    const serverData = "rumao "+data; // Retrieve the server data
+    callback(serverData);
+  });
+});
+
+// Start the server
+server.listen(3001, () => {
+  console.log('Server is running on port 3001');
 });
 /*
 const Http = require("http").Server(express);

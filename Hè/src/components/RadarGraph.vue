@@ -1,5 +1,5 @@
 
-<script>/*
+<script lang="ts">/*
  setup lang="ts">
 import { ref, onMounted, reactive, toRaw } from 'vue'
 import axios from 'axios'
@@ -69,15 +69,31 @@ const fetchData = () => {
 
 */
   /** SOCKET IO  */
-  import { socket } from "../socket.js";
+  /*import { socket } from "../socket.js";
   socket.on("dataReturn", (arg) => {
-    console.log(arg); // world
-  });
+    console.log("RRUURURURUR"+arg); // world
+  });*/
+  //RAPYNO TRY
+  //import {socket} from "../socket.ts"
+  import { getServerData } from '@/utils/api';
+
+  export default {
+    async mounted() {
+      try {
+        const response = await getServerData("graph");
+        // Handle the response data
+        console.log(response);
+      } catch (error) {
+        // Handle the error
+        console.error(error);
+      }
+    },
+  };
 </script>
 
 <template>
   <div id="chart">
-    <apexchart type="radar" height="350" :options="chartOptions" :series="series"></apexchart>
+    <!--<apexchart type="radar" height="350" :options="chartOptions" :series="series"></apexchart>-->
   </div>
 </template>
 
