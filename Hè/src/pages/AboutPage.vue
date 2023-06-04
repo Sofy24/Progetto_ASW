@@ -1,40 +1,29 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
-    <form @submit.prevent="onSubmit">
-    <input v-model="value" />
-
-    <button type="submit" :disabled="isLoading">Submit</button>
-  </form>
   </div>
  
 </template>
 
 
-<script>
-  import { socket } from "@/socket";
+<script lang="ts">
+  import { getServerData } from "@/utils/api";
+  /*
   socket.on("hello", (arg) => {
     console.log(arg); // world
-  });
+  });*/
+  
   export default {
-    name: "MyForm",
-
-    data() {
-      return {
-        isLoading: false,
-        value: ""
+    async mounted() {
+      try {
+        const response = await getServerData("about");
+        // Handle the response data
+        console.log(response);
+      } catch (error) {
+        // Handle the error
+        console.error(error);
       }
-    },
-
-    methods: {
-      onSubmit() {
-        this.isLoading = true;
-
-        socket.timeout(5000).emit("create-something", this.value, () => {
-          this.isLoading = false;
-        });
-      },
-    }
+    }    
   }
 </script>
 <style>

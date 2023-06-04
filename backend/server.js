@@ -8,8 +8,28 @@ const path = require('path');
 const connectDB = require('./config/dbConn');
 
 app.use(cors());
-
 const http = require('http');
+
+
+
+const { handleSocketConnections } = require('./socketController');
+
+const server = http.createServer(app);
+
+// ... (other server configurations and routes)
+
+// Invoke the handleSocketConnections function to set up the socket connections
+handleSocketConnections(server);
+
+// Start the server
+const port = 8080; // Set the desired port number
+server.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
+});
+
+/*
+//RAPYNO TRY
+
 const { Server } = require('socket.io');
 const server = http.createServer(app);
 const io = new Server(server, {
@@ -18,13 +38,14 @@ const io = new Server(server, {
     methods: ['GET', 'POST'], // Specify the allowed HTTP methods
   },
 });
-
+*/
 
 /*io.on("connection", (socket) => {
   socket.emit("hello", "world");
 });*/
 
 //RAPYNO TRY
+/*
 io.on('connection', (socket) => { 
   console.log("receive 1")
   socket.on('getServerData', (data, callback) => {
@@ -40,6 +61,9 @@ io.on('connection', (socket) => {
 server.listen(3001, () => {
   console.log('Server is running on port 3001');
 });
+*/
+
+
 /*
 const Http = require("http").Server(express);
 const Socketio = require("socket.io")(Http, {
@@ -68,7 +92,7 @@ app.use('/notification', require('./router/notificationRoute'));
 app.use('/municipality', require('./router/municipalityRoute'));
 app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));
-app.use('/graph/general',require('./router/graphRoute'));
+//app.use('/graph/general',require('./router/graphRoute'));
 app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
 
