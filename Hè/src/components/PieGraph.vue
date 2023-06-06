@@ -1,14 +1,22 @@
 <script setup lang="ts">
 import { ref, onMounted, toRaw} from 'vue'
 import {getPieData} from '../utils/api'
+import { defineProps } from 'vue'
+
+const props = defineProps({
+  email: {
+    type: String,
+    required: true,
+  },
+})
 
 const series=ref([]as number[])
 onMounted(()=>{
-  fetchData()
+  fetchData(props.email)
 }) 
   
-const fetchData = () => {
-  getPieData("graph").then((response)=>{
+const fetchData = (msg:string) => {
+  getPieData(msg).then((response)=>{
     series.value = response
     console.log(toRaw(series.value))
     console.log(series.value)

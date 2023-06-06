@@ -6,6 +6,7 @@ import RadarGraph from '@/components/RadarGraph.vue'
 import ColumnGraph from '@/components/ColumnGraph.vue'
 import PieGraph from '@/components/PieGraph.vue'
 import LineGraph from '@/components/LineGraph.vue'
+import { io } from "socket.io-client"
 //import areas from '@/assets/comuni.json'
 </script>
 
@@ -13,13 +14,13 @@ import LineGraph from '@/components/LineGraph.vue'
     
   <WelcomeItem>
     <template #heading>Grafico mese corrente</template>
-    <PieGraph/>
+    <PieGraph :email='"general"'/>
   </WelcomeItem>
   
 
   <WelcomeItem>
     <template #heading>Grafico confornto kg </template>
-      <LineGraph/>
+      <LineGraph :email='"general"'/>
     
   </WelcomeItem>
 
@@ -27,7 +28,7 @@ import LineGraph from '@/components/LineGraph.vue'
   <WelcomeItem>
     <template #heading>Grafo confronto percentuale</template>
     <template #default>
-      <ImpiledGraph/>
+      <ImpiledGraph :email='"general"'/>
     </template>
   </WelcomeItem>
 
@@ -38,13 +39,13 @@ import LineGraph from '@/components/LineGraph.vue'
     <template #heading>Grafo confronto mese scorso</template>
 
     <template #default>
-      <RadarGraph :path="'http://localhost:3000/graph/general/radar'" />
+      <RadarGraph :email='"general"' />
     </template>
   </WelcomeItem>
   
   <WelcomeItem>
     <template #heading>Grafo kg depositati e media</template>
-    <ColumnGraph :path="'http://localhost:3000/datacolumn'" />
+    <ColumnGraph :email='"general"' />
   </WelcomeItem>
 </template>
 
