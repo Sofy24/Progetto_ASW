@@ -25,7 +25,7 @@ const handleMonthlyReport = async (req, res) => {
 
 async function produceReport(email, year, month) {
     try {
-        const timezoneOffset = +120; // GMT+2:00 (2 hours ahead of GMT)
+        const timezoneOffset = new Date().getTimezoneOffset() + 120; // GMT+2:00 (2 hours ahead of GMT)
         const currentDate = new Date(year,month,01);
         //applying timezone offset
         const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);

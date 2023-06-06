@@ -20,6 +20,17 @@
     }
   })
 
+  const badgeLink = computed(() => {
+    const currentDate = new Date();
+    const previousMonth = currentDate.getMonth(); // months are zero-based (0 - 11)
+    const currentYear = currentDate.getFullYear();
+    if (previousMonth == 0) {
+      return `/badge/${currentYear - 1}/12`;//january goes to december previous year
+    } else {
+      return `/badge/${currentYear}/${previousMonth}`;
+    }
+  })
+
   onMounted(() => { 
     checkAuthorization()
   })
@@ -62,6 +73,7 @@
 
         <RouterLink v-if="isAuthorized" to="/personal">MyPage</RouterLink>
         <RouterLink v-if="isAuthorized" :to="reportLink">Resoconto Mensile</RouterLink>
+        <RouterLink v-if="isAuthorized" :to="badgeLink">Le tue medaglie</RouterLink>
         <RouterLink v-if="isAuthorized" to="/userGraph">MyGraph</RouterLink>
       </nav>
     </div>

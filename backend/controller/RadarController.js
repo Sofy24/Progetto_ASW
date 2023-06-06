@@ -10,7 +10,7 @@ async function generalData(){
   var final1=[0,0,0,0,0,0,0]
   var final2=[0,0,0,0,0,0,0]
 
-  const timezoneOffset = +120; // GMT+2:00 (2 hours ahead of GMT)
+  const timezoneOffset = new Date().getTimezoneOffset() + 120; // GMT+2:00 (2 hours ahead of GMT)
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
@@ -42,8 +42,14 @@ async function generalData(){
 
   //console.log(res1)
   
+  var lastMonth
+  if(month==0){
+    lastMonth = 11
+  }else{
+    lastMonth=month-1
+  }
   
-  const lastDate = new Date(year,month-1,01);
+  const lastDate = new Date(year,lastMonth,01);
   const adjustedLastDate = new Date(lastDate.getTime() + timezoneOffset * 60 * 1000);
   
   const depositLastMonth= await Deposit.aggregate([

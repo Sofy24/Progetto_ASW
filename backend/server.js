@@ -162,6 +162,41 @@ function loadData2() {
           });
       });
     }   
+
+// UNCOMMENT THIS TO CREATE BADGES FOR THE FIRST TIME!
+//loadData3();
+function loadData3() {
+  const areasDataPath = path.join(__dirname, 'badges.json');
+  fs.readFile(areasDataPath, 'utf8', (error, data) => {
+    if (error) {
+      console.error('Error reading data file:', error);
+      process.exit(1);
+    }
+    
+    const areas = JSON.parse(data);
+    
+    // Define the area schema and model (similar to the previous examples)
+    const areaSchema = new mongoose.Schema({
+      name: { type: String, required: true },
+      is_multiple: { type: Boolean, required: true },
+      repetition:{type: Number, required: false}
+    }, { collection: 'Badges' });
+    const Area = mongoose.model('Area', areaSchema);
+
+    // Use insertMany() to insert the areas into the collection
+    Area.insertMany(areas)
+      .then(() => {
+        console.log('Data loaded successfully');
+        mongoose.disconnect();
+      })
+      .catch((error) => {
+        console.error('Error loading data:', error);
+        mongoose.disconnect();
+      });
+  });
+}   
+
+
 // UNCOMMENT THIS TO CREATE BINS FOR THE FIRST TIME!
 //createData();
 function createData(){

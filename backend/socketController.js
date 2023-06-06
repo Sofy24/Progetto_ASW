@@ -93,12 +93,12 @@ function handleSocketConnections(server) {
         console.log("receive 3");
         if(data=="general"){
             Line.generalData().then((res)=>{
-                console.log("X: "+res)
+                //console.log("X: "+res)
                 callback( res);
             })
         }else{
             Line.userData(data).then((res)=>{
-                console.log("X: "+res)
+                //console.log("X: "+res)
                 callback( res);
             })
         }
