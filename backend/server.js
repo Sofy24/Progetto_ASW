@@ -210,7 +210,7 @@ function createData(){
 }
 // CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
 //setTimeout(create1deposit,10000)
-//create1deposit();
+create1deposit();
 function create1deposit(){
   const Bin = require('./model/Bin');
   const User = require('./model/Municipality');
@@ -221,11 +221,12 @@ function create1deposit(){
   //var u = User.findById('6479f8a6117b966054dc1a14')._id
   //var b = Bin.findOne({_id:ObjectId('6479f541056369bd03bbaf0f')})._id
   const deposit = new Deposit({
-    user:'6479ba4088c5143cc41799a3',
+    user:'6479b2a727b053d0b4f6b800',
     kg:2,
     bin: '647b3e04a4c6674f3e9fca21' ,
   });
   deposit.save();
+  console.log("deposited")
 }
 /*
 app.get('/datacolumn', async (req, res) => {
