@@ -1,6 +1,9 @@
 const Deposit = require('../model/Deposit');
 const Typology = require('../model/Typology');
 const Bins = require('../model/Bin');
+//const Server = require("../socketController")
+
+
 const handle2Months = async (req, res) => {
     try {
         const current =new Date()
@@ -88,14 +91,14 @@ const handle2Months = async (req, res) => {
         const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
         
 
-        console.log(res1)
+        console.log("ses1:"+res1)
         /*
         var x = depositThisMonth.forEach()
         console.log(depositThisMonth);
         console.log(x)*/
         
         const lastDate = new Date(year,month-1,01);
-        const adjustedLastDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+        const adjustedLastDate = new Date(lastDate.getTime() + timezoneOffset * 60 * 1000);
         
         const depositLastMonth = await Deposit.aggregate([
           {$match: {createdAt:{ $gte : adjustedLastDate}}},
@@ -150,14 +153,198 @@ const handle2Months = async (req, res) => {
           final2[index]=e[1]
         });
         
-        console.log(final1)
-        res.json([final1,final2]);
+        console.log("f1: "+final1)
+        res.json([final1,final2])
+        //res = [final1,final2]
       } catch (error) {
         console.error('Error retrieving bins:', error);
         res.status(500).json({ error: 'Failed to retrieve bins' });
       }
 };
 
+function radarData(res){
+  const current =new Date()
+        var year = current.getFullYear()//.toString();
+        var month = current.getMonth()//.toString();
+        var final1=[0,0,0,0,0,0,0]
+        var final2=[0,0,0,0,0,0,0]
+
+        const timezoneOffset = +120; // GMT+2:00 (2 hours ahead of GMT)
+        const currentDate = new Date(year,month,01);
+        const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+        
+        console.log(adjustedDate);
+
+        Deposit.aggregate([
+          {$match: {createdAt:{ $gte : adjustedDate}}},
+          {$group:{_id:'$bin',total_kg:{$sum:'$kg'}}},
+          {$lookup:{
+            from:'Bins',
+            localField: '_id',
+            foreignField: '_id',
+            as: "bin"
+          }},
+          {$lookup:{
+              from:'Typology',
+              localField: 'bin.typology',
+              foreignField: '_id',
+              as: "typology"
+          }},
+          {$project:{
+            bin_typology: "$typology.name",
+            total_kg: '$total_kg'
+          }}
+        ]).then((depositThisMonth)=>{
+          const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
+        
+
+          console.log(res1)
+          
+          
+          const lastDate = new Date(year,month-1,01);
+          const adjustedLastDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+          
+          Deposit.aggregate([
+            {$match: {createdAt:{ $gte : adjustedLastDate}}},
+            {$match: {createdAt:{ $lt : adjustedDate}}},
+            {$group:{_id:'$bin',total_kg:{$sum:'$kg'}}},
+            {$lookup:{
+              from:'Bins',
+              localField: '_id',
+              foreignField: '_id',
+              as: "bin"
+            }},
+            {$lookup:{
+                from:'Typology',
+                localField: 'bin.typology',
+                foreignField: '_id',
+                as: "typology"
+            }},
+            {$project:{
+              bin_typology: "$typology.name",
+              total_kg: '$total_kg'
+            }}
+          ]).then((depositLastMonth)=>{
+            const res2 = depositLastMonth.map(element =>[element.bin_typology,element.total_kg])
+          const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  
+          
+          res1.forEach(e => {
+            index=list.indexOf(e[0])
+            final1[index]=e[1]
+          });
+          res2.forEach(e => {
+            index=list.indexOf(e[0])
+            final2[index]=e[1]
+          });
+          
+          console.log(final1)
+          //res.json();
+          console.log("GUDIHGDIBHB ")
+  
+          console.log([final1,final2])
+          res= [final1,final2]
+          });
+  
+        });
+
+        
+        
+        
+}
+
+
+
+
+async function radarData2(){
+  const current =new Date()
+  var year = current.getFullYear()//.toString();
+  var month = current.getMonth()//.toString();
+  var final1=[0,0,0,0,0,0,0]
+  var final2=[0,0,0,0,0,0,0]
+
+  const timezoneOffset = +120; // GMT+2:00 (2 hours ahead of GMT)
+  const currentDate = new Date(year,month,01);
+  const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+  
+  console.log(adjustedDate);
+
+  const depositThisMonth = await Deposit.aggregate([
+    {$match: {createdAt:{ $gte : adjustedDate}}},
+    {$group:{_id:'$bin',total_kg:{$sum:'$kg'}}},
+    {$lookup:{
+      from:'Bins',
+      localField: '_id',
+      foreignField: '_id',
+      as: "bin"
+    }},
+    {$lookup:{
+        from:'Typology',
+        localField: 'bin.typology',
+        foreignField: '_id',
+        as: "typology"
+    }},
+    {$project:{
+      bin_typology: "$typology.name",
+      total_kg: '$total_kg'
+    }}
+  ])
+  const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
+
+
+  console.log(res1)
+  
+  
+  const lastDate = new Date(year,month-1,01);
+  const adjustedLastDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+  
+  const depositLastMonth= await Deposit.aggregate([
+    {$match: {createdAt:{ $gte : adjustedLastDate}}},
+    {$match: {createdAt:{ $lt : adjustedDate}}},
+    {$group:{_id:'$bin',total_kg:{$sum:'$kg'}}},
+    {$lookup:{
+      from:'Bins',
+      localField: '_id',
+      foreignField: '_id',
+      as: "bin"
+    }},
+    {$lookup:{
+        from:'Typology',
+        localField: 'bin.typology',
+        foreignField: '_id',
+        as: "typology"
+    }},
+    {$project:{
+      bin_typology: "$typology.name",
+      total_kg: '$total_kg'
+    }}
+  ])
+  const res2 = depositLastMonth.map(element =>[element.bin_typology,element.total_kg])
+  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+
+  
+  res1.forEach(e => {
+    index=list.indexOf(e[0])
+    final1[index]=e[1]
+  });
+  res2.forEach(e => {
+    index=list.indexOf(e[0])
+    final2[index]=e[1]
+  });
+  
+  console.log(final1)
+  //res.json();
+  console.log("GUDIHGDIBHB ")
+
+  console.log([final1,final2])
+
+  return [final1,final2]
+
+        
+}
+
 module.exports = {
-  handle2Months
+  handle2Months, 
+  radarData,
+  radarData2
 }

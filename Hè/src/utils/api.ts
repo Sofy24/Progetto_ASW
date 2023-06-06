@@ -9,3 +9,13 @@ export function getServerData(input: string) {
     });
   });
 }
+
+
+export function getRadarData(input: string) {
+  return new Promise<number[][]>((resolve, reject) => {
+    console.log("try to communicate")
+    socket.emit('getRadarData', input, (response: number[][]) => {
+      resolve(response);
+    });
+  });
+}
