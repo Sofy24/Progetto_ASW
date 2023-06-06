@@ -271,16 +271,16 @@ async function radarData2(){
 
   const depositThisMonth = await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedDate}}},
-    {$group:{_id:'$bin',total_kg:{$sum:'$kg'}}},
     {$lookup:{
       from:'Bins',
-      localField: '_id',
+      localField: 'bin',
       foreignField: '_id',
       as: "bin"
     }},
+    {$group:{_id:'$bin.typology',total_kg:{$sum:'$kg'}}},
     {$lookup:{
         from:'Typology',
-        localField: 'bin.typology',
+        localField: '_id',
         foreignField: '_id',
         as: "typology"
     }},
@@ -289,6 +289,7 @@ async function radarData2(){
       total_kg: '$total_kg'
     }}
   ])
+  console.log(depositThisMonth)
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
 
@@ -301,16 +302,16 @@ async function radarData2(){
   const depositLastMonth= await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedLastDate}}},
     {$match: {createdAt:{ $lt : adjustedDate}}},
-    {$group:{_id:'$bin',total_kg:{$sum:'$kg'}}},
     {$lookup:{
       from:'Bins',
-      localField: '_id',
+      localField: 'bin',
       foreignField: '_id',
       as: "bin"
     }},
+    {$group:{_id:'$bin.typology',total_kg:{$sum:'$kg'}}},
     {$lookup:{
         from:'Typology',
-        localField: 'bin.typology',
+        localField: '_id',
         foreignField: '_id',
         as: "typology"
     }},
@@ -319,7 +320,7 @@ async function radarData2(){
       total_kg: '$total_kg'
     }}
   ])
-  const res2 = depositLastMonth.map(element =>[element.bin_typology,element.total_kg])
+  const res2 = depositLastMonth.map(element =>[element.bin_typology[0],element.total_kg])
   const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 
   

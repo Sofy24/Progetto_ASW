@@ -1,23 +1,42 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, toRaw} from 'vue'
 import axios from 'axios'
+import {getColumnData} from '../utils/api'
 
 const props = defineProps<{
   path: string; 
 }>()
 
 const chartOptions= ref('')
-const series= ref('')
+const series= ref([] as number[][])
 const searchQuery= ref('')
+const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+var res = ref([] as { x: string; y: number; goals:[{name: string,value:number,strokeDashArray:number,strokeColor:string}] }[])
+
 onMounted(()=>{
   fetchData()
   //fetchOptions()
 }) 
 const fetchData = () => {
-  axios.get(props.path)
-    .then((response) => {
-      series.value = response.data
+
+  getColumnData("graph").then((response) => {
+      series.value = response
       console.log(series)
+      for(var i=0;i<labels.length;i++){
+        res.value[i]=({
+        x: labels[i],
+        y: toRaw(series.value)[0][i],
+        goals: [
+          {
+            name: 'Expected',
+            value: toRaw(series.value)[1][i],
+            strokeDashArray: 2,
+            strokeColor: '#ff0000'
+          }
+        ]
+      })
+}
+
     })
     .catch((error) => {
       console.error('Error retrieving municipalities names:', error)
@@ -33,22 +52,6 @@ const fetchOptions = () =>{
       console.error('Error retrieving municipalities names:', error)
     });
 };*/
-const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
-var res = [] as { x: string; y: number; goals:[{name: string,value:number,strokeDashArray:number,strokeColor:string}] }[]
-for(var i=0;i<labels.length;i++){
-  res[i]=({
-        x: labels[i],
-        y: 1292,
-        goals: [
-          {
-            name: 'Expected',
-            value: 1400,
-            strokeDashArray: 2,
-            strokeColor: '#ff0000'
-          }
-        ]
-      })
-}
 
 
 console.log(res)
