@@ -60,10 +60,31 @@ export function getRadarData(input: string) {
           resolve(response);
         })
       }, 60*1000);
-      /*
-      socket.emit('getRadarData', input, (response: number[][]) => {
+    });
+  }
+
+
+
+  export function getPieData(input: string) {
+    getPieDataPeriodically(input)
+    return new Promise<number[]>((resolve, reject) => {
+      
+      console.log("pie first")
+      socket.emit('getPieData', input, (response: number[]) => {
         resolve(response);
-      });*/
+      });
     
     });
   }
+  
+  export function getPieDataPeriodically(input: string) {
+    return new Promise<number[]>((resolve, reject) => {
+      setInterval(() => {
+        console.log("pie periodic")
+        socket.emit('getPieData', input, (response: number[]) => {
+          resolve(response);
+        })
+      }, 60*1000);
+    });
+  }
+

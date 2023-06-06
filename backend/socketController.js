@@ -1,6 +1,7 @@
 const { Server } = require('socket.io');
 const Radar = require("./controller/RadarController")
 const Column = require("./controller/ColumnController")
+const Pie = require("./controller/PieController")
 
 // Define a function to handle the socket connections
 function handleSocketConnections(server) {
@@ -69,7 +70,13 @@ function handleSocketConnections(server) {
         })
     });
 
-
+    socket.on('getPieData', (data, callback) => {
+        console.log("receive 3");
+        Pie.generalData().then((res)=>{
+            console.log("X: "+res)
+            callback( res);
+        })
+    });
 
   });
 }
