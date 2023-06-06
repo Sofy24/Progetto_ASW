@@ -2,6 +2,8 @@ const { Server } = require('socket.io');
 const Radar = require("./controller/RadarController")
 const Column = require("./controller/ColumnController")
 const Pie = require("./controller/PieController")
+const Impiled = require("./controller/ImpiledController")
+const Line = require("./controller/LineController")
 
 // Define a function to handle the socket connections
 function handleSocketConnections(server) {
@@ -55,7 +57,7 @@ function handleSocketConnections(server) {
         })*/
         //console.log("X: "+x)
         Radar.radarData2().then((res)=>{
-            console.log("X: "+res)
+            //console.log("X: "+res)
             callback( res);
         })
         //console.log("X: "+x)
@@ -65,7 +67,7 @@ function handleSocketConnections(server) {
         console.log("receive 3");
 
         Column.generalData().then((res)=>{
-            console.log("X: "+res)
+            //console.log("X: "+res)
             callback( res);
         })
     });
@@ -73,6 +75,23 @@ function handleSocketConnections(server) {
     socket.on('getPieData', (data, callback) => {
         console.log("receive 3");
         Pie.generalData().then((res)=>{
+            //console.log("X: "+res)
+            callback( res);
+        })
+    });
+
+
+    socket.on('getImpiledData', (data, callback) => {
+        console.log("receive 3");
+        Impiled.generalData().then((res)=>{
+            //console.log("X: "+res)
+            callback( res);
+        })
+    });
+
+    socket.on('getLineData', (data, callback) => {
+        console.log("receive 3");
+        Line.generalData().then((res)=>{
             console.log("X: "+res)
             callback( res);
         })

@@ -1,64 +1,79 @@
 <script setup lang="ts">
+import { ref, onMounted, toRaw} from 'vue'
+import {getImpiledData} from '../utils/api'
 
-const timevalues = ['2011 Q1', '2011 Q2', '2011 Q3', '2011 Q4', '2012 Q1', '2012 Q2','2012 Q3', '2012 Q4']
+//const series=ref([]as number[])
+onMounted(()=>{
+  fetchData()
+}) 
+
+const series= ref([] as number[])
+const timelabels= ref([] as number[][])
+const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+var res = ref([] as { name: string; data: number[];}[])
+const fetchData = () => {
+  getImpiledData("graph").then((response)=>{
+    console.log("response")
+    console.log(response)
+    console.log(response[0])
+    console.log(response[1])
+    for(var i=0;i<labels.length;i++){
+      res.value[i]=({
+        name: labels[i],
+        data: response[0][i]
+      })
+    }
+    timelabels.value = response[1]
+    //console.log(toRaw(series.value))
+    //console.log(series.value)
+  }).catch((error)=>{
+        
+    console.error(error);
+  });        
+}
+
 
 var chartOptions= {
-            chart: {
-              type: 'bar',
-              height: 350,
-              stacked: true,
-              stackType: '100%'
-            },
-            plotOptions: {
-              bar: {
-              columnWidth: '100%'
-              }
-            },
-            responsive: [{
-              breakpoint: 480,
-              options: {
-                legend: {
-                  position: 'bottom',
-                  offsetX: -10,
-                  offsetY: 0
-                }
-              }
-            }],
-            xaxis: {
-              categories: timevalues,
-            },
-            colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
-            fill: {
-              opacity: 1
-            },
-            legend: {
-              position: 'bottom',
-              offsetX: 0,
-              offsetY: 0
-            },
-          }
-
-
-var series= [{
-    name: 'PRODUCT A',
-    data: [44, 55, 41, 67, 22, 43, 21, 49]
-  }, {
-    name: 'PRODUCT B',
-    data: [13, 23, 20, 8, 13, 27, 33, 12]
-  }, {
-    name: 'PRODUCT C',
-    data: [11, 17, 15, 15, 21, 14, 15, 13]
-  }]
-
-
-const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
-var res = [] as { name: string; data: number[];}[]
-for(var i=0;i<labels.length;i++){
-  res[i]=({
-        name: labels[i],
-        data: [11, 17, 15, 15, 21, 14, 15, 13]
-      })
+  chart: {
+    type: 'bar',
+    height: 350,
+    stacked: true,
+    stackType: '100%'
+  },
+  plotOptions: {
+    bar: {
+    columnWidth: '100%'
+    }
+  },
+  responsive: [{
+    breakpoint: 480,
+    options: {
+      legend: {
+        position: 'bottom',
+        offsetX: -10,
+        offsetY: 0
+      }
+    }
+  }],
+  xaxis: {
+    categories: timelabels.value,
+  },
+  colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
+  fill: {
+    opacity: 1
+  },
+  legend: {
+    position: 'bottom',
+    offsetX: 0,
+    offsetY: 0
+  },
 }
+
+
+
+
+
+
 </script>
 
 <template>

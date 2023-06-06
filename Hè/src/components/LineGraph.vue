@@ -1,16 +1,40 @@
 <script setup lang="ts">
+import { ref, onMounted, toRaw} from 'vue'
+import {getLineData} from '../utils/api'
 
-const series= [30, 40, 45, 50, 49, 60, 70, 91]
-const timelabels= [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998]
+//const series=ref([]as number[])
+onMounted(()=>{
+  fetchData()
+}) 
+
+const series= ref([] as number[])
+const timelabels= ref([] as number[][])
 const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
-
-var res = [] as { name: string; data: number[];}[]
-for(var i=0;i<labels.length;i++){
-  res[i]=({
+var res = ref([] as { name: string; data: number[];}[])
+const fetchData = () => {
+  getLineData("graph").then((response)=>{
+    console.log("response")
+    console.log(response)
+    console.log(response[0])
+    console.log(response[1])
+    for(var i=0;i<labels.length;i++){
+      res.value[i]=({
         name: labels[i],
-        data: [30, 40, 45, 50, 49, 60, 70, 91-i]
+        data: response[0][i]
       })
+    }
+    timelabels.value = response[1]
+    //console.log(toRaw(series.value))
+    //console.log(series.value)
+  }).catch((error)=>{
+        
+    console.error(error);
+  });        
 }
+
+
+
+
 
 
 /*"[{
