@@ -75,6 +75,12 @@ const router = createRouter({
       beforeEnter: requireAuth
     },
     {
+      path: '/userGraph',
+      name: 'userGraph',
+      component: () => import ('../pages/UserGraphPage.vue'),
+      beforeEnter: requireAuth
+    },
+    {
       path: '/report/:year/:month',
       name: 'report',
       component: () => import ('../pages/ReportPage.vue'),

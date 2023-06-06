@@ -62,6 +62,7 @@
 
         <RouterLink v-if="isAuthorized" to="/personal">MyPage</RouterLink>
         <RouterLink v-if="isAuthorized" :to="reportLink">Resoconto Mensile</RouterLink>
+        <RouterLink v-if="isAuthorized" to="/userGraph">MyPage</RouterLink>
       </nav>
     </div>
   </header>

@@ -35,16 +35,28 @@
             router.push(`/report/${currentYear}/${previousMonth}`);
         }
         } else {
-        const response = await axios.get("http://localhost:3000/report", {
+        axios.get("http://localhost:3000/report", {
             params: {
             email: userEmail.value,
             year: props.year,
             month: props.month,
             },
-        });
-        console.log("res " + response.data);
+        })
+        .then(response => { 
+            console.log("res " + response.data);
+        })
+        .catch(error => {
+            console.log("error")
+            if (previousMonth === 0) {
+                router.push(`/report/${currentYear - 1}/12`);
+            } else {
+                router.push(`/report/${currentYear}/${previousMonth}`);
+            }
+        })
+
         }
     } catch (error) {
+        //not authorized (token expired or not logged in)
         console.log(error);
         router.push('/login');
     }
