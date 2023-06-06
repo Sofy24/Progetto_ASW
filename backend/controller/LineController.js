@@ -80,8 +80,10 @@ async function generalData(){
       console.log("res1")
       console.log(res1)
       res1.forEach(e => {
-        index=list.indexOf(e[0])
-        final[index][i]=e[1]
+        if (e[0] != undefined) {
+          index=list.indexOf(e[0])
+          final[index][i]=e[1]
+        }
       });
       console.log(final)
     

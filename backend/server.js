@@ -210,7 +210,7 @@ function createData(){
 }
 // CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
 //setTimeout(create1deposit,10000)
-create1deposit();
+//create1deposit();
 function create1deposit(){
   const Bin = require('./model/Bin');
   const User = require('./model/Municipality');
@@ -223,7 +223,7 @@ function create1deposit(){
   const deposit = new Deposit({
     user:'6479b2a727b053d0b4f6b800',
     kg:2,
-    bin: '647b3e04a4c6674f3e9fca21' ,
+    bin: '647b451d3d26278ce788c07c' ,
   });
   deposit.save();
   console.log("deposited")
