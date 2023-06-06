@@ -10,39 +10,39 @@
         const errorMessage = ref('')
 
         const submitForm = () => {
-        const formData = {
-            email: email.value,
-            password: password.value,
-        };
+            const formData = {
+                email: email.value,
+                password: password.value,
+            };
 
-        console.log(formData);
+            console.log(formData);
 
-        // Send the login request to the server
-        axios.post('http://localhost:3000/login', formData)
-            .then(response => {
-                console.log('Login successful')
-                //save the auth token in local storage
-                const token = response.data.token;
-                localStorage.setItem('token', token);
-                //reset errorMessage
-                errorMessage.value = ''
-                //go to personal page
-                router.push('personal')
-            })
-            .catch(error => {
-                if (error.response.status == 401){
-                    errorMessage.value = error.response.data.error
-                }
-                console.error('Login failed:', error)
-                // Handle login failure, such as displaying an error message
-            })
+            // Send the login request to the server
+            axios.post('http://localhost:3000/login', formData)
+                .then(response => {
+                    console.log('Login successful')
+                    //save the auth token in local storage
+                    const token = response.data.token;
+                    localStorage.setItem('token', token);
+                    //reset errorMessage
+                    errorMessage.value = ''
+                    //go to personal page
+                    router.push('personal')
+                })
+                .catch(error => {
+                    if (error.response.status == 401){
+                        errorMessage.value = error.response.data.error
+                    }
+                    console.error('Login failed:', error)
+                    // Handle login failure, such as displaying an error message
+                })
         }
 
         return {
-        email,
-        password,
-        errorMessage,
-        submitForm,
+            email,
+            password,
+            errorMessage,
+            submitForm,
         }
     },
     })
