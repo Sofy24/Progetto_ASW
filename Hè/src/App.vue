@@ -11,9 +11,13 @@
 
   const reportLink = computed(() => {
     const currentDate = new Date();
+    const previousMonth = currentDate.getMonth(); // months are zero-based (0 - 11)
     const currentYear = currentDate.getFullYear();
-    const currentMonth = currentDate.getMonth() + 1; // months are zero-based (0 - 11)
-    return `/report/${currentYear}/${currentMonth}`;
+    if (previousMonth == 0) {
+      return `/report/${currentYear - 1}/12`;//january goes to december previous year
+    } else {
+      return `/report/${currentYear}/${previousMonth}`;
+    }
   })
 
   onMounted(() => { 

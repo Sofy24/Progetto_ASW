@@ -97,6 +97,7 @@ app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
 
 
+
 //loadData();
 //NON CANCELLARE 
 // Funzione per popolare il db, cambire il nome del file json e lo schema sulla base si cosa si inserisce e decommentare loadData() nella connessione  
