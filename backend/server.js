@@ -208,7 +208,7 @@ function createData(){
   
 }
 // CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
-setTimeout(create1deposit,10000)
+//setTimeout(create1deposit,10000)
 //create1deposit();
 function create1deposit(){
   const Bin = require('./model/Bin');
@@ -226,7 +226,7 @@ function create1deposit(){
   });
   deposit.save();
 }
-
+/*
 app.get('/datacolumn', async (req, res) => {
   try {
     const valori = ""
@@ -247,7 +247,7 @@ app.get('/options', async (req, res) => {
     console.error('Error retrieving municipalities:', error);
     res.status(500).json({ error: 'Failed to retrieve municipalities' });
   }
-});
+});*/
 /*
 app.get('/dataradar', async (req, res) => {
   try {

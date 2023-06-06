@@ -1,5 +1,6 @@
 const { Server } = require('socket.io');
 const Radar = require("./controller/RadarController")
+const Column = require("./controller/ColumnController")
 
 // Define a function to handle the socket connections
 function handleSocketConnections(server) {
@@ -57,16 +58,20 @@ function handleSocketConnections(server) {
             callback( res);
         })
         //console.log("X: "+x)
-        
-        
-      });
+    });
+
+    socket.on('getColumnData', (data, callback) => {
+        console.log("receive 3");
+
+        Column.generalData().then((res)=>{
+            console.log("X: "+res)
+            callback( res);
+        })
+    });
+
+
+
   });
-
-/*
-  io.on('getRadarData', (socket) => {
-
-    socket.emit(Radar.handle2Months())
-  })*/
 }
 
 module.exports = { handleSocketConnections };
