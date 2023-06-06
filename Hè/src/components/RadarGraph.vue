@@ -1,7 +1,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, reactive, toRaw } from 'vue'
-import { getRadarData } from '@/utils/api';
+import { getRadarData, getRadarDataFirst} from '@/utils/api';
 const props = defineProps<{
   path: string; 
 }>()
@@ -80,15 +80,15 @@ const fetchData = () => {
   
 
 onMounted(()=>{
-  fetchData()
-  //fetchOptions()
+  fetchData(getRadarDataFirst)
+  fetchData(getRadarData)
 }) 
-  const fetchData = () => {
+  const fetchData = (func: (input: string)=> Promise<number[][]>) => {
     /*
     const res = getRadarData("graph")
     radarvalues.value=res
     */
-    getRadarData("graph").then((response)=>{
+    func("graph").then((response)=>{
       radarvalues.value = response
       console.log(toRaw(radarvalues.value))
       console.log(radarvalues.value)
