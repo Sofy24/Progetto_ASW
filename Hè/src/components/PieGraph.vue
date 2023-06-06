@@ -1,6 +1,23 @@
 <script setup lang="ts">
+import { ref, onMounted, toRaw} from 'vue'
+import {getPieData} from '../utils/api'
 
-var series=[44, 55, 41, 17, 15, 10, 10]
+const series=ref([]as number[])
+onMounted(()=>{
+  fetchData()
+}) 
+  
+const fetchData = () => {
+  getPieData("graph").then((response)=>{
+    series.value = response
+    console.log(toRaw(series.value))
+    console.log(series.value)
+  }).catch((error)=>{
+        
+    console.error(error);
+  });        
+} 
+
 </script>
 
 <template>

@@ -297,7 +297,7 @@ async function radarData2(){
   
   
   const lastDate = new Date(year,month-1,01);
-  const adjustedLastDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+  const adjustedLastDate = new Date(lastDate.getTime() + timezoneOffset * 60 * 1000);
   
   const depositLastMonth= await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedLastDate}}},
