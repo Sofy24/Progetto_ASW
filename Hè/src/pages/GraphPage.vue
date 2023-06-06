@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GraphContainer from "@/components/GraphContainer.vue"
+  import GraphContainer from "@/components/GraphContainer.vue"
 </script>
 
 <template>

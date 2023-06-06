@@ -23,10 +23,10 @@
         }).catch(error => {
             router.push('/login')
     });
-})
+    })
 </script>
 
 <template>
-  <h1>Report {{ year }} {{ month }}</h1>
-  <LogoutButton />
+    <h1>Report {{ year }} {{ month }}</h1>
+    <LogoutButton />
 </template>
