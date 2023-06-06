@@ -2,17 +2,23 @@
 import { ref, onMounted, toRaw} from 'vue'
 import {getLineData} from '../utils/api'
 
+const props = defineProps({
+  email: {
+    type: String,
+    required: true,
+  },
+})
 //const series=ref([]as number[])
 onMounted(()=>{
-  fetchData()
+  fetchData(props.email)
 }) 
 
 const series= ref([] as number[])
 const timelabels= ref([] as number[][])
 const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 var res = ref([] as { name: string; data: number[];}[])
-const fetchData = () => {
-  getLineData("graph").then((response)=>{
+const fetchData = (msg:string) => {
+  getLineData(msg).then((response)=>{
     console.log("response")
     console.log(response)
     console.log(response[0])

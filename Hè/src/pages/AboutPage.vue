@@ -1,6 +1,9 @@
 <template>
   <div class="about">
     <h1>This is an about page</h1>
+    <p>
+      
+    </p>
   </div>
  
 </template>
@@ -12,11 +15,11 @@
   socket.on("hello", (arg) => {
     console.log(arg); // world
   });*/
-  
+  var response = ""
   export default {
     async mounted() {
       try {
-        const response = await getServerData("about");
+        response = await getServerData("about");
         // Handle the response data
         console.log(response);
       } catch (error) {

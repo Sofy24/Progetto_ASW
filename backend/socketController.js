@@ -28,73 +28,80 @@ function handleSocketConnections(server) {
 
     socket.on('getRadarData', (data, callback) => {
         console.log("receive 3");
-        // Perform the necessary actions to retrieve the server data
-        // Send the response back to the client
-        //const serverData = Radar.handle2Months()
+        if(data=="general"){
+            Radar.generalData().then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }else{
+            Radar.userData(data).then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }
         
-        /*
-        Radar.handle2Months().then((res)=>{
-            serverData = toRaw("inside then"+res.data)
-            callback(serverData);
-        })*/
-        /*Radar.handle2Months((req,res)=>{
-            console.log("banana"+res)
-            serverData = res.data
-        });*/ // Retrieve the server data
-        //console.log("outside then"+serverData)
-        //console.log("outside then2"/*+Radar.handle2Months()*/)
-
-
-
-        /*
-        var x = Radar.handle2Months().then((res)=>{
-            //y = 
-            console.log(res.data)
-        })*/
-        /*Radar.radarData((res)=>{
-            console.log("IN THEN : "+ res)
-            
-        })*/
-        //console.log("X: "+x)
-        Radar.radarData2().then((res)=>{
-            //console.log("X: "+res)
-            callback( res);
-        })
         //console.log("X: "+x)
     });
 
     socket.on('getColumnData', (data, callback) => {
         console.log("receive 3");
-
-        Column.generalData().then((res)=>{
+        if(data=="general"){
+            Column.generalData().then((res)=>{
             //console.log("X: "+res)
-            callback( res);
-        })
+                callback( res);
+            })
+        }else{
+            Column.userData(data).then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }
     });
 
     socket.on('getPieData', (data, callback) => {
         console.log("receive 3");
-        Pie.generalData().then((res)=>{
-            //console.log("X: "+res)
-            callback( res);
-        })
+        if(data=="general"){
+            Pie.generalData().then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }else{
+            Pie.userData(data).then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }
     });
 
 
     socket.on('getImpiledData', (data, callback) => {
         console.log("receive 3");
-        Impiled.generalData().then((res)=>{
-            //console.log("X: "+res)
-            callback( res);
-        })
+        if(data=="general"){
+            Impiled.generalData().then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }else{
+            Impiled.userData(data).then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }
     });
 
     socket.on('getLineData', (data, callback) => {
         console.log("receive 3");
-        Line.generalData().then((res)=>{
-            console.log("X: "+res)
-            callback( res);
-        })
+        if(data=="general"){
+            Line.generalData().then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }else{
+            Line.userData(data).then((res)=>{
+                //console.log("X: "+res)
+                callback( res);
+            })
+        }
     });
 
   });

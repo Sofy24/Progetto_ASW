@@ -89,6 +89,16 @@ const router = createRouter({
         month: Number(route.params.month),
       }),
       beforeEnter: requireAuth
+    },
+    {
+      path: '/badge/:year/:month',
+      name: 'badge',
+      component: () => import ('../pages/BadgePage.vue'),
+      props: (route: RouteLocationNormalized) => ({
+        year: Number(route.params.year),
+        month: Number(route.params.month),
+      }),
+      beforeEnter: requireAuth
     }
   ]
 })

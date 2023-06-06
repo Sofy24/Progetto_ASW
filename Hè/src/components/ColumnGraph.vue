@@ -3,9 +3,12 @@ import { ref, onMounted, toRaw} from 'vue'
 import axios from 'axios'
 import {getColumnData} from '../utils/api'
 
-const props = defineProps<{
-  path: string; 
-}>()
+const props = defineProps({
+  email: {
+    type: String,
+    required: true,
+  },
+})
 
 const chartOptions= ref('')
 const series= ref([] as number[][])
@@ -14,12 +17,12 @@ const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', '
 var res = ref([] as { x: string; y: number; goals:[{name: string,value:number,strokeDashArray:number,strokeColor:string}] }[])
 
 onMounted(()=>{
-  fetchData()
+  fetchData(props.email)
   //fetchOptions()
 }) 
-const fetchData = () => {
+const fetchData = (msg:string) => {
 
-  getColumnData("graph").then((response) => {
+  getColumnData(msg).then((response) => {
       series.value = response
       console.log(series)
       for(var i=0;i<labels.length;i++){
