@@ -13,7 +13,7 @@ async function generalData(){
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  console.log(adjustedDate);
+  //console.log(adjustedDate);
 
   const depositThisMonth = await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedDate}}},
@@ -37,7 +37,7 @@ async function generalData(){
   ])
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
-  console.log(res1)
+  //console.log(res1)
   
   
   const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
@@ -49,7 +49,7 @@ async function generalData(){
   });
   
   
-  console.log(final1)
+  //console.log(final1)
   
   
   return final1
