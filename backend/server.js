@@ -7,35 +7,44 @@ const fs = require('fs');
 const path = require('path');
 const connectDB = require('./config/dbConn');
 const populator = require('./prepopulation/prepopulate');
-
-
-
-app.use(cors());
 const http = require('http');
-
-
-
 const { handleSocketConnections } = require('./socketController');
+app.use(cors());
 
-const server = http.createServer(app);
+//NON CANCELLARE
+const startServer = async () => {
+  try {
+    await populator.populateDatabase();
+  } catch (error) {console.log("FAIL"+error)}
+  const PORT = 3000;
+  app.listen(PORT, () => {
+    console.log('Node API server started on port ' + PORT);
+  });
+
+  //socket.io
+  const server = http.createServer(app);
+  handleSocketConnections(server);
+  const port = 8080; // Set the desired port number
+  server.listen(port, () => {
+    console.log(`Server listening on port ${port}`);
+  });
+};
+
+startServer();
+
+
 
 // ... (other server configurations and routes)
 
 // Invoke the handleSocketConnections function to set up the socket connections
-handleSocketConnections(server);
+
 
 // Start the server
-const port = 8080; // Set the desired port number
-server.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
-});
+
 
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
-
-app.use(cors());
-
 connectDB();
 //routes
 app.use('/', require('./router/root'));
@@ -47,6 +56,12 @@ app.use('/login', require('./router/loginRoute'));
 app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
 app.use('/badge', require('./router/badgeRoute'));
+
+
+
+//DA QUI IN POI FUFFA
+
+
 
 // UNCOMMENT THIS TO CREATE TYPOLOGY OF WASTE FOR THE FIRST TIME!
 //loadData2();
@@ -215,16 +230,7 @@ app.get('/dataradar', async (req, res) => {
 
 
 
-//NON CANCELLARE
-const startServer = async () => {
-  try {
-    await populator.populateDatabase();
-  } catch (error) {console.log("FAIL"+error)}
-  const PORT = 3000;
-  app.listen(PORT, () => {
-    console.log('Node API server started on port ' + PORT);
-  });
-};
 
-startServer();
+
+
 
