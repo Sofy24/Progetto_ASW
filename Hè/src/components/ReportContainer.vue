@@ -9,6 +9,8 @@
     import ReportTable from '@/components/ReportTable.vue'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
     import HistoryButtons from '@/components/HistoryButtons.vue'
+
+    //arguments passed from ReportPage
     const props = defineProps({
         year: {
             type: Number,
@@ -27,14 +29,17 @@
         isDataLoaded: false,
     })
     
+    //everytime is asked a report that can't exist (future date or before registration)
     const redirectToPreviousReport = (currentYear: number, previousMonth: number) => {
-        if (previousMonth === 0) {
+        //it always send to the report of the month previous to the current
+        if (previousMonth === 0) {//case for january
             router.push(`/report/${currentYear - 1}/12`)
         } else {
             router.push(`/report/${currentYear}/${previousMonth}`)
         }
     };
 
+    //format the report to be processed by a graph
     const extractColumns = (array: [string, string, string][]) => {
         const column1 = array.map((item) => item[0])
         const column2 = array.map((item) => parseFloat(item[1]))
@@ -43,16 +48,16 @@
         return columns
     }
 
+    //authentication and retrieving of report
     const fetchData = async () => {
-        console.log("componente intermedio")
         try {
+            //token validation
             const result = await verifyToken()
             userEmail.value = result
-
+            //check if report is possible with the year and month given
             const currentDate = new Date()
             const previousMonth = currentDate.getMonth()
             const currentYear = currentDate.getFullYear()
-
             if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
                 redirectToPreviousReport(currentYear, previousMonth)
             } else {
@@ -64,11 +69,12 @@
                     }
                 })
                 .then((response) => {
+                    //data retrieved, now the template can load
                     report.value = response.data
                     data.isDataLoaded = true
-                    console.log("res " + response.data)
                 })
                 .catch((error) => {
+                    //error in report (wrong date, server down, ...), redirect to standard report page 
                     console.log("error: " + error)
                     redirectToPreviousReport(currentYear, previousMonth)
                 });
@@ -80,14 +86,14 @@
         }
     };
 
-    //all possibl eway to reload this component
-    watchEffect(() => {
+    //all possible way to reload this component
+    watchEffect(() => {//reload page from this
         fetchData()
     });
-    onMounted(() => {
+    onMounted(() => {//first time
         fetchData()
     });
-    onBeforeMount(() => {
+    onBeforeMount(() => {//reload from child component of this
         router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: Function) => {
             fetchData()
             next()

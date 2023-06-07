@@ -2,6 +2,7 @@
 
     type ReportItem = [string, number, number];
 
+    //argument passed
     const props = defineProps({
         year: {
             type: Number,
@@ -16,9 +17,11 @@
             required: true,
         }
     });
-    const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
+    //string for all months
+    const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto',
+        'settembre', 'ottobre', 'novembre', 'dicembre']
 
-
+    //add data to table
     const calculatePercentage = (previousValue: number, currentValue: number): string => {
         if (previousValue == 0) {
             return "" 

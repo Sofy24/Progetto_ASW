@@ -1,7 +1,6 @@
 <script setup lang="ts">
     import LogoutButton from "@/components/LogoutButton.vue"
     import ReportContainer from "@/components/ReportContainer.vue"
-import { onMounted } from "vue";
 
     const props = defineProps({
         year: {
@@ -13,8 +12,6 @@ import { onMounted } from "vue";
             required: true,
         }
     });
-
-    //onMounted(async () => { console.log(props.month, props.year) })
 </script>
 
 <template>

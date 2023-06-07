@@ -36,9 +36,8 @@ const props = defineProps({
         isDataLoaded: false,
     })
 
-
+    //get registration date to prevent accessing a report that can't exist
     watchEffect(() => {
-        console.log("buttons watch")
         axios.get("http://localhost:3000/user/registrationDate", {
                 params: {
                     email: props.email

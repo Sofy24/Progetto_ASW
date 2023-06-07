@@ -10,6 +10,7 @@
         },
     });
 
+    //structure of the radar graph
     const chartOptions = computed(() => ({
         chart: {
             height: 350,
@@ -37,7 +38,6 @@
             categories: props.columns[0],
         }
     }))
-
     const series = computed(() => [
         {
             name: 'This Month',
@@ -50,6 +50,7 @@
     ])
 
 </script>
+
 <template>
     <div id="chart">
         <apexchart type="radar" height="350" :options="chartOptions" :series="series"></apexchart>
