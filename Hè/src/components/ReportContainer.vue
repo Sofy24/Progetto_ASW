@@ -3,9 +3,11 @@
     import { onMounted, ref, reactive } from 'vue'
     import { useRouter} from 'vue-router'
     import { defineProps, watchEffect } from 'vue'
+    import { onBeforeMount } from 'vue';    
+    import type {RouteLocationNormalized } from 'vue-router'
     import { verifyToken } from '@/utils/tokenUtils'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
-
+    import HistoryButtons from '@/components/HistoryButtons.vue'
     const props = defineProps({
         year: {
             type: Number,
@@ -42,6 +44,7 @@
     }
 
     const fetchData = async () => {
+        console.log("componente intermedio")
         try {
             const result = await verifyToken()
             userEmail.value = result
@@ -58,7 +61,7 @@
                         email: userEmail.value,
                         year: props.year,
                         month: props.month,
-                    },
+                    }
                 })
                 .then((response) => {
                     report.value = response.data
@@ -85,6 +88,14 @@
         fetchData()
     });
 
+
+    onBeforeMount(() => {
+        router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: Function) => {
+            fetchData()
+            next()
+        });
+    });
+
     const calculatePercentage = (previousValue: number, currentValue: number): string => {
         if (previousValue == 0) {
             return "" 
@@ -104,8 +115,8 @@
         <thead>
             <tr>
             <th>Categoria</th>
-            <th>{{ months[props.month - 1] }} {{ props.year }}</th>
-            <th>{{ months[props.month - 2 === -1 ? 11 : props.month - 2] }} {{ props.month === 1 ? props.year - 1 : props.year }}</th>
+            <th>{{ months[month - 1] }} {{ year }}</th>
+            <th>{{ months[month - 2 === -1 ? 11 : month - 2] }} {{ month === 1 ? year - 1 : year }}</th>
             <th>Change</th>
             </tr>
         </thead>
@@ -119,5 +130,6 @@
         </tbody>
         </table>
         <ReportRadarGraph :columns="extractColumns(report)"/>
+        <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail"  /> 
     </div>
 </template>
