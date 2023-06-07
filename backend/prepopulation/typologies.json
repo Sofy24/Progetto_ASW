@@ -1,0 +1,31 @@
+
+[
+    {
+        "name": "vetro",
+        "max_kg": 50
+    },
+    {
+        "name": "plastica e lattine",
+        "max_kg": 15
+    },
+    {
+        "name": "carta",
+        "max_kg": 20
+    },
+    {
+        "name": "organico",
+        "max_kg": 3
+    },
+    {
+        "name": "sfralci e potature",
+        "max_kg": 25
+    },
+    {
+        "name": "olio",
+        "max_kg": 15
+    },
+    {
+        "name": "indifferenziata",
+        "max_kg": 4
+    }
+]
