@@ -52,8 +52,8 @@ const handleBadges = async (req, res) => {
     console.log('list: '+classicBadges)
     const list = classicBadges.map(elem=>elem._id)
     console.log('list: '+list)
-    list.forEach(e=>{
-        final[y]=[0,0,0,0,0,0,0,0,0,0,0,0]
+    monthArray.forEach(e=>{
+        final[y]=['','','','','','','','']
         y++
     })
     
@@ -109,7 +109,7 @@ const handleBadges = async (req, res) => {
             var index=list.indexOf(e)
             console.log(index)
             console.log(i)
-            final[index][i]=1
+            final[i][index]=e
         });
         console.log(final)
         

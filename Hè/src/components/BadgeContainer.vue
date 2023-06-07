@@ -19,6 +19,8 @@
     const router = useRouter()
     const userEmail = ref('')
     const badges = ref()
+    const badgeMonth = ref()
+    const extraBadges = ref()
     const data = reactive({
         isDataLoaded: false,
     })
@@ -52,9 +54,11 @@
                     },
                 })
                 .then((response) => {
-                    badges.value = response.data;
+                    badges.value = response.data[1];
+                    badgeMonth.value = response.data[0];
+                    extraBadges.value = response.data[2];
                     data.isDataLoaded = true;
-                    console.log("res " + response.data);
+                    console.log(response.data);
                 })
                 .catch((error) => {
                     console.log("error: " + error);
@@ -80,20 +84,16 @@
 </script>
 
 <template>
-    <p>Badge Container {{ year }}</p>
+    <h1>Badge Container {{ year }}</h1>
+    <h3> extra</h3>
+    <div v-for="elem in extraBadges" >
+        <div>{{ elem }}</div>
+    </div>
     <div class="grid-container">
-        <div class="grid-item">1</div>
-        <div class="grid-item">2</div>
-        <div class="grid-item">3</div>
-        <div class="grid-item">4</div>
-        <div class="grid-item">5</div>
-        <div class="grid-item">6</div>
-        <div class="grid-item">7</div>
-        <div class="grid-item">8</div>
-        <div class="grid-item">9</div>
-        <div class="grid-item">10</div>
-        <div class="grid-item">11</div>
-        <div class="grid-item">12</div>
+        <div class="grid-item" v-for="(elem,index) in badgeMonth" :key="index">
+            <h3> {{elem}}</h3>
+            <div> {{ badges[index] }}</div>
+        </div>
     </div>
 </template>
 
