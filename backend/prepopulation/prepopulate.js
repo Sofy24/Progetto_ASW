@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const streetNames = require('./streetNames.js');
 const Municipality = require('../model/Municipality');
 const Typology = require('../model/Typology');
+const Badge = require('../model/Badges');
 const Bin = require('../model/Bin');
 
 
@@ -14,6 +15,7 @@ const populateDatabase = async () => {
     try {
       await prepopulateDatabase('municipalities', Municipality);
       await prepopulateDatabase('typologies', Typology);
+      await prepopulateDatabase('badges', Badge);
       await createBins();
     } catch (error) {}
   }
