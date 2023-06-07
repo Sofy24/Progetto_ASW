@@ -11,7 +11,7 @@ export function getServerData(input: string) {
 }
 
 export function getRadarData(input: string) {
-  getRadarDataPeriodically(input)
+  //getRadarDataPeriodically(input)
   return new Promise<number[][]>((resolve, reject) => {
     console.log("try to communicate3")
     socket.emit('getRadarData', input, (response: number[][]) => {
@@ -37,7 +37,7 @@ export function getRadarDataPeriodically(input: string) {
 
 
 export function getColumnData(input: string) {
-  getColumnDataPeriodically(input)
+  //getColumnDataPeriodically(input)
   return new Promise<number[][]>((resolve, reject) => {
     
     console.log("column first")
@@ -62,7 +62,7 @@ export function getColumnDataPeriodically(input: string) {
 
 
 export function getPieData(input: string) {
-  getPieDataPeriodically(input)
+  //getPieDataPeriodically(input)
   return new Promise<number[]>((resolve, reject) => {
     
     console.log("pie first")
@@ -86,7 +86,7 @@ export function getPieDataPeriodically(input: string) {
 
 
 export function getImpiledData(input: string) {
-  getImpiledDataPeriodically(input)
+  //getImpiledDataPeriodically(input)
   return new Promise<number[][][]>((resolve, reject) => {
     
     console.log("impiled first")
@@ -110,7 +110,7 @@ export function getImpiledDataPeriodically(input: string) {
 
 
 export function getLineData(input: string) {
-  getLineDataPeriodically(input)
+  //getLineDataPeriodically(input)
   return new Promise<number[][][]>((resolve, reject) => {
     
     console.log("line first")

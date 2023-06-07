@@ -84,14 +84,19 @@ const fetchData = () => {
   
 
 onMounted(()=>{
-  fetchData(props.email)
+  fetchData()
+  const interval = setInterval(fetchData, 60000);
+  
+  return () => {
+    clearInterval(interval);
+  };
 }) 
-  const fetchData = (msg: string) => {
+  const fetchData = () => {
     /*
     const res = getRadarData("graph")
     radarvalues.value=res
     */
-    getRadarData(msg).then((response)=>{
+    getRadarData(props.email).then((response)=>{
       radarvalues.value = response
       console.log(toRaw(radarvalues.value))
       console.log(radarvalues.value)

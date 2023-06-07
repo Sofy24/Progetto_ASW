@@ -95,7 +95,7 @@ app.use('/login', require('./router/loginRoute'));
 //app.use('/graph/general',require('./router/graphRoute'));
 app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
-
+//app.use('/badge', require('./router/badgeRoute'));
 
 
 //loadData();
@@ -244,7 +244,7 @@ function createData(){
   
 }
 // CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
-//setTimeout(create1deposit,10000)
+setTimeout(create1deposit,10000)
 //create1deposit();
 function create1deposit(){
   const Bin = require('./model/Bin');
@@ -256,9 +256,9 @@ function create1deposit(){
   //var u = User.findById('6479f8a6117b966054dc1a14')._id
   //var b = Bin.findOne({_id:ObjectId('6479f541056369bd03bbaf0f')})._id
   const deposit = new Deposit({
-    user:'6479b2a727b053d0b4f6b800',
+    user:'647b3f2dc34527bb4073be43',
     kg:2,
-    bin: '647b451d3d26278ce788c07c' ,
+    bin: '647b3e04a4c6674f3e9fca1b' ,
   });
   deposit.save();
   console.log("deposited")
