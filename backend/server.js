@@ -6,6 +6,9 @@ const cors = require('cors')
 const fs = require('fs');
 const path = require('path');
 const connectDB = require('./config/dbConn');
+const populator = require('./prepopulation/prepopulate');
+
+
 
 app.use(cors());
 const http = require('http');
@@ -27,58 +30,6 @@ server.listen(port, () => {
   console.log(`Server listening on port ${port}`);
 });
 
-/*
-//RAPYNO TRY
-
-const { Server } = require('socket.io');
-const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: 'http://localhost:5173', // Replace with the actual client origin
-    methods: ['GET', 'POST'], // Specify the allowed HTTP methods
-  },
-});
-*/
-
-/*io.on("connection", (socket) => {
-  socket.emit("hello", "world");
-});*/
-
-//RAPYNO TRY
-/*
-io.on('connection', (socket) => { 
-  console.log("receive 1")
-  socket.on('getServerData', (data, callback) => {
-    console.log("receive 2")
-    // Perform the necessary actions to retrieve the server data
-    // Send the response back to the client
-    const serverData = "rumao "+data; // Retrieve the server data
-    callback(serverData);
-  });
-});
-
-// Start the server
-server.listen(3001, () => {
-  console.log('Server is running on port 3001');
-});
-*/
-
-
-/*
-const Http = require("http").Server(express);
-const Socketio = require("socket.io")(Http, {
-  cors: {
-    origin: "http://localhost:3001",
-  },
-});
-Http.listen(3001, () => {
-  console.log("Server up and running...");
-});
-const message = {mesg:"hello"}
-Socketio.on("connection", (socket) => {
-  socket.emit("position", message);
-});*/
-
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
@@ -96,40 +47,6 @@ app.use('/login', require('./router/loginRoute'));
 app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
 //app.use('/badge', require('./router/badgeRoute'));
-
-
-//loadData();
-//NON CANCELLARE 
-// Funzione per popolare il db, cambire il nome del file json e lo schema sulla base si cosa si inserisce e decommentare loadData() nella connessione  
-function loadData() {
-  const areasDataPath = path.join(__dirname, 'comuni.json');
-  fs.readFile(areasDataPath, 'utf8', (error, data) => {
-    if (error) {
-      console.error('Error reading data file:', error);
-      process.exit(1);
-    }
-    
-    const areas = JSON.parse(data);
-    
-    // Define the area schema and model (similar to the previous examples)
-        const areaSchema = new mongoose.Schema({
-          name: { type: String, required: true },
-          users: { type: Number, required: true },
-        }, { collection: 'Municipalities' });
-        const Area = mongoose.model('Area', areaSchema);
-    
-        // Use insertMany() to insert the areas into the collection
-        Area.insertMany(areas)
-          .then(() => {
-            console.log('Data loaded successfully');
-            mongoose.disconnect();
-          })
-          .catch((error) => {
-            console.error('Error loading data:', error);
-            mongoose.disconnect();
-          });
-      });
-    }   
 
 // UNCOMMENT THIS TO CREATE TYPOLOGY OF WASTE FOR THE FIRST TIME!
 //loadData2();
@@ -297,14 +214,17 @@ app.get('/dataradar', async (req, res) => {
 });*/
 
 
-//NON CANCELLARE
-const PORT = 3000;
-app.listen(PORT,() =>{
-  console.log('Node API server started on port '+PORT);
-});
 
-/*mongoose.connection.once('open', () => {
-    console.log('Connected to MongoDB');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-}); */
+//NON CANCELLARE
+const startServer = async () => {
+  try {
+    await populator.populateDatabase();
+  } catch (error) {console.log("FAIL"+error)}
+  const PORT = 3000;
+  app.listen(PORT, () => {
+    console.log('Node API server started on port ' + PORT);
+  });
+};
+
+startServer();
 
