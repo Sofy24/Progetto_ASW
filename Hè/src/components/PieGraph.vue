@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref, onMounted, toRaw} from 'vue'
-import {getPieData} from '../utils/api'
+import { ref, onMounted, toRaw, onUpdated, onBeforeUpdate, watchEffect, reactive, onServerPrefetch} from 'vue'
+import {getPieData, getPieDataPeriodically} from '../utils/api'
 import { defineProps } from 'vue'
 
 const props = defineProps({
@@ -12,19 +12,30 @@ const props = defineProps({
 
 const series=ref([]as number[])
 onMounted(()=>{
-  fetchData(props.email)
-}) 
+  console.log("mount pie")
+  fetchData()
+  const interval = setInterval(fetchData, 60000);
   
-const fetchData = (msg:string) => {
-  getPieData(msg).then((response)=>{
+  return () => {
+    clearInterval(interval);
+  };
+})
+
+const fetchData = () => {
+  
+  getPieData(props.email).then((response)=>{
+    console.log("sto QUA ME STO AD AGGIORNA")
     series.value = response
     console.log(toRaw(series.value))
     console.log(series.value)
+    
   }).catch((error)=>{
         
     console.error(error);
   });        
+
 } 
+
 
 </script>
 

@@ -12,15 +12,20 @@ const props = defineProps({
 
 //const series=ref([]as number[])
 onMounted(()=>{
-  fetchData(props.email)
+  fetchData()
+  const interval = setInterval(fetchData, 60000);
+  
+  return () => {
+    clearInterval(interval);
+  };
 }) 
 
 const series= ref([] as number[])
 const timelabels= ref([] as number[][])
 const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 var res = ref([] as { name: string; data: number[];}[])
-const fetchData = (msg: string) => {
-  getImpiledData(msg).then((response)=>{
+const fetchData = () => {
+  getImpiledData(props.email).then((response)=>{
     console.log("response")
     console.log(response)
     console.log(response[0])

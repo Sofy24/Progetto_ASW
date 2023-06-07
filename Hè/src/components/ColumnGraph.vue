@@ -17,12 +17,17 @@ const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', '
 var res = ref([] as { x: string; y: number; goals:[{name: string,value:number,strokeDashArray:number,strokeColor:string}] }[])
 
 onMounted(()=>{
-  fetchData(props.email)
+  fetchData()
   //fetchOptions()
+  const interval = setInterval(fetchData, 60000);
+  
+  return () => {
+    clearInterval(interval);
+  };
 }) 
-const fetchData = (msg:string) => {
+const fetchData = () => {
 
-  getColumnData(msg).then((response) => {
+  getColumnData(props.email).then((response) => {
       series.value = response
       console.log(series)
       for(var i=0;i<labels.length;i++){

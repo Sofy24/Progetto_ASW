@@ -62,7 +62,7 @@ export function getColumnDataPeriodically(input: string) {
 
 
 export function getPieData(input: string) {
-  getPieDataPeriodically(input)
+  //getPieDataPeriodically(input)
   return new Promise<number[]>((resolve, reject) => {
     
     console.log("pie first")
