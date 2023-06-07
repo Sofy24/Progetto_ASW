@@ -6,6 +6,7 @@
     import { onBeforeMount } from 'vue';    
     import type {RouteLocationNormalized } from 'vue-router'
     import { verifyToken } from '@/utils/tokenUtils'
+    import ReportTable from '@/components/ReportTable.vue'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
     import HistoryButtons from '@/components/HistoryButtons.vue'
     const props = defineProps({
@@ -25,7 +26,6 @@
     const data = reactive({
         isDataLoaded: false,
     })
-    const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre']
     
     const redirectToPreviousReport = (currentYear: number, previousMonth: number) => {
         if (previousMonth === 0) {
@@ -80,55 +80,25 @@
         }
     };
 
+    //all possibl eway to reload this component
     watchEffect(() => {
         fetchData()
     });
-
     onMounted(() => {
         fetchData()
     });
-
-
     onBeforeMount(() => {
         router.beforeEach((to: RouteLocationNormalized, from: RouteLocationNormalized, next: Function) => {
             fetchData()
             next()
         });
     });
-
-    const calculatePercentage = (previousValue: number, currentValue: number): string => {
-        if (previousValue == 0) {
-            return "" 
-        } else {
-            const percentage = ((currentValue - previousValue) / previousValue) * 100;
-            const formattedPercentage = percentage.toFixed(0); // Adjust the number of decimal places as needed
-            return `${formattedPercentage}%`
-        }
-    };
-
 </script>
 
 <template>
     <p>Report Container {{ year }}</p>
     <div v-if ="data.isDataLoaded">
-        <table>
-        <thead>
-            <tr>
-            <th>Categoria</th>
-            <th>{{ months[month - 1] }} {{ year }}</th>
-            <th>{{ months[month - 2 === -1 ? 11 : month - 2] }} {{ month === 1 ? year - 1 : year }}</th>
-            <th>Change</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr v-for="(row, index) in report" :key="index">
-            <td>{{ row[0] }}</td>
-            <td>{{ row[1] }} Kg</td>
-            <td>{{ row[2] }} Kg</td>
-            <td>{{ calculatePercentage(row[2], row[1]) }}</td>
-            </tr>
-        </tbody>
-        </table>
+        <ReportTable :year="year" :month="month" :report="report" />
         <ReportRadarGraph :columns="extractColumns(report)"/>
         <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail"  /> 
     </div>
