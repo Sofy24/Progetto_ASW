@@ -34,6 +34,22 @@ const handleVerification = async (req, res) => {
     }
   };
 
+  const handleRegistrationDate = async (req, res) => {
+    const { email } = req.query;
+    try {
+        const user = await User.findOne({ email });
+        if (user) {
+            const { date } = user;
+            res.status(200).json(date);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+
 module.exports = {
-    handleVerification
+    handleVerification,
+    handleRegistrationDate
 }

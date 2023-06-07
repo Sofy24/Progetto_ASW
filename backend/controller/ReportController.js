@@ -34,7 +34,6 @@ async function produceReport(email, year, month) {
         const currentDate = new Date(year,month,01);
         //applying timezone offset
         const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60000);
-
         let futureDate;
         //check if month is december
         if ((parseInt(month) + 1) === 12) {
