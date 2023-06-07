@@ -28,7 +28,13 @@
         } else {
             const percentage = ((currentValue - previousValue) / previousValue) * 100;
             const formattedPercentage = percentage.toFixed(0); // Adjust the number of decimal places as needed
-            return `${formattedPercentage}%`
+            if (percentage > 0) {
+                return `${formattedPercentage}% ↑`;
+            } else if (percentage < 0) {
+                return `${formattedPercentage}% ↓`;
+            } else {
+                return `${formattedPercentage}% ↔`;
+            }
         }
     };
 </script>
