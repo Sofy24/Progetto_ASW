@@ -3,6 +3,7 @@ const Report = require('../model/Report');
 const User = require('../model/User')
 const Typology = require('../model/Typology');
 const Bins = require('../model/Bin');
+const BadgeController = require('../controller/BadgeController');
 
 const handleMonthlyReport = async (req, res) => {
     const {email, year, month} = req.query;
@@ -155,6 +156,11 @@ async function produceReport(email, year, month) {
             });
             await report.save();
         }
+
+        console.log("in report: "+adjustedDate)
+
+        BadgeController.createBadges(typologiesData,email,adjustedDate,adjustedFutureDate)
+
         return typologiesData;
     } catch(error) {
         throw error;

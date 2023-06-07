@@ -46,7 +46,7 @@ app.use('/login', require('./router/loginRoute'));
 //app.use('/graph/general',require('./router/graphRoute'));
 app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
-//app.use('/badge', require('./router/badgeRoute'));
+app.use('/badge', require('./router/badgeRoute'));
 
 // UNCOMMENT THIS TO CREATE TYPOLOGY OF WASTE FOR THE FIRST TIME!
 //loadData2();
@@ -161,7 +161,7 @@ function createData(){
   
 }
 // CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
-setTimeout(create1deposit,10000)
+//setTimeout(create1deposit,10000)
 //create1deposit();
 function create1deposit(){
   const Bin = require('./model/Bin');

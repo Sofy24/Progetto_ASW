@@ -4,6 +4,6 @@ const badgeSchema = new mongoose.Schema({
   name:String,
   is_multiple:Boolean,
   repetition: Number
-}, { collection: 'Badge' });
+}, { collection: 'Badges' });
 
-module.exports = mongoose.model('Badge', badgeSchema);
+module.exports = mongoose.model('Badges', badgeSchema);
