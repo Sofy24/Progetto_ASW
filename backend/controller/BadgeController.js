@@ -156,7 +156,7 @@ const handleBadges = async (req, res) => {
                 specialBadgeList.push((e._id[0]).concat(" ").concat(n))
             }
             console.log(n)
-            console.log(specialBadgeList)
+            console.log("SPECIAL "+specialBadgeList)
         })
         
         
@@ -233,21 +233,22 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
                 badge.save();
             })
         }else{
+            console.log("MUST TOTAL FALSE")
             must_create_total = false
         }
 
-        if(must_create_total){
-            Badges.findOne({name:"tutto"}).then((thisBadge)=>{
-                const badge = new UserBadges({
-                    user:thisUser._id,
-                    badge: thisBadge._id
-                })
-                badge.save();
-            })
-        }
-
-
     })
+
+    if(must_create_total){
+        console.log("IS TRUE")
+        Badges.findOne({name:"tutto"}).then((thisBadge)=>{
+            const badge = new UserBadges({
+                user:thisUser._id,
+                badge: thisBadge._id
+            })
+            badge.save();
+        })
+    }
 }
 
 module.exports = {
