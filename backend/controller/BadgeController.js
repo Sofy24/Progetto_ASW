@@ -6,9 +6,14 @@ const UserBadges = require('../model/UserBadges')
 const Badges = require('../model/Badges');
 const Typology = require('../model/Typology');
 //const Bins = require('../model/Bin');
-
+const ReportController = require('../controller/ReportController');
 
 const handleBadges = async (req, res) => {
+    /*
+    ReportController.handleMonthlyReport((req,res)=>{
+        console.log(res)
+        createBadges(res,email,adjustedDate,adjustedFutureDate)
+    })*/
     
     const {email, year, month} = req.query;
     userEmail = email
@@ -93,25 +98,30 @@ const handleBadges = async (req, res) => {
         console.log(badgesThisMonth)
         const len = badgesThisMonth.length
         badgesThisMonth.forEach(e=>{
+            /*
             console.log(e)
             console.log(e.badge)
             console.log(e.badge[0].name)
+            */
             //console.log(e.badge[0].repetition)
         })
         const res1 = badgesThisMonth.map(element =>element.badge[0].name)
+        /*
         console.log("res1")
         console.log(res1)
         console.log(len)
+        */
         
         res1.forEach(e => {
+            /*
             console.log(list)
-            console.log(e)
+            console.log(e)*/
             var index=list.indexOf(e)
-            console.log(index)
-            console.log(i)
+            /*console.log(index)
+            console.log(i)*/
             final[i][index]=e
         });
-        console.log(final)
+        //console.log(final)
         
     }
     const specialBadge = await UserBadges.aggregate([
@@ -209,7 +219,11 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
     console.log(media)
     reportData.forEach(e=>{
         var typology=waste.indexOf(e[0])
-        if(e[2]<e[1] || e[1]<media[typology]){
+        console.log(" DEBUG ")
+        console.log(e)
+        console.log(typology)
+        console.log(media)
+        if(e[2]<e[1] || e[1]>media[typology]){
             
             Badges.findOne({name:e[0]}).then((thisBadge)=>{
                 const badge = new UserBadges({
@@ -218,8 +232,6 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
                 })
                 badge.save();
             })
-            
-
         }else{
             must_create_total = false
         }
