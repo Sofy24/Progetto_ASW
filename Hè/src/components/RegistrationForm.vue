@@ -69,43 +69,47 @@
 </script>
 
 <template>
-  <form @submit.prevent="submitForm">
-    <div>
-      <label for="name">Nome:</label>
-      <input type="text" id="name" v-model="name" required pattern="[A-Za-z]+">
-    </div>
-    <div>
-      <label for="surname">Cognome:</label>
-      <input type="text" id="surname" v-model="surname" required pattern="[A-Za-z]+">
-    </div>
-    <div>
-      <label for="email">Email:</label>
-      <input type="email" id="email" v-model="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
-    </div>
-    <div>
-      <label for="password">Password:</label>
-      <input type="password" id="password" v-model="password" required>
-      <div v-if="!isPasswordValid" class="error-message">
-          <p>La password deve avere almeno 8 caratteri di cui almeno una maiuscola, una minuscola, un numero e un simbolo.</p>
+  <div class="container">
+    <form @submit.prevent="submitForm">
+      <div class="form-group">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" v-model="name" required pattern="[A-Za-z]+">
       </div>
-    </div>
-    <div>
-      <label for="municipality">Comune di Residenza:</label>
-      <select id="municipality" v-model="municipality" required>
-          <option value="">Seleziona il tuo Comune</option>
-          <option v-for="option in filteredOptions" :value="option" :key="option">
-            {{ option}}
-          </option>
-      </select>
-    </div>
-    <div v-if="errorMessage != ''" class="error-message">{{ errorMessage }}</div>
-    <button type="submit">Registrati</button>
-  </form>
+      <div class="form-group">
+        <label for="surname">Cognome:</label>
+        <input type="text" id="surname" v-model="surname" required pattern="[A-Za-z]+">
+      </div>
+      <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" id="email" v-model="email" required pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$">
+      </div>
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" id="password" v-model="password" required>
+        <div v-if="!isPasswordValid" class="error-message error">
+            <p>La password deve avere almeno 8 caratteri di cui almeno una maiuscola, una minuscola, un numero e un simbolo.</p>
+        </div>
+        <div v-else class="error-message success">
+          <p> Password valida</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="municipality">Comune di Residenza:</label>
+        <select id="municipality" v-model="municipality" required>
+            <option value="">Seleziona il tuo Comune</option>
+            <option v-for="option in filteredOptions" :value="option" :key="option">
+              {{ option}}
+            </option>
+        </select>
+      </div>
+      <div v-if="errorMessage != ''" class="error-message">{{ errorMessage }}</div>
+      <button type="submit">Registrati</button>
+    </form>
+    <hr class="separator">
+    <RouterLink to="/login" class="custom-link">Login</RouterLink>
+  </div>
 </template>
 
-<style>
-  .error-message {
-    color: red;
-    font-size: 0.8em;
-  }
+<style lang="scss">
+    @import '../assets/style/formElement.scss'; 
 </style>

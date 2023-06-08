@@ -26,8 +26,7 @@ $border-radius: 10px;
         text-align: left;
     }
 
-    input[type="email"],
-    input[type="password"] {
+    input, select {
         width: 100%;
         padding: 3%;
         border: none;
@@ -79,6 +78,22 @@ button {
     p {
         margin: 0;
       }
+  }
+
+  .error-message {
+    padding-top: 0%;
+    padding-bottom: 5%;
+    padding-left: 0%;
+    padding-right: 5%;
+    &.error {
+      color: #ff0000;
+    }
+    &.success {
+      color: #009000;
+    }
+    p {
+      margin: 0;
+    }
   }
   
 
