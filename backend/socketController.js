@@ -16,10 +16,10 @@ function handleSocketConnections(server) {
   });
 
   io.on('connection', (socket) => {
-    console.log("receive 1");
+    //console.log("receive 1");
     
     socket.on('getServerData', (data, callback) => {
-      console.log("receive 2");
+      //console.log("receive 2");
       // Perform the necessary actions to retrieve the server data
       // Send the response back to the client
       const serverData = "rumao " + data; // Retrieve the server data
@@ -27,7 +27,7 @@ function handleSocketConnections(server) {
     });
 
     socket.on('getRadarData', (data, callback) => {
-        console.log("receive 3");
+        //console.log("receive 3");
         if(data=="general"){
             Radar.generalData().then((res)=>{
                 //console.log("X: "+res)
@@ -44,7 +44,7 @@ function handleSocketConnections(server) {
     });
 
     socket.on('getColumnData', (data, callback) => {
-        console.log("receive 3");
+        //console.log("receive 3");
         if(data=="general"){
             Column.generalData().then((res)=>{
             //console.log("X: "+res)
@@ -59,7 +59,7 @@ function handleSocketConnections(server) {
     });
 
     socket.on('getPieData', (data, callback) => {
-        console.log("receive 3");
+        //console.log("receive 3");
         if(data=="general"){
             Pie.generalData().then((res)=>{
                 //console.log("X: "+res)
@@ -75,7 +75,7 @@ function handleSocketConnections(server) {
 
 
     socket.on('getImpiledData', (data, callback) => {
-        console.log("receive 3");
+        //console.log("receive 3");
         if(data=="general"){
             Impiled.generalData().then((res)=>{
                 //console.log("X: "+res)
@@ -90,7 +90,7 @@ function handleSocketConnections(server) {
     });
 
     socket.on('getLineData', (data, callback) => {
-        console.log("receive 3");
+        //console.log("receive 3");
         if(data=="general"){
             Line.generalData().then((res)=>{
                 //console.log("X: "+res)

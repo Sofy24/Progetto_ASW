@@ -24,6 +24,7 @@ const series= ref([] as number[])
 const timelabels= ref([] as number[][])
 const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
 var res = ref([] as { name: string; data: number[];}[])
+
 const fetchData = () => {
   getImpiledData(props.email).then((response)=>{
     console.log("response")
@@ -37,8 +38,10 @@ const fetchData = () => {
       })
     }
     timelabels.value = response[1]
-    //console.log(toRaw(series.value))
-    //console.log(series.value)
+    console.log(toRaw( timelabels.value))
+    console.log( timelabels)
+    console.log(toRaw( timelabels))
+    console.log( timelabels.value)
   }).catch((error)=>{
         
     console.error(error);
@@ -46,7 +49,18 @@ const fetchData = () => {
 }
 
 
-var chartOptions= {
+//var chartOptions=
+
+
+
+
+
+
+</script>
+
+<template>
+  <div id="chart">
+    <apexchart type="bar" height="350" :options=" {
   chart: {
     type: 'bar',
     height: 350,
@@ -69,7 +83,7 @@ var chartOptions= {
     }
   }],
   xaxis: {
-    categories: timelabels.value,
+    categories: timelabels,
   },
   colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
   fill: {
@@ -80,18 +94,7 @@ var chartOptions= {
     offsetX: 0,
     offsetY: 0
   },
-}
-
-
-
-
-
-
-</script>
-
-<template>
-  <div id="chart">
-    <apexchart type="bar" height="350" :options="chartOptions" :series="res"></apexchart>
+}" :series="res"></apexchart>
   </div>
 </template>
 

@@ -1,9 +1,10 @@
 <script setup lang="ts">
     import axios from 'axios'
-    import { onMounted, ref, reactive } from 'vue'
+    import { onMounted, ref, reactive, onBeforeMount } from 'vue'
     import { useRouter} from 'vue-router'
     import { defineProps, watchEffect } from 'vue';
     import { verifyToken } from '@/utils/tokenUtils'
+    import HistoryButtons from '@/components/HistoryButtons.vue'
 
     const props = defineProps({
         year: {
@@ -19,6 +20,7 @@
     const router = useRouter()
     const userEmail = ref('')
     const badges = ref()
+    const report = ref()
     const badgeMonth = ref()
     const extraBadges = ref()
     const data = reactive({
@@ -34,37 +36,54 @@
         }
     };
 
+
     const fetchData = async () => {
         try {
-            const result = await verifyToken();
-            userEmail.value = result;
+                            
+                const result = await verifyToken();
+                userEmail.value = result;
 
-            const currentDate = new Date();
-            const previousMonth = currentDate.getMonth();
-            const currentYear = currentDate.getFullYear();
+                const currentDate = new Date();
+                const previousMonth = currentDate.getMonth();
+                const currentYear = currentDate.getFullYear();
 
-            if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
-                redirectToPreviousBadges(currentYear, previousMonth);
-            } else {
-                axios.get("http://localhost:3000/badge", {
+                if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
+                    redirectToPreviousBadges(currentYear, previousMonth);
+                } else {
+                    axios.get("http://localhost:3000/report", {
                     params: {
                         email: userEmail.value,
                         year: props.year,
                         month: props.month,
-                    },
+                    }
                 })
                 .then((response) => {
-                    badges.value = response.data[1];
-                    badgeMonth.value = response.data[0];
-                    extraBadges.value = response.data[2];
-                    data.isDataLoaded = true;
-                    console.log(response.data);
+                    //data retrieved, now the template can load
+                    report.value = response.data
+                    //data.isDataLoaded = true
+                    axios.get("http://localhost:3000/badge", {
+                        params: {
+                            email: userEmail.value,
+                            year: props.year,
+                            month: props.month,
+                            //report: report
+                        },
+                    })
+                    .then((response) => {
+                        badges.value = response.data[1];
+                        badgeMonth.value = response.data[0];
+                        extraBadges.value = response.data[2];
+                        data.isDataLoaded = true;
+                        console.log(response.data);
+                    })
+                    .catch((error) => {
+                        console.log("error: " + error);
+                        redirectToPreviousBadges(currentYear, previousMonth);
+                    });
                 })
-                .catch((error) => {
-                    console.log("error: " + error);
-                    redirectToPreviousBadges(currentYear, previousMonth);
-                });
+                    
             }
+            
         } catch (error) {
             //not authorized (token expired or not logged in)
             console.log("error: " + error);
@@ -84,16 +103,19 @@
 </script>
 
 <template>
-    <h1>Badge Container {{ year }}</h1>
-    <h3> extra</h3>
-    <div v-for="elem in extraBadges" >
-        <div>{{ elem }}</div>
-    </div>
-    <div class="grid-container">
-        <div class="grid-item" v-for="(elem,index) in badgeMonth" :key="index">
-            <h3> {{elem}}</h3>
-            <div> {{ badges[index] }}</div>
+    <div v-if ="data.isDataLoaded">
+        <h1>Badge Container {{ year }}</h1>
+        <h3> extra</h3>
+        <div v-for="elem in extraBadges" >
+            <div>{{ elem }}</div>
         </div>
+        <div class="grid-container">
+            <div class="grid-item" v-for="(elem,index) in badgeMonth" :key="index">
+                <h3> {{elem}}</h3>
+                <div> {{ badges[index] }}</div>
+            </div>
+        </div>
+        <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail"  /> 
     </div>
 </template>
 

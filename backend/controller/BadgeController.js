@@ -9,13 +9,34 @@ const Typology = require('../model/Typology');
 const ReportController = require('../controller/ReportController');
 
 const handleBadges = async (req, res) => {
-    /*
-    ReportController.handleMonthlyReport((req,res)=>{
-        console.log(res)
-        createBadges(res,email,adjustedDate,adjustedFutureDate)
-    })*/
-    
+       
     const {email, year, month} = req.query;
+
+
+    try {
+        const user = await User.findOne({ email });
+        /*const report =*/ await Report.findOne({ user, 'date.month': month, 'date.year': year });
+    } catch (err) {
+        try {//if there is no report try to generate one based on deposits 
+            const { date: { month: registrationMonth, year: registrationYear } } = await User.findOne({ email }, 'date.month date.year');
+            if (registrationYear > year || (registrationYear === year && (registrationMonth) >= month)) {
+                return res.status(400).json({ error: 'asked badges before registration date' });
+                
+            }
+            /*const quantities =*/ await ReportController.produceReport(email, year, month - 1);
+            //res.json(quantities)
+        } catch (error) {
+            console.error('Error retrieving report:', error);
+            res.status(500).json({ error: 'Failed to retrieve report for badges' });
+        }
+    }   
+
+
+
+
+
+
+
     userEmail = email
     const current =new Date()
     //var year = current.getFullYear()//.toString();
@@ -25,13 +46,47 @@ const handleBadges = async (req, res) => {
     var final=[[]]
     var monthArray = ['','','','','','','','','','','','']
 
+
     
-
-
-
     const timezoneOffset = new Date().getTimezoneOffset() + 120; // GMT+2:00 (2 hours ahead of GMT)
     const currentDate = new Date(year,month,01);
-    const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
+    //applying timezone offset
+    const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60000);
+    let futureDate;
+    //check if month is december
+    if ((parseInt(month) + 1) === 12) {
+        console.log("dec-jan")
+        futureDate = new Date((parseInt(year) + 1), 0 , 01);
+    } else {
+        console.log("normal")
+        futureDate = new Date(year, (parseInt(month) + 1), 01);
+    }
+    //applying timezone offset
+    const adjustedFutureDate = new Date(futureDate.getTime() + timezoneOffset *60000);
+
+    /*
+    ReportController.handleMonthlyReport({params: {
+        email: email,
+        year: year,
+        month: month,
+    }}).then((res)=>{
+        console.log(res)
+    })*/
+
+    /*
+    ReportController.handleMonthlyReport({ query: { email, year, month } }, {
+        json: (response) => {
+          console.log(response); // Handle the response from the function
+        }
+      });
+    console.log("pippo"+pippo)*/
+    //createBadges(pippo,email,adjustedDate,adjustedFutureDate)
+
+
+
+    //const timezoneOffset = new Date().getTimezoneOffset() + 120; // GMT+2:00 (2 hours ahead of GMT)
+    //const currentDate = new Date(year,month,01);
+    //const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
     
     
     //console.log("mela") 
@@ -68,32 +123,34 @@ const handleBadges = async (req, res) => {
         var d = dates[i]
         const startDate = new Date(year,d,01);
         const adjustedStartDate = new Date(startDate.getTime() + timezoneOffset * 60 * 1000);
-        //console.log(adjustedStartDate)
+        console.log(adjustedStartDate)
         const endDate = new Date(year,d+1,01);
         const adjustedEndDate = new Date(endDate.getTime() + timezoneOffset * 60 * 1000);
-        //console.log(adjustedEndDate)
-        monthArray[i]= adjustedStartDate.toLocaleString('default', { month: 'long' }) + " "+adjustedStartDate.getFullYear()
+        console.log(adjustedEndDate)
+        const printDate =new Date(year,d-1,01);
+        const adjustedPrintDate = new Date(printDate.getTime() + timezoneOffset * 60 * 1000);
+        monthArray[i]= adjustedPrintDate.toLocaleString('default', { month: 'long' }) + " "+adjustedPrintDate.getFullYear()
         //console.log(i)
         //console.log(monthArray)
 
         
         const badgesThisMonth = await UserBadges.aggregate([
-        {$lookup:{
-            from:'Users',
-            localField: 'user',
-            foreignField: '_id',
-            as: "user"
-        }},
-        {$match: {"user.email": email}},
-        {$match: {createdAt:{ $gte : adjustedStartDate}}},
-        {$match: {createdAt:{ $lt : adjustedEndDate}}},
-        {$lookup:{
-            from:'Badges',
-            localField: 'badge',
-            foreignField: '_id',
-            as: "badge"
-        }},
-        {$match: {"badge.is_multiple": false}}
+            {$lookup:{
+                from:'Users',
+                localField: 'user',
+                foreignField: '_id',
+                as: "user"
+            }},
+            {$match: {"user.email": email}},
+            {$match: {createdAt:{ $gte : adjustedStartDate}}},
+            {$match: {createdAt:{ $lt : adjustedEndDate}}},
+            {$lookup:{
+                from:'Badges',
+                localField: 'badge',
+                foreignField: '_id',
+                as: "badge"
+            }},
+            {$match: {"badge.is_multiple": false}}
         ])
         console.log(badgesThisMonth)
         const len = badgesThisMonth.length
@@ -145,7 +202,7 @@ const handleBadges = async (req, res) => {
     var specialBadgeList = []
     const numBadge = await Badges.aggregate([{$match: {is_multiple: true}},{$group: {_id:"$repetition" }}])
     const numList=numBadge.map(e=>e._id)
-    console.log(numList)
+    //console.log(numList)
     specialBadge.forEach(e=>{
         numList.forEach(n=>{
             
@@ -156,13 +213,14 @@ const handleBadges = async (req, res) => {
                 specialBadgeList.push((e._id[0]).concat(" ").concat(n))
             }
             console.log(n)
-            console.log("SPECIAL "+specialBadgeList)
+            //console.log("SPECIAL "+specialBadgeList)
         })
         
         
     })
-    console.log(specialBadge)
+    //console.log(specialBadge)
 
+    console.log([monthArray,final,specialBadgeList])
     res.json([monthArray,final,specialBadgeList])
 
 }
@@ -225,12 +283,14 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
         console.log(media)
         if(e[2]<e[1] || e[1]>media[typology]){
             
-            Badges.findOne({name:e[0]}).then((thisBadge)=>{
+            Badges.findOne({name:e[0],is_multiple: false}).then(async (thisBadge)=>{
                 const badge = new UserBadges({
                     user:thisUser._id,
                     badge: thisBadge._id
                 })
-                badge.save();
+                await badge.save();
+                console.log("SALVATO")
+                
             })
         }else{
             console.log("MUST TOTAL FALSE")
@@ -241,14 +301,62 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
 
     if(must_create_total){
         console.log("IS TRUE")
-        Badges.findOne({name:"tutto"}).then((thisBadge)=>{
+        Badges.findOne({name:"tutto", is_multiple: false}).then(async (thisBadge)=>{
             const badge = new UserBadges({
                 user:thisUser._id,
                 badge: thisBadge._id
             })
-            badge.save();
+            await badge.save();
         })
     }
+
+    const specialBadge = await UserBadges.aggregate([
+        {$lookup:{
+            from:'Users',
+            localField: 'user',
+            foreignField: '_id',
+            as: "user"
+        }},
+        {$match: {"user.email": email}},
+        {$lookup:{
+            from:'Badges',
+            localField: 'badge',
+            foreignField: '_id',
+            as: "badge"
+        }},
+        {$match: {"badge.is_multiple": false}},
+        {$group: {_id:"$badge.name",count: {$sum: 1} }}
+    ])
+
+    var specialBadgeList = []
+    const numBadge = await Badges.aggregate([{$match: {is_multiple: true}},{$group: {_id:"$repetition" }}])
+    const numList=numBadge.map(e=>e._id)
+    //console.log(numList)
+    specialBadge.forEach(e=>{
+        numList.forEach(n=>{
+            
+            if(e.count=n){
+
+                Badges.findOne({name:e._id[0],is_multiple: true, repetition:n}).then(async (thisBadge)=>{
+                    const badge = new UserBadges({
+                        user:thisUser._id,
+                        badge: thisBadge._id
+
+                    })
+                    await badge.save();
+                })
+                //console.log(e._id[0])
+                //var element = 
+                //console.log(element)
+                //specialBadgeList.push((e._id[0]).concat(" ").concat(n))
+            }
+            //console.log(n)
+            //console.log("SPECIAL "+specialBadgeList)
+        })
+        
+        
+    })
+    
 }
 
 module.exports = {

@@ -125,6 +125,9 @@ const props = defineProps({
             router.push(props.route+"/"+gotoYear+"/"+gotoMonth)
         } else if (props.mode === 'year') {
             // scalare sulle medaglie
+            let gotoMonth = props.month
+            let gotoYear = props.year + scale
+            router.push(props.route+"/"+gotoYear+"/"+gotoMonth)
         }
     }
 
