@@ -31,7 +31,7 @@
                 })
                 .catch(error => {
                     if (error.response.status == 401){
-                        errorMessage.value = error.response.data.error
+                        errorMessage.value = "Email o Password errata"
                     }
                     console.error('Login failed:', error)
                     // Handle login failure, such as displaying an error message
@@ -50,17 +50,27 @@
 
 
 <template>
-    <form @submit.prevent="submitForm">
-        <div>
-            <label for="email">Email:</label>
-            <input type="email" id="email" v-model="email" required>
-        </div>
-        <div>
-            <label for="password">Password:</label>
-            <input type="password" id="password" v-model="password" required>
-        </div>
-        <button type="submit">Login</button>
-    </form>
-    <div v-if="errorMessage != ''" class="error-message">{{ errorMessage }}</div>
+    <div class="container">
+        <form @submit.prevent="submitForm">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" v-model="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" v-model="password" required>
+            </div>
+            <div v-if="errorMessage !== ''" class="error-message">
+                <p>{{ errorMessage }}</p>
+            </div>
+            <button type="submit">Login</button>
+        </form>
+        <hr class="separator">
+        <RouterLink to="/register" class="custom-link">Registrati</RouterLink>
+    </div>
 </template>
+
+<style lang="scss">
+    @import '../assets/style/formElement.scss'; 
+</style>
   

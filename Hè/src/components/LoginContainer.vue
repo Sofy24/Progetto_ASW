@@ -3,8 +3,16 @@
 </script>
 
 <template>
-    <div>
-        <h1>Login Page</h1>
+    <div class="page">
+        <h1>Login</h1>  
     </div>
     <LoginForm/>
 </template>
+
+<style lang="scss">
+    .page {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+</style>

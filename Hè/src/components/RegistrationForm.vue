@@ -85,9 +85,9 @@
     <div>
       <label for="password">Password:</label>
       <input type="password" id="password" v-model="password" required>
-      <span v-if="!isPasswordValid" class="error-message">
-          La password deve avere almeno 8 caratteri di cui almeno una maiuscola, una minuscola, un numero e un simbolo.
-      </span>
+      <div v-if="!isPasswordValid" class="error-message">
+          <p>La password deve avere almeno 8 caratteri di cui almeno una maiuscola, una minuscola, un numero e un simbolo.</p>
+      </div>
     </div>
     <div>
       <label for="municipality">Comune di Residenza:</label>
