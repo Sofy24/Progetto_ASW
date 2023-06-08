@@ -3,6 +3,7 @@
     import ReportTable from '@/components/ReportTable.vue'
     import { computed } from '@vue/reactivity';
     import { onMounted, reactive, ref } from 'vue';
+    import {checkReportDateValidity} from '../utils/checkReport'
 
     const props = defineProps({
         email: {
@@ -16,6 +17,7 @@
         'settembre', 'ottobre', 'novembre', 'dicembre']
     const containerData = reactive({
         isDataLoaded: false,
+        isDataValid: false
     })
 
     const reportMonthYear = computed(() => {
@@ -30,8 +32,10 @@
     })
 
     onMounted(() => {
-        
-        
+        checkReportDateValidity(reportMonthYear.value[0], reportMonthYear.value[1], props.email)
+        .then(response => {
+            containerData.isDataValid = response
+        }).catch(ignored => {})
         axios.get("http://localhost:3000/report", {
             params: {
                 email: props.email,
@@ -42,7 +46,9 @@
         .then((response) => {
             //data retrieved, now the template can load
             report.value = response.data
+
             containerData.isDataLoaded = true
+            
         })
         .catch((error) => {
             //error in report (wrong date, server down, ...), redirect to standard report page 
@@ -53,13 +59,14 @@
 </script>
 
 <template>
-    <p>qui ci sono i componenti della pagina personale di {{ email }}</p>
     <div v-if ="containerData.isDataLoaded">
-        <h2>Report del mese di {{ months[reportMonthYear[1] - 1] }} {{ reportMonthYear[0] }}</h2>
-        <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" />
-        <RouterLink :to="`/report/${reportMonthYear[0]}/${reportMonthYear[1]}`">Visualizza altri Report</RouterLink>
-    </div>
-    <div v-else>
-        <p>Il report sarà disponibile il prossimo mese</p>
+        <div v-if="containerData.isDataValid">
+            <h2>Report del mese di {{ months[reportMonthYear[1] - 1] }} {{ reportMonthYear[0] }}</h2>
+            <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" />
+            <RouterLink :to="`/report/${reportMonthYear[0]}/${reportMonthYear[1]}`">Visualizza altri Report</RouterLink>
+        </div>
+        <div v-else>
+            <p>Benvenuto/a, questo è ancora il tuo primo mese su Hé, con il tempo questa pagina si riempirà sempre più</p>
+        </div>
     </div>
 </template>
