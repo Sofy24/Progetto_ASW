@@ -1,9 +1,10 @@
 <script setup lang="ts">
     import axios from 'axios'
-    import { onMounted, ref, reactive } from 'vue'
+    import { onMounted, ref, reactive, onBeforeMount } from 'vue'
     import { useRouter} from 'vue-router'
     import { defineProps, watchEffect } from 'vue';
     import { verifyToken } from '@/utils/tokenUtils'
+    import HistoryButtons from '@/components/HistoryButtons.vue'
 
     const props = defineProps({
         year: {
@@ -102,16 +103,19 @@
 </script>
 
 <template>
-    <h1>Badge Container {{ year }}</h1>
-    <h3> extra</h3>
-    <div v-for="elem in extraBadges" >
-        <div>{{ elem }}</div>
-    </div>
-    <div class="grid-container">
-        <div class="grid-item" v-for="(elem,index) in badgeMonth" :key="index">
-            <h3> {{elem}}</h3>
-            <div> {{ badges[index] }}</div>
+    <div v-if ="data.isDataLoaded">
+        <h1>Badge Container {{ year }}</h1>
+        <h3> extra</h3>
+        <div v-for="elem in extraBadges" >
+            <div>{{ elem }}</div>
         </div>
+        <div class="grid-container">
+            <div class="grid-item" v-for="(elem,index) in badgeMonth" :key="index">
+                <h3> {{elem}}</h3>
+                <div> {{ badges[index] }}</div>
+            </div>
+        </div>
+        <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail"  /> 
     </div>
 </template>
 
