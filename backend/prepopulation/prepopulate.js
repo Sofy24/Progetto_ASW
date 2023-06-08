@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const streetNames = require('./streetNames.js');
 const Municipality = require('../model/Municipality');
 const Typology = require('../model/Typology');
-const Badge = require('../model/Badges');
+const Badge = require('../model/Badge.js');
 const Bin = require('../model/Bin');
 
 
