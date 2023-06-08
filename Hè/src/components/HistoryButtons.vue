@@ -94,7 +94,7 @@ const props = defineProps({
     });
     const isBackwardDisabled = computed(() => {
         if (props.mode === 'month') {
-            if (props.year < regYear.value || ( props.year === regYear.value && (props.month - 1) <= regMonth.value )) {
+            if (props.year < regYear.value || ( props.year === regYear.value && (props.month) <= regMonth.value )) {
                 return true
             } else {
                 return false

@@ -9,6 +9,7 @@
     import ReportTable from '@/components/ReportTable.vue'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
     import HistoryButtons from '@/components/HistoryButtons.vue'
+    import {checkReportDateValidity} from '../utils/checkReport'
 
     //arguments passed from ReportPage
     const props = defineProps({
@@ -27,12 +28,14 @@
     const report = ref()
     const data = reactive({
         isDataLoaded: false,
+        isDataValid: false,
     })
     
     //everytime is asked a report that can't exist (future date or before registration)
     const redirectToPreviousReport = (currentYear: number, previousMonth: number) => {
+        router.push('/personal')
         //it always send to the report of the month previous to the current
-        if (previousMonth === 0) {//case for january
+        if (previousMonth == 0) {//case for january
             router.push(`/report/${currentYear - 1}/12`)
         } else {
             router.push(`/report/${currentYear}/${previousMonth}`)
@@ -51,16 +54,19 @@
     //authentication and retrieving of report
     const fetchData = async () => {
         try {
+            const currentDate = new Date()
+            const previousMonth = currentDate.getMonth()
+            const currentYear = currentDate.getFullYear()        
             //token validation
             const result = await verifyToken()
             userEmail.value = result
             //check if report is possible with the year and month given
-            const currentDate = new Date()
-            const previousMonth = currentDate.getMonth()
-            const currentYear = currentDate.getFullYear()
             if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
                 redirectToPreviousReport(currentYear, previousMonth)
             } else {
+                //check report date validity
+                data.isDataValid = await checkReportDateValidity(currentYear, previousMonth, userEmail.value)
+                //ask for report
                 axios.get("http://localhost:3000/report", {
                     params: {
                         email: userEmail.value,
@@ -70,6 +76,7 @@
                 })
                 .then((response) => {
                     //data retrieved, now the template can load
+                    console.log("VALIDDDDD")
                     report.value = response.data
                     data.isDataLoaded = true
                 })
@@ -103,9 +110,17 @@
 
 <template>
     <p>Report Container {{ year }}</p>
-    <div v-if ="data.isDataLoaded">
+    <div v-if ="data.isDataLoaded && data.isDataValid">
         <ReportTable :year="year" :month="month" :report="report" />
         <ReportRadarGraph :columns="extractColumns(report)"/>
         <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail"  /> 
+    </div>
+    <div v-else>
+        <p>Questo report non può essere visualizzato, le possibili cause sono:</p>
+        <ul>
+            <li>Il report risale a prima che ti registrassi sulla piattaforma</li>
+            <li>Non è ancora passato un mese dalla tua registrazione alla piattaforma</li>
+        </ul>
+        <RouterLink to="/personal">Ritorna alla tua pagina personale</RouterLink>
     </div>
 </template>

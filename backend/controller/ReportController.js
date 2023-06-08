@@ -16,7 +16,9 @@ const handleMonthlyReport = async (req, res) => {
     } catch (err) {
         try {//if there is no report try to generate one based on deposits 
             const { date: { month: registrationMonth, year: registrationYear } } = await User.findOne({ email }, 'date.month date.year');
-            if (registrationYear > year || (registrationYear === year && (registrationMonth) >= month)) {
+            console.log("SESSO ASSOLUTO: "+ registrationMonth + " "+ month)
+            if (registrationYear > year || (registrationYear == year && (registrationMonth) >= month)) {
+                console.log("NONONONO")
                 return res.status(400).json({ error: 'asked report before registration date' });
             }
             const quantities = await produceReport(email, year, month - 1);
