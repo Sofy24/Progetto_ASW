@@ -51,11 +51,11 @@ const fetchData = () => {
               //colors:['#3d63ed', '#edca3d', '#ed663d','#3ded49','#742727','#742727','#bdbdbd']
             //},
             responsive: [{
-              breakpoint: 480,
+              breakpoint: 325,
               options: {
-                chart: {
-                  width: 200
-                },
+                /*chart: {
+                  width: 250
+                },*/
                 legend: {
                   position: 'bottom'
                 }

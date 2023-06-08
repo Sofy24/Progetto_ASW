@@ -55,7 +55,8 @@ const fetchData = () => {
 </script>
 
 <template>
-  <apexchart width="500" type="line" :options="{
+
+  <apexchart height="350" type="line" :options="{
         chart: {
           id: 'vuechart-example'
         },
@@ -67,7 +68,10 @@ const fetchData = () => {
       
 </template>
 
-<style scoped>
+
+
+<!--
+  <style scoped>
 h1 {
   font-weight: 500;
   font-size: 2.6rem;
@@ -90,3 +94,5 @@ h3 {
   }
 }
 </style>
+
+-->

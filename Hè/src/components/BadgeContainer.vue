@@ -109,10 +109,14 @@
         <div v-for="elem in extraBadges" >
             <div>{{ elem }}</div>
         </div>
-        <div class="grid-container">
-            <div class="grid-item" v-for="(elem,index) in badgeMonth" :key="index">
+        <div class="medagliereGrid">
+            <!-- grey" class="grid-item"  -->
+            <div class="medagliere" v-for="(elem,index) in badgeMonth" :key="index">
                 <h3> {{elem}}</h3>
-                <div> {{ badges[index] }}</div>
+                <div class="grid" v-for="element in badges[index]" > 
+                    <img src="../assets/images/vetro.png" alt={{element}} width="42" height="42" >
+                    <!--<div>{{ element }}</div>-->
+                </div>
             </div>
         </div>
         <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail"  /> 
@@ -120,7 +124,9 @@
 </template>
 
 <style>
-.grid-container {
-    display: grid;
-  }
+h3{
+    text-align: center;
+    color: white;
+}
+
 </style>

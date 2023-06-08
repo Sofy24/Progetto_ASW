@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <h1>USer GRaph PaGe</h1>
+    
     <UserGraphContainer />
     <LogoutButton />
 </template>

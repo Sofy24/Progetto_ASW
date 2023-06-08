@@ -33,42 +33,36 @@
     <UserPieContainer :email="userEmail" />
   
 
-    <WelcomeItem>
-        <template #heading>Grafico mese corrente</template>
+    <div>
+        <h3>Grafico mese corrente</h3>
         
         <PieGraph :email="userEmail" />
         
-    </WelcomeItem>
+    </div>
     
 
-    <WelcomeItem>
-        <template #heading>Grafico confornto kg </template>
+    <div>
+        <h3>Grafico confornto kg </h3>
         <LineGraph :email="userEmail"/>
         
-    </WelcomeItem>
-
-
-    <WelcomeItem>
-        <template #heading>Grafo confronto percentuale</template>
-        <template #default>
-        <ImpiledGraph :email="userEmail"/>
-        </template>
-    </WelcomeItem>
-
-    <WelcomeItem>
-        <template #icon>
-        <DocumentationIcon />
-        </template>
-        <template #heading>Grafo confronto mese scorso</template>
-
-        <template #default>
-        <RadarGraph :email="userEmail" />
-        </template>
-    </WelcomeItem>
-    
-    <WelcomeItem>
-        <template #heading>Grafo kg depositati e media</template>
-        <ColumnGraph :email="userEmail" />
-    </WelcomeItem>
     </div>
+
+
+    <div>
+        <h3>Grafo confronto percentuale</h3>
+        
+        <ImpiledGraph :email="userEmail"/>
+        
+    </div>
+
+    <div>
+        <h3>Grafo confronto mese scorso</h3>
+        <RadarGraph :email="userEmail" />
+    </div>
+    
+    <div>
+        <h3>Grafo kg depositati e media</h3>
+        <ColumnGraph :email="userEmail" />
+    </div>
+  </div>
 </template>

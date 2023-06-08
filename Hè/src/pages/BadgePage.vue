@@ -18,7 +18,6 @@ import { onMounted } from "vue";
 </script>
 
 <template>
-    <h1>Report {{ year }} {{ month }}</h1>
     <BadgeContainer :year="year" :month="month" />
     <LogoutButton />
 </template>

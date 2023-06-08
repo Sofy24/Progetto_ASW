@@ -12,40 +12,44 @@ import { io } from "socket.io-client"
 
 <template>
     
-  <WelcomeItem>
+  <!--
+    <WelcomeItem>
     <template #heading>Grafico mese corrente</template>
+  <template #default>
+     </WelcomeItem></template>
+  -->
+  <div>
+    <h3>Grafico mese corrente</h3>
     <PieGraph :email='"general"'/>
-  </WelcomeItem>
-  
-
-  <WelcomeItem>
-    <template #heading>Grafico confornto kg </template>
-      <LineGraph :email='"general"'/>
+  </div>
     
-  </WelcomeItem>
+
+  <div>
+    <h3>Grafico confornto kg </h3>
+      <LineGraph :email='"general"'/>
+  </div>
 
 
-  <WelcomeItem>
-    <template #heading>Grafo confronto percentuale</template>
-    <template #default>
-      <ImpiledGraph :email='"general"'/>
-    </template>
-  </WelcomeItem>
+  <div>
+    <h3>Grafo confronto percentuale</h3>
+    
+    <ImpiledGraph :email='"general"'/>
+    
+  </div>
 
-  <WelcomeItem>
-    <template #icon>
-      <DocumentationIcon />
-    </template>
-    <template #heading>Grafo confronto mese scorso</template>
-
-    <template #default>
-      <RadarGraph :email='"general"' />
-    </template>
-  </WelcomeItem>
   
-  <WelcomeItem>
-    <template #heading>Grafo kg depositati e media</template>
+  <div>
+  <h3>Grafo confronto mese scorso</h3>
+    <RadarGraph :email='"general"' />
+  </div>
+  
+  
+  
+    
+  <div>
+    <h3>Grafo kg depositati e media</h3>
     <ColumnGraph :email='"general"' />
-  </WelcomeItem>
+  </div>
+  
 </template>
 

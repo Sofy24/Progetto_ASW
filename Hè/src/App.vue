@@ -59,10 +59,9 @@
     <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
     
     <div class="wrapper">
-      <HelloWorld msg="Hè" />
+      <!----<HelloWorld msg="Hè" />-->
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">Chi siamo</RouterLink>
 
         <RouterLink to="/graph">Grafici</RouterLink>
         <RouterLink to="/classifica">Classifica</RouterLink>
@@ -78,10 +77,22 @@
       </nav>
     </div>
   </header>
-  <RouterView />
-  <RouterView name="personal"></RouterView>
-  <RouterView name="home"></RouterView>
+  <div id="mainContent">
+    <RouterView />
+    <RouterView name="personal"></RouterView>
+    <RouterView name="home"></RouterView>
+  </div>
+  
 </template>
+
+
+
+<style scoped lang="scss">
+    @import './assets/style/navElement.scss'; 
+</style>
+
+
+<!--
 
 <style scoped>
 header {
@@ -146,3 +157,7 @@ nav a:first-of-type {
   }
 }
 </style>
+
+
+-->
+

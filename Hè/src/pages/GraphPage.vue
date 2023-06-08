@@ -3,7 +3,10 @@
 </script>
 
 <template>
-  <GraphContainer />
+  <div class="grid">
+    <GraphContainer />
+  </div>
+  
 </template>
 
 
