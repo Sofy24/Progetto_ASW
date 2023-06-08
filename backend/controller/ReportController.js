@@ -159,7 +159,8 @@ async function produceReport(email, year, month) {
 
         console.log("in report: "+adjustedDate)
 
-        BadgeController.createBadges(typologiesData,email,adjustedDate,adjustedFutureDate)
+
+        await BadgeController.createBadges(typologiesData,email,adjustedDate,adjustedFutureDate)
 
         return typologiesData;
     } catch(error) {
