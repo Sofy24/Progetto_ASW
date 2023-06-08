@@ -7,7 +7,7 @@ const binSchema = new mongoose.Schema({
       required: true
   },
   actual_kg:Number,
-  adress:String,
+  address:String,
   municipality: { 
       type: mongoose.Schema.Types.ObjectId, 
       ref: "Municipalities", 

@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const streetNames = require('./streetNames.js');
 const Municipality = require('../model/Municipality');
 const Typology = require('../model/Typology');
-const Badge = require('../model/Badges');
+const Badge = require('../model/Badge.js');
 const Bin = require('../model/Bin');
 
 
@@ -14,10 +14,19 @@ const readFileAsync = promisify(fs.readFile);
 const populateDatabase = async () => {
     try {
       await prepopulateDatabase('municipalities', Municipality);
+      await Bin.deleteMany({});
+    } catch (error) {}
+    try {
       await prepopulateDatabase('typologies', Typology);
+      await Bin.deleteMany({});
+    } catch (error) {}
+    try { 
       await prepopulateDatabase('badges', Badge);
+    } catch (error) {}
+    try {  
       await createBins();
     } catch (error) {}
+
   }
 
 const prepopulateDatabase = async (filename, Model) => {
@@ -29,7 +38,7 @@ const prepopulateDatabase = async (filename, Model) => {
     const count = await Model.countDocuments();
     if (count === 0) {
       await Model.insertMany(datas);
-      console.log('Data loaded successfully');
+      console.log(filename + ' loaded successfully');
     } else {
         throw new Error('Data already exists in the collection. Skipping population.');
     }
@@ -56,12 +65,13 @@ const createBins = async () => {
                 typology: typology._id,
                 municipality: municipality._id,
                 actual_kg: 0, // Set initial value as needed
-                address: generateStreetAddress, // Set address as needed
+                address: generateStreetAddress() // Set address as needed
             });
             // Save the bin to the database
             await bin.save();
             }
         }
+        console.log('Bin loaded successfully');
     } else {
         throw new Error('Data already exists in the collection. Skipping population.');
     }
