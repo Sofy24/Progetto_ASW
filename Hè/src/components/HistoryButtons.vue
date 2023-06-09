@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, watchEffect, reactive, ref } from 'vue';
+import { computed, watchEffect, reactive, ref, getCurrentInstance } from 'vue';
 import { useRouter} from 'vue-router'
 import axios from 'axios'
 
@@ -32,6 +32,7 @@ const props = defineProps({
     const currentDate = new Date();
     const currentMonth = currentDate.getMonth() + 1; // Adding 1 because months are zero-based (0 - 11)
     const currentYear = currentDate.getFullYear();
+    const instance = getCurrentInstance(); // Get the current component instance
     const datacomp = reactive({
         isDataLoaded: false,
     })
@@ -128,6 +129,9 @@ const props = defineProps({
             let gotoMonth = props.month
             let gotoYear = props.year + scale
             router.push(props.route+"/"+gotoYear+"/"+gotoMonth)
+        }
+        if (instance != null) {
+            instance.emit('navigate');
         }
     }
 

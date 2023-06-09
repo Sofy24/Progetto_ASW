@@ -61,6 +61,7 @@
 <template>
     <div v-if ="containerData.isDataLoaded">
         <div v-if="containerData.isDataValid">
+            <!-- put here the components that should not be seen the first month-->
             <h2>Report del mese di {{ months[reportMonthYear[1] - 1] }} {{ reportMonthYear[0] }}</h2>
             <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" />
             <RouterLink :to="`/report/${reportMonthYear[0]}/${reportMonthYear[1]}`">Visualizza altri Report</RouterLink>
