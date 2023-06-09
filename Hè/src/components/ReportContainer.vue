@@ -62,10 +62,10 @@
             }})
             //set report
             report.value = response.data
-            //retieve the prices 
+            //retieve the prices for typology
             const res2 = await axios.get('http://localhost:3000/typology/price') 
             typologyPrices.value = res2.data
-            console.log("PREZZI BASSI E FISSI: " + typologyPrices.value[0])
+            //show data
             data.isDataLoaded = true
         }
         } catch (error) {
@@ -83,7 +83,7 @@
 <template>
     <p>Report Container {{ year }}</p>
     <div v-if ="data.isDataLoaded && data.isDataValid">
-        <ReportTable :year="year" :month="month" :report="report" />
+        <ReportTable :year="year" :month="month" :report="report" :prices="typologyPrices" />
         <ReportRadarGraph :columns="extractColumns(report)"/>
         <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail" @navigate="fetchData"  /> 
     </div>

@@ -164,7 +164,7 @@ const createDeposits = async () => {
                             year++; // Increment year by 1
                         }
 
-                        const randomKg = Math.round((Math.random() * (0.4 - 0.1) + 0.1) * 100) / 100;
+                        const randomKg = Math.round((Math.random() * (8.5 - 0.5) + 0.5) * 100) / 100;
                         // Create a new deposit
                         const deposit = new Deposit({
                         user: _id,
@@ -175,8 +175,10 @@ const createDeposits = async () => {
                         // Save the deposit to the database
                         await deposit.save();
                         //update the kg in the bin
-                        bin.actual_kg += randomKg;
-                        await bin.save();
+                        if (month == currentMonth && year == currentYear) {
+                            bin.actual_kg += randomKg;
+                            await bin.save();
+                        }
                     }
                 }
             }

@@ -1,6 +1,9 @@
 <script setup lang="ts">
 
-    type ReportItem = [string, number, number];
+    import { computed} from 'vue'
+
+    type ReportItem = [string, number, number]
+    type PriceItem = [string, number]
 
     //argument passed
     const props = defineProps({
@@ -14,6 +17,10 @@
         },
         report: {
             type: Array as () => Array<ReportItem>,
+            required: true,
+        },
+        prices: {
+            type: Array as () => Array<PriceItem>,
             required: true,
         }
     });
@@ -37,6 +44,16 @@
             }
         }
     };
+
+    const totalCost =  computed(() => {
+        let sum = 0
+        for (const [itemName, itemPrice] of props.prices) {
+            const reportItem = props.report.find(([name]) => name === itemName)
+            const quantity = reportItem ? reportItem[1] : 0
+            sum += itemPrice * quantity
+        }   
+        return Math.round(sum * 100) / 100
+    });
 </script>
 
 <template>
@@ -58,4 +75,10 @@
             </tr>
         </tbody>
         </table>
+        <div v-for="(row, index) in report">
+            <p>Hai prodotto {{ row[1] }}Kg di {{ row[0] }} al prezzo di {{ prices[index][1] }} al Kg</p>
+        </div>
+        <div>
+            <p>Per un totale di {{ totalCost }}€</p>
+        </div>
 </template>

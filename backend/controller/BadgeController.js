@@ -13,7 +13,7 @@ const handleBadges = async (req, res) => {
     const {email, year, month} = req.query;
 
     /**charge report */
-    await chargeReport(email, year, month)
+    //await chargeReport(email, year, month)
 
     
 
