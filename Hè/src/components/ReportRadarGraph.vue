@@ -1,6 +1,6 @@
 <script setup lang="ts">
 
-    import { defineProps, watch, computed} from 'vue'
+    import { defineProps, computed} from 'vue'
     import type { PropType } from 'vue'
 
     const props = defineProps({
@@ -23,7 +23,7 @@
             },
         },
         title: {
-            text: 'Radar Chart - Multi Series',
+            text: 'Confronto ultimi 2 mesi',
         },
         stroke: {
             width: 2,
@@ -38,6 +38,7 @@
             categories: props.columns[0],
         }
     }))
+
     const series = computed(() => [
         {
             name: 'This Month',
@@ -48,7 +49,6 @@
             data: props.columns[2],
         }
     ])
-
 </script>
 
 <template>
