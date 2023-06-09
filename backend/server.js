@@ -50,7 +50,7 @@ app.use('/login', require('./router/loginRoute'));
 app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
 app.use('/badge', require('./router/badgeRoute'));
-
+app.use('/typology', require('./router/typologyRoute'));
 
 
 //DA QUI IN POI FUFFA

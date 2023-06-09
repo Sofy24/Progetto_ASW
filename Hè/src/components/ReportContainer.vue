@@ -22,6 +22,7 @@
 
     const userEmail = ref('')
     const report = ref()
+    const typologyPrices = ref()
     //data to check if we can visualzie report or not
     const data = reactive({
         isDataLoaded: false,
@@ -59,12 +60,16 @@
                 year: props.year,
                 month: props.month,
             }})
-            //set report and validate final check
+            //set report
             report.value = response.data
+            //retieve the prices 
+            const res2 = await axios.get('http://localhost:3000/typology/price') 
+            typologyPrices.value = res2.data
+            console.log("PREZZI BASSI E FISSI: " + typologyPrices.value[0])
             data.isDataLoaded = true
         }
         } catch (error) {
-            //if you are not logged
+            //if you are not logged or queries produced an error
             data.isDataLoaded = false
             data.isDataValid = false
         }
@@ -72,7 +77,7 @@
 
     onMounted(fetchData)
 
-    watch([props.year, props.month], fetchData)
+    //watch([props.year, props.month], fetchData)
 </script>
 
 <template>
