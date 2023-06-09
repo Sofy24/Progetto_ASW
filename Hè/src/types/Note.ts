@@ -1,8 +1,8 @@
 interface Note {
-    text: string 
     date: Array<number>
     email: string
     isRead: boolean
+    text: string 
     type: string
 }
 
