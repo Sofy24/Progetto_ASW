@@ -56,6 +56,8 @@ async function generalData(){
         as: "typology"
     }},
     {$project:{
+      min:"$month_min",
+      max:adjustedDate,
       bin_typology: "$typology.name",
       total_kg: '$total_kg',
       month:{$dateDiff:
@@ -68,9 +70,14 @@ async function generalData(){
     }}
   ])
   /*
-  console.log("banana: ")
+  console.log("banana: ")*/
   console.log(depositTotal)
-  */
+  depositTotal.forEach(e=>{
+    
+      e.month++
+    
+  })
+  console.log(depositTotal)
   const res2 = depositTotal.map(element =>[element.bin_typology[0],(element.total_kg)/(element.month)])
   const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
   
