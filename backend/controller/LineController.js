@@ -74,16 +74,16 @@ async function generalData(){
         total_kg: '$total_kg'
       }}
     ])
-      console.log("RUMAO??")
-      console.log(depositThisMonth)
+      //console.log("RUMAO??")
+      //console.log(depositThisMonth)
         
       const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
-      console.log("res1")
-      console.log(res1)
+      //console.log("res1")
+      //console.log(res1)
       res1.forEach(e => {
         if (e[0] != undefined) {
           index=list.indexOf(e[0])
-          console.log("BEFORE CRASH: " + index + " " + i);
+          //console.log("BEFORE CRASH: " + index + " " + i);
           final[index][i]=e[1]
         }
       });
@@ -186,8 +186,10 @@ async function userData(email){
         total_kg: '$total_kg'
       }}
     ])
+    /*
       console.log("PRINTTTTT")
       console.log(depositThisMonth)
+      */
         
       const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
       //console.log("res1")
