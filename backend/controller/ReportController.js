@@ -8,7 +8,10 @@ const BadgeController = require('../controller/BadgeController');
 const handleMonthlyReport = async (req, res) => {
     const {email, year, month} = req.query;
     console.log("params report"+email+year+month);
+    
     try {
+        await chargeReport(email, year, month);
+        console.log("DEVE AVER FINITO");
         const user = await User.findOne({ email });
         const report = await Report.findOne({ user, 'date.month': month, 'date.year': year });
         console.log("direct "+report);
@@ -169,6 +172,50 @@ async function produceReport(email, year, month) {
         throw error;
     }
 }
+
+async function chargeReport(email,year, month){
+
+    //console.log(month)
+
+    const last_report = await Report.aggregate([
+        {$sort:{"date.year":-1, "date.month":-1}},
+        {$limit:1}
+    ]);
+
+    console.log("???"+last_report)
+
+    let last_year = last_report.map(e=>e.date.year)
+    let last_month = last_report.map(e=>e.date.month)
+
+    if (last_report.length == 0) {
+        console.log("BANANA")
+        const user = await User.findOne({ email });
+        console.log("ARANCIA");
+        last_year = user.date.year;
+        last_month = user.date.month;
+    }
+
+    console.log("DATE MAGGICHE: "+last_year+" "+last_month)
+
+    const year_offset = (year-last_year)*12
+
+    const offset = year_offset+(month-last_month)
+
+    console.log(year_offset+" "+(month-last_month))
+    console.log(offset)
+    console.log("FINISHED")
+
+    let iyear = last_year;
+    for (let imonth = last_month; imonth <= month || year != iyear ; imonth++) {
+        if (imonth > 12) {
+            imonth = 1; // Reset month to January
+            iyear++; // Increment year by 1
+        }
+        console.log("RUNNING YEAR MONTH: " + iyear + " " + imonth)
+        await produceReport(email, iyear, imonth - 1);
+    } 
+}
+
 
 module.exports = {
     handleMonthlyReport
