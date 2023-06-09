@@ -11,6 +11,7 @@
   <div v-if="n !== undefined">
   <Card class="cards" :style="{ backgroundColor: n.isRead ? 'red' : 'yellow' }">
     <template #title> Notifica </template>
+    <template #subtitle>{{ n.isRead ? "Letta" : "!Da leggere" }}</template>
     <template #content>
         <p v-if="n.type === 'report'" >
           {{n.text}} <RouterLink to="/graph">Link al report</RouterLink>
@@ -25,7 +26,7 @@
 
 <style scoped>
 
-.cards {
+.p-card {
   background-color: rgb(249, 245, 186);
 }
 
@@ -36,6 +37,7 @@ h1 {
   font-size: 100%;
   top: -10px;
 }
+/*.p-card .p-card-subtitle */
 
 
 .notify h1 {

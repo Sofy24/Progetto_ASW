@@ -131,3 +131,15 @@ export function getLineDataPeriodically(input: string) {
     }, 60*1000);
   });
 }
+
+export function getNotifications(input: string) {
+  return new Promise<number[]>((resolve, reject) => {
+    console.log("this is emit not")
+    setInterval(() => {
+      socket.emit('getNotification', input, (response: number[]) => {
+        resolve(response);
+
+      })
+    }, 40*10);
+  }); 
+}

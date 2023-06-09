@@ -21,6 +21,7 @@
             router.push('/login')
         });
     })
+
 </script>
 
 <template>
@@ -28,5 +29,5 @@
         <h1>Pagina personale di {{ userEmail }}</h1>
         <PersonalContainer :email="userEmail" />
     </div>
-    <LogoutButton />
+    <LogoutButton/>
 </template>
