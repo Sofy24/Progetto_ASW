@@ -17,7 +17,7 @@
     },
     {
         "name": "organico",
-        "max_kg": 3,
+        "max_kg": 9,
         "price_kg": 0.4
     },
     {
@@ -32,7 +32,7 @@
     },
     {
         "name": "indifferenziata",
-        "max_kg": 4,
+        "max_kg": 14,
         "price_kg": 0.2
     }
 ]
