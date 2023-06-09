@@ -177,7 +177,7 @@ function createData(){
 }
 // CREO 1 DEPOSITO DI PROVA, andranno creati ogni tot su utenti e bidoni diversi
 //setTimeout(create1deposit,10000)
-create1deposit();
+//create1deposit();
 function create1deposit(){
   const Bin = require('./model/Bin');
   const User = require('./model/Municipality');
