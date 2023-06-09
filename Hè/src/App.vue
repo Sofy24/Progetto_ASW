@@ -67,8 +67,8 @@
 
         <RouterLink v-if="!isAuthorized" to="/register">Register</RouterLink>
         <RouterLink v-if="!isAuthorized" to="/login">Login</RouterLink>
-        <RouterLink to="/notification">Mess</RouterLink>
-
+        <RouterLink v-if="isAuthorized" to="/notification">MyNotifications</RouterLink>
+        <RouterLink v-if="isAuthorized" to="/binState">Stato corrente bidoni</RouterLink>
         <RouterLink v-if="isAuthorized" to="/personal">MyPage</RouterLink>
         <RouterLink v-if="isAuthorized" :to="reportLink">Resoconto Mensile</RouterLink>
         <RouterLink v-if="isAuthorized" :to="badgeLink">Le tue medaglie</RouterLink>
