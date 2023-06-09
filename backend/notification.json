@@ -5,9 +5,9 @@
             "month": 4,
             "year": 2011
           },
-        "category": "plastica",
-        "weight": 50,
-        "money": 40
+        "isRead": true,
+        "text": "This is the text of the message",
+        "type": "report"
     },
     {
         "email": "hey@gmail.com",
@@ -15,9 +15,9 @@
             "month": 3,
             "year": 2020
           },
-        "category": "carta",
-        "weight": 20,
-        "money": 10
+        "isRead": false,
+        "text": "This is another message",
+        "type": "deposit"
     },
     {
         "email": "hola@gmail.com",
@@ -25,9 +25,9 @@
             "month": 5,
             "year": 2023
           },
-        "category": "vetro",
-        "weight": 30,
-        "money": 30
+        "isRead": true,
+        "text": "Lorem inpsum",
+        "type": "report"
     },
     {
         "email": "aloha@gmail.com",
@@ -35,8 +35,8 @@
             "month": 2,
             "year": 2021
           },
-        "category": "organico",
-        "weight": 20,
-        "money": 10
+        "isRead": false,
+        "text": "Lorem inpsum the sequel",
+        "type": "deposit"
     }
 ]

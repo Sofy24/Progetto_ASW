@@ -9,17 +9,17 @@ const notificationSchema = mongoose.Schema({
         month: { type: Number, required: false },
         year: { type: Number, required: false }
     },
-    category: {
+    type: {
         type: String,
-        required: false
+        required: true
     },
-    weight: {
-        type: Number,
-        required: false
+    isRead: {
+        type: Boolean,
+        required: true
     },
-    money: {
-        type: Number,
-        required: false
+    text: {
+        type: String,
+        required: true
     }
 });
 

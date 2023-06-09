@@ -5,26 +5,23 @@ import { onMounted, ref } from "vue"
 import {type Note} from "../types/Note"
 
 const notifications = ref<Note[]>([])
-//<Array<Note>>
 
 const getNotifications = async () => {
   try {
     const data = (await axios.get("http://localhost:3000/notification")).data
     notifications.value = data
-    /*if (data.poster != null && data.poster !== "") {
+    /* CODICE PROF
+    if (data.poster != null && data.poster !== "") {
       data.poster = data.poster.replace("http://ia.media-imdb.com/", "https://m.media-amazon.com/")
     } else {
       data.poster = "https://www.stillisolutions.com/wp-content/uploads/2017/09/no-image-box-300x155.png"
     }
     movie.value = data*/
-    console.log("this is not", notifications.value)
   } catch (e) {
     console.error(e)
   }
 }
 onMounted(getNotifications)
-
-/*qui ci vanno tutte le notifiche*/
 
 
 /*import axios from "axios"
@@ -50,16 +47,10 @@ const getLastMovie = async () => {
 onMounted(getLastMovie)*/
 </script>
 
-<template>
-    <Notification type="report" year="2023" month="aprile"/>
-    <Notification v-for="n in notifications" type="deposit" :weight="n.weight" :category="n.category" :money="n.money"/>
-    <Notification message="heey"/>
-    <Notification message="heey"/>
-    <Notification message="heey"/>
-    <Notification message="heey"/>
-    <Notification message="heey"/>
-    <Notification message="heey"/>
-    <Notification message="heey"/>
+<template v-if="notifications !== undefined">
+  <Notification type="report" year="2023" month="aprile"/>
+  <Notification v-for="n in notifications" :n="n"/>
+
   <!--<div class="notificationContainer">
     <div class="last">
       <div class="coverImage"><img :src="movie.poster" class="card-img" alt="" @error="replaceByDefault" /></div>

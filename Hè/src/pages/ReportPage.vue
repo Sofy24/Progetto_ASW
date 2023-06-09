@@ -15,7 +15,33 @@
 </script>
 
 <template>
-    <h1>Report {{ year }} {{ month }}</h1>
+    <div class="ellipse">
+        <h1>Report {{ year }} {{ month }}</h1>
+    </div>
     <ReportContainer :year="year" :month="month" />
     <LogoutButton />
 </template>
+
+<style lang="scss">
+    .ellipse {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.ellipse::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1500%;
+  height: 300%;
+  background-color: lightblue;
+  border-radius: 50%;
+  transform: translateX(150%);
+  transform: translateY(-50%);
+  margin-left: -1258%;
+  padding-left: 150%;
+  z-index: -1;
+}
+</style>

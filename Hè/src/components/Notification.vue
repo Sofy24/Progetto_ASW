@@ -1,25 +1,26 @@
 <script setup lang="ts">
-  import { ref, computed } from "vue"
+  import { ref, watch } from "vue"
   import Card from 'primevue/card';
 
-  const props = defineProps(["type", "month", "year", "category", "weight", "money"])
-  //const sms = ref("r")
-  //const displayMessage = computed(() => "Questo è il messaggio" + props.message)
+  const props = defineProps(["n"])
+
 </script>
 
 
 <template>
-  <Card class="cards">
+  <div v-if="n !== undefined">
+  <Card class="cards" :style="{ backgroundColor: n.isRead ? 'red' : 'yellow' }">
     <template #title> Notifica </template>
     <template #content>
-        <p v-if="type === 'report'">
-          Il tuo report riguardo al {{month}}/{{year}} è pronto! <RouterLink to="/graph">Link al report</RouterLink>
+        <p v-if="n.type === 'report'" >
+          {{n.text}} <RouterLink to="/graph">Link al report</RouterLink>
         </p>
-        <p v-if="type === 'deposit'">
-          Hai consegnato {{category}} di peso {{weight}} kg. Questo ti verrà a costare {{money}} euro.
+        <p v-if="n.type === 'deposit'">
+          {{n.text}}
         </p>
     </template>
   </Card>
+</div>
 </template>
 
 <style scoped>
