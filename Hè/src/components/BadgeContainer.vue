@@ -14,6 +14,7 @@
     import organico from '../assets/images/organico.png'
     import vetro from '../assets/images/vetro.png'
     import potature from '../assets/images/potature.png'
+    import Timeline from 'primevue/timeline';
 
 
 
@@ -149,6 +150,10 @@
 </script>
 
 <template>
+
+
+
+
     <div v-if ="data.isDataLoaded" class="yellow">
         <h1>Badge Container {{ year }}</h1>
         <h3> extra</h3>

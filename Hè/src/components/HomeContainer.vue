@@ -9,7 +9,7 @@ import SupportIcon from './icons/IconSupport.vue'
 
 <template>
 
-  <img src="../assets/images/riciclaggio.jpg" alt="riciclaggio" width="100%" >
+  <img src="../assets/images/riciclaggio1.jpg" alt="riciclaggio" width="100%" >
   <div class="mainContent">
     <div class="yellow_div">
       <h1>Chi siamo</h1>
