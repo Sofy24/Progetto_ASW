@@ -3,9 +3,12 @@
 </script>
 
 <template>
-  <div class="grid">
-    <GraphContainer />
+  <div class="mainContent">
+    <div class="grid">
+      <GraphContainer />
+    </div>
   </div>
+  
   
 </template>
 

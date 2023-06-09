@@ -77,7 +77,7 @@
       </nav>
     </div>
   </header>
-  <div id="mainContent">
+  <div>
     <RouterView />
     <RouterView name="personal"></RouterView>
     <RouterView name="home"></RouterView>
