@@ -34,7 +34,7 @@ const chartOptions={
     size: 0
   },
   xaxis: {
-    categories: ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+    categories: ['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   }
 }
 
