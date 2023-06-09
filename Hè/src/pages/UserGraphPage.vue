@@ -4,6 +4,8 @@
 </script>
 
 <template>
-    <UserGraphContainer />
-    <LogoutButton />
+    <div class="mainContent">
+        <UserGraphContainer />
+        <LogoutButton />
+    </div>
 </template>

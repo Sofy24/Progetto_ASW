@@ -3,25 +3,53 @@ import Notification from "@/components/Notification.vue"
 import axios from "axios"
 import { onMounted, ref } from "vue"
 import {type Note} from "../types/Note"
+import { getNotifications} from '@/utils/api'
 
 const notifications = ref<Note[]>([])
 
-const getNotifications = async () => {
+onMounted(()=>{
+  fetchData()
+  const interval = setInterval(fetchData, 60000);
+  
+  return () => {
+    clearInterval(interval);
+  };
+}) 
+
+
+const fetchData = () => {
+
+  getNotifications("ciaoo").then((response)=>{
+      console.log("this is response2, i'm client", response)
+      notifications.value = response.map((item: any): Note => {
+      return {
+        date: item.date,
+        email: item.email,
+        isRead: item.isRead,
+        text: item.text,
+        type: item. type
+      }
+    })
+    console.log("notifications print", notifications)
+    }).catch((error)=>{
+        // Handle the error
+        console.error(error);
+      });
+        // Handle the response data
+        
+      } 
+
+
+/*const getNotifications = async () => {
   try {
     const data = (await axios.get("http://localhost:3000/notification")).data
     notifications.value = data
-    /* CODICE PROF
-    if (data.poster != null && data.poster !== "") {
-      data.poster = data.poster.replace("http://ia.media-imdb.com/", "https://m.media-amazon.com/")
-    } else {
-      data.poster = "https://www.stillisolutions.com/wp-content/uploads/2017/09/no-image-box-300x155.png"
-    }
-    movie.value = data*/
+    
   } catch (e) {
     console.error(e)
   }
 }
-onMounted(getNotifications)
+onMounted(getNotifications)*/
 
 
 /*import axios from "axios"

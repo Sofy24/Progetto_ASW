@@ -188,9 +188,9 @@ function create1deposit(){
   //var u = User.findById('6479f8a6117b966054dc1a14')._id
   //var b = Bin.findOne({_id:ObjectId('6479f541056369bd03bbaf0f')})._id
   const deposit = new Deposit({
-    user:'647b3f2dc34527bb4073be43',
+    user:'6482d383f29eff4b92b8a5bb',
     kg:2,
-    bin: '647b3e04a4c6674f3e9fca1b' ,
+    bin: '6482d254d401fe210923898c' ,
   });
   deposit.save();
   console.log("deposited")

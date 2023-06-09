@@ -18,6 +18,9 @@ import { onMounted } from "vue";
 </script>
 
 <template>
-    <BadgeContainer :year="year" :month="month" />
-    <LogoutButton />
+    <div class="mainContent">
+        <BadgeContainer :year="year" :month="month" />
+        <LogoutButton />
+    </div>
+    
 </template>
