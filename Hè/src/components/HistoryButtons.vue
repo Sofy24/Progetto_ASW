@@ -143,3 +143,9 @@ const props = defineProps({
         <button @click="handleClick(-1)" :disabled="isBackwardDisabled"> {{ previousText }}</button>
     </div>
 </template>
+
+<style>
+div{
+    position: relative;
+}
+</style>

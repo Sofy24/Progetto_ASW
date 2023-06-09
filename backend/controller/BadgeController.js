@@ -113,7 +113,7 @@ const handleBadges = async (req, res) => {
     const list = classicBadges.map(elem=>elem._id)
     console.log('list: '+list)
     monthArray.forEach(e=>{
-        final[y]=['','','','','','','','']
+        final[y]=['niente','niente','niente','niente','niente','niente','niente','niente']
         y++
     })
     
