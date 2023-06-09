@@ -32,7 +32,7 @@ async function generalData(){
 
   //console.log("dates")
   //console.log(dates)
-  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   var y=0
   list.forEach(e=>{
     final[y]=[0,0,0,0,0,0,0,0,0,0,0,0]
@@ -131,7 +131,7 @@ async function userData(email){
 
   //console.log("dates")
   //console.log(dates)
-  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   var y=0
   list.forEach(e=>{
     final[y]=[0,0,0,0,0,0,0,0,0,0,0,0]

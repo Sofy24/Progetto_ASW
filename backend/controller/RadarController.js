@@ -74,7 +74,7 @@ async function generalData(){
     }}
   ])
   const res2 = depositLastMonth.map(element =>[element.bin_typology[0],element.total_kg])
-  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
 
   
   res1.forEach(e => {
@@ -179,7 +179,7 @@ async function userData(email){
     }}
   ])
   const res2 = depositLastMonth.map(element =>[element.bin_typology[0],element.total_kg])
-  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
 
   
   res1.forEach(e => {

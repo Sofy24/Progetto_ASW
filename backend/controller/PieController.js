@@ -40,7 +40,7 @@ async function generalData(){
   //console.log(res1)
   
   
-  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   
   
   res1.forEach(e => {
@@ -104,7 +104,7 @@ async function userData(email){
   //console.log(res1)
   
   
-  const list=['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio']
+  const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   
   
   res1.forEach(e => {
