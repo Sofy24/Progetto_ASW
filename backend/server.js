@@ -24,7 +24,7 @@ const startServer = async () => {
   //socket.io
   const server = http.createServer(app);
   handleSocketConnections(server);
-  const port = 8080; // Set the desired port number
+  const port = 8080; 
   server.listen(port, () => {
     console.log(`Server listening on port ${port}`);
   });
@@ -34,13 +34,6 @@ startServer();
 
 
 
-// ... (other server configurations and routes)
-
-// Invoke the handleSocketConnections function to set up the socket connections
-
-
-// Start the server
-
 
 
 app.use('/static', express.static(path.join(__dirname, 'public')));
@@ -49,6 +42,7 @@ connectDB();
 //routes
 app.use('/', require('./router/root'));
 app.use('/notification', require('./router/notificationRoute'));
+app.use('/binState', require('./router/binsStateRoute'));
 app.use('/municipality', require('./router/municipalityRoute'));
 app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));

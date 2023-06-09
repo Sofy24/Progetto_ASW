@@ -5,10 +5,6 @@
       "node",
       "vuetify"
     ],
-    "esModuleInterop_comment": "Necessary for incompatible modules to import, like socket.io",
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports_comment": "cannot be false, as needed for `esModuleInterop` parameter, though we can omit it",
-    "allowSyntheticDefaultImports": true
   },
   "files": [],
   "references": [

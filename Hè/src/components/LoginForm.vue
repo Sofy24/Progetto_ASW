@@ -27,7 +27,7 @@
                     //reset errorMessage
                     errorMessage.value = ''
                     //go to personal page
-                    router.push('personal')
+                    router.push('/personal')
                 })
                 .catch(error => {
                     if (error.response.status == 401){

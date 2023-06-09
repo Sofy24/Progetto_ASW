@@ -112,19 +112,7 @@ function handleSocketConnections(server) {
 
     })
 
-    
 
-        /*if(data=="general"){
-            Pie.generalData().then((res)=>{
-                //console.log("X: "+res)
-                callback( res);
-            })
-        }else{
-            Pie.userData(data).then((res)=>{
-                //console.log("X: "+res)
-                callback( res);
-            })
-        }*/
     });
 
 

@@ -3,11 +3,7 @@ async function handleNewNote(){
     const sms = await Notification.find();
     return sms;
 }
-/*const handleNewNote = async (req, res) => {
-    const sms = await Notification.find();
-    if (!sms) return res.status(204).json({ 'message': 'No notification found' });
-    res.json(sms);
-}*/
+
 ///DON'T DELETE THIS
 /*Notification.create({
     "email": "ciao@gmail.com",
