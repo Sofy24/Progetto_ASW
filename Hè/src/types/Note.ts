@@ -1,9 +1,9 @@
 interface Note {
-    category: string 
+    text: string 
     date: Array<number>
     email: string
-    money: number
-    weight: number
+    isRead: boolean
+    type: string
 }
 
 export type {Note}
