@@ -12,30 +12,10 @@ const handleBadges = async (req, res) => {
        
     const {email, year, month} = req.query;
 
+    /**charge report */
+    await chargeReport(email, year, month)
 
-    try {
-        const user = await User.findOne({ email });
-        /*const report =*/ await Report.findOne({ user, 'date.month': month, 'date.year': year });
-    } catch (err) {
-        try {//if there is no report try to generate one based on deposits 
-            const { date: { month: registrationMonth, year: registrationYear } } = await User.findOne({ email }, 'date.month date.year');
-            if (registrationYear > year || (registrationYear === year && (registrationMonth) >= month)) {
-                return res.status(400).json({ error: 'asked badges before registration date' });
-                
-            }
-            /*const quantities =*/ await ReportController.produceReport(email, year, month - 1);
-            //res.json(quantities)
-        } catch (error) {
-            console.error('Error retrieving report:', error);
-            res.status(500).json({ error: 'Failed to retrieve report for badges' });
-        }
-    }   
-
-
-
-
-
-
+    
 
     userEmail = email
     const current =new Date()
@@ -109,24 +89,24 @@ const handleBadges = async (req, res) => {
     //console.log(final)
     const classicBadges = await Badges.aggregate([
         {$group: {_id:"$name"}}])
-    console.log('list: '+classicBadges)
+    //console.log('list: '+classicBadges)
     const list = classicBadges.map(elem=>elem._id)
-    console.log('list: '+list)
+    //console.log('list: '+list)
     monthArray.forEach(e=>{
         final[y]=['niente','niente','niente','niente','niente','niente','niente','niente']
         y++
     })
     
-    console.log(list)
+    //console.log(list)
     for(var i =0;i<12;i++)
     {
         var d = dates[i]
         const startDate = new Date(year,d,01);
         const adjustedStartDate = new Date(startDate.getTime() + timezoneOffset * 60 * 1000);
-        console.log(adjustedStartDate)
+        //console.log(adjustedStartDate)
         const endDate = new Date(year,d+1,01);
         const adjustedEndDate = new Date(endDate.getTime() + timezoneOffset * 60 * 1000);
-        console.log(adjustedEndDate)
+        //console.log(adjustedEndDate)
         const printDate =new Date(year,d-1,01);
         const adjustedPrintDate = new Date(printDate.getTime() + timezoneOffset * 60 * 1000);
         monthArray[i]= adjustedPrintDate.toLocaleString('default', { month: 'long' }) + " "+adjustedPrintDate.getFullYear()
@@ -152,7 +132,7 @@ const handleBadges = async (req, res) => {
             }},
             {$match: {"badge.is_multiple": false}}
         ])
-        console.log(badgesThisMonth)
+        //console.log(badgesThisMonth)
         const len = badgesThisMonth.length
         badgesThisMonth.forEach(e=>{
             /*
@@ -212,7 +192,7 @@ const handleBadges = async (req, res) => {
                 //console.log(element)
                 specialBadgeList.push((e._id[0]).concat(" ").concat(n))
             }
-            console.log(n)
+           // console.log(n)
             //console.log("SPECIAL "+specialBadgeList)
         })
         
@@ -227,13 +207,13 @@ const handleBadges = async (req, res) => {
 
 
 async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
-    console.log(reportData)
-    console.log(email)
+    //console.log(reportData)
+    //console.log(email)
     const thisUser = await User.findOne({ email: email });
     var must_create_total = true
 
-    console.log("in badge: "+adjustedDate)
-    console.log(adjustedFutureDate)
+    //console.log("in badge: "+adjustedDate)
+    //console.log(adjustedFutureDate)
     const depositTotal= await Deposit.aggregate([
         {$match: {createdAt:{ $gte : adjustedDate}}},
         {$match: {createdAt:{ $lt : adjustedFutureDate}}},
@@ -260,51 +240,54 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
     /*for(var i=0;i<waste.length;i++){
         media[i]=0
     }*/
-    console.log(num_user)
-    console.log("deposit!!!! ")
-    console.log(depositTotal)
+    //console.log(num_user)
+    //console.log("deposit!!!! ")
+    //console.log(depositTotal)
     var partial=depositTotal.map(e=>[e._id.tipo[0],(e.tot_kg)/num_user])
     console.log(partial)
     partial.forEach(p=>{
-        console.log(p)
-        console.log(p[0])
+        //console.log(p)
+        //console.log(p[0])
         var id = waste.indexOf(p[0])
-        console.log[id]
+        //console.log[id]
         media[id]=p[1]
 
     })
-    console.log(waste)
-    console.log(media)
+    //console.log(waste)
+    //console.log(media)
     reportData.forEach(e=>{
         var typology=waste.indexOf(e[0])
-        console.log(" DEBUG ")
-        console.log(e)
-        console.log(typology)
-        console.log(media)
+        //console.log(" DEBUG ")
+        //console.log(e)
+        //console.log(typology)
+        //console.log(media)
         if(e[2]<e[1] || e[1]>media[typology]){
             
             Badges.findOne({name:e[0],is_multiple: false}).then(async (thisBadge)=>{
                 const badge = new UserBadges({
                     user:thisUser._id,
-                    badge: thisBadge._id
+                    badge: thisBadge._id,
+                    createdAt:adjustedDate
+
                 })
                 await badge.save();
-                console.log("SALVATO")
+                //console.log("SALVATO")
                 
             })
         }else{
-            console.log("MUST TOTAL FALSE")
+            //console.log("MUST TOTAL FALSE")
             must_create_total = false
         }
 
     })
 
     if(must_create_total){
-        console.log("IS TRUE")
+        //console.log("IS TRUE")
         Badges.findOne({name:"tutto", is_multiple: false}).then(async (thisBadge)=>{
             const badge = new UserBadges({
                 user:thisUser._id,
-                badge: thisBadge._id
+                badge: thisBadge._id,
+                createdAt:adjustedDate
             })
             await badge.save();
         })
@@ -340,7 +323,8 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
                 Badges.findOne({name:e._id[0],is_multiple: true, repetition:n}).then(async (thisBadge)=>{
                     const badge = new UserBadges({
                         user:thisUser._id,
-                        badge: thisBadge._id
+                        badge: thisBadge._id,
+                        createdAt:adjustedDate
 
                     })
                     await badge.save();
@@ -357,6 +341,52 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
         
     })
     
+}
+
+
+async function chargeReport(email,year, month){
+
+
+    //console.log(month)
+
+    const last_report = await Report.aggregate([
+        {$sort:{"date.year":-1, "date.month":-1}},
+        {$limit:1}
+    ]);
+
+    console.log(last_report)
+
+    const last_year = last_report.map(e=>e.date.year)
+    const last_month = last_report.map(e=>e.date.month)
+
+    console.log(last_year+" "+last_month)
+
+    const year_offset = (year-last_year)*12
+
+    const offset = year_offset+(month-last_month)
+
+    console.log(year_offset+" "+(month-last_month))
+    console.log(offset)
+    for (var i=1; i<=(offset);i++){
+        try {
+            const user = await User.findOne({ email });
+            /*const report =*/ await Report.findOne({ user, 'date.month': last_month, 'date.year': last_year });
+        } catch (err) {
+            try {//if there is no report try to generate one based on deposits 
+                const { date: { month: registrationMonth, year: registrationYear } } = await User.findOne({ email }, 'date.month date.year');
+                if (registrationYear > year || (registrationYear === year && (registrationMonth) >= month)) {
+                    return res.status(400).json({ error: 'asked badges before registration date' });
+                    
+                }
+                /*const quantities =*/ await ReportController.produceReport(email, year, month - 1);
+                //res.json(quantities)
+            } catch (error) {
+                console.error('Error retrieving report:', error);
+                res.status(500).json({ error: 'Failed to retrieve report for badges' });
+            }
+        } 
+    }
+      
 }
 
 module.exports = {

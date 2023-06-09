@@ -71,13 +71,13 @@ async function generalData(){
   ])
   /*
   console.log("banana: ")*/
-  console.log(depositTotal)
+  //console.log(depositTotal)
   depositTotal.forEach(e=>{
     
       e.month++
     
   })
-  console.log(depositTotal)
+  //console.log(depositTotal)
   const res2 = depositTotal.map(element =>[element.bin_typology[0],(element.total_kg)/(element.month)])
   const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   

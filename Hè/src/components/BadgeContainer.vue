@@ -1,6 +1,6 @@
 <script setup lang="ts">
     import axios from 'axios'
-    import { onMounted, ref, reactive, onBeforeMount } from 'vue'
+    import { onMounted, ref, reactive, watch, onBeforeMount } from 'vue'
     import { loadRouteLocation, useRouter} from 'vue-router'
     import { defineProps, watchEffect } from 'vue';
     import { verifyToken } from '@/utils/tokenUtils'
@@ -103,15 +103,13 @@
         }
     };
 
-    watchEffect(() => {
-        fetchData();
-    });
+    
 
     onMounted(() => {
         fetchData();
     });
 
-    
+    watch([props.year, props.month], fetchData)
 
     function getImg(src:string){
         switch ( src ) {
@@ -178,7 +176,7 @@
                 </div>
             </div>
         </div>
-        <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail"  /> 
+        <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail" @navigate="fetchData" /> 
     </div>
 </template>
 
