@@ -19,10 +19,19 @@
   --vt-c-text-light-2: rgba(60, 60, 60, 0.66);
   --vt-c-text-dark-1: var(--vt-c-white);
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
+
+  --primary-color: black;
+  --secondary-color:#FFC700;
+  --secondary-color-light:#f8db73;
+  --secondary-color-trasparent:#ffc800c5;
+  --secondary-color-trasparent2:#ffc8002f;
+  --border-radius: 10px;
 }
 
 /* semantic color variables for this project */
 :root {
+
+
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);

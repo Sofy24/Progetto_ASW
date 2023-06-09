@@ -29,8 +29,9 @@
 </script>
 
 <template>
-  <div v-if="data.isDataLoaded">
-    <UserPieContainer :email="userEmail" />
+  <div v-if="data.isDataLoaded"  class="grid">
+
+    <!--<UserPieContainer :email="userEmail" />-->
   
 
     <div>

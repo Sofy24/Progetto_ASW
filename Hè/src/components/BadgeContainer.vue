@@ -1,10 +1,21 @@
 <script setup lang="ts">
     import axios from 'axios'
     import { onMounted, ref, reactive, onBeforeMount } from 'vue'
-    import { useRouter} from 'vue-router'
+    import { loadRouteLocation, useRouter} from 'vue-router'
     import { defineProps, watchEffect } from 'vue';
     import { verifyToken } from '@/utils/tokenUtils'
     import HistoryButtons from '@/components/HistoryButtons.vue'
+    import niente from '../assets/images/niente.png'
+    import carta from '../assets/images/carta.png'
+    import plastica from '../assets/images/plastica e lattine.png'
+    import indifferenziata from '../assets/images/indifferenziata.png'
+    import tutto from '../assets/images/tutto.png'
+    import olio from '../assets/images/olio.png'
+    import organico from '../assets/images/organico.png'
+    import vetro from '../assets/images/vetro.png'
+    import potature from '../assets/images/potature.png'
+
+
 
     const props = defineProps({
         year: {
@@ -99,11 +110,46 @@
         fetchData();
     });
 
+    
+
+    function getImg(src:string){
+        switch ( src ) {
+            case "carta":
+                return carta
+            case "vetro":
+                return vetro
+            case "niente":
+                return niente
+            case "plastica e lattine":
+                return plastica
+            case "tutto":
+                return tutto
+            case "organico":
+                return organico
+            case "indifferenziata":
+                return indifferenziata
+            case "olio":
+                return olio
+            case "sfralci e potature":
+                return potature
+        }
+        //return await new URL(`../../lib/Carousel/assets/${src}`, import.meta.url).href
+        /*
+        var string = "../../assets/images/".concat(src).concat(".png")
+        import img from string
+        return img
+        return eval(src)"../../assets/images/".concat(src).concat(".png")
+        */
+    }
+
+
+
+    
 
 </script>
 
 <template>
-    <div v-if ="data.isDataLoaded">
+    <div v-if ="data.isDataLoaded" class="yellow">
         <h1>Badge Container {{ year }}</h1>
         <h3> extra</h3>
         <div v-for="elem in extraBadges" >
@@ -111,11 +157,19 @@
         </div>
         <div class="medagliereGrid">
             <!-- grey" class="grid-item"  -->
-            <div class="medagliere" v-for="(elem,index) in badgeMonth" :key="index">
+            <div  v-for="(elem,index) in badgeMonth" :key="index">
                 <h3> {{elem}}</h3>
-                <div class="grid" v-for="element in badges[index]" > 
-                    <img src="../assets/images/vetro.png" alt={{element}} width="42" height="42" >
-                    <!--<div>{{ element }}</div>-->
+                <div class="gridMedglie medagliere">
+                    
+                    <div  v-for="element in badges[index]" :key="element" > 
+                        <!--<img :src="'../assets/images/'+ element +'.png'" alt={{element}} width="42" height="42" >
+                        {{ element }}-->
+                        <img :src="getImg(element)" alt="pippo" width="42" height="42">
+                    </div>
+                    <!--
+                    <img v-for="element in badges[index]" :src="'../../assets/images/'+ element +'.png'" :alt="element" width="42" height="42">
+                    <img src="../assets/images/niente.png" alt="pippo" width="42" height="42">
+                    -->
                 </div>
             </div>
         </div>
