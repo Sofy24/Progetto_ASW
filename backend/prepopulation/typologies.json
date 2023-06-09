@@ -2,30 +2,37 @@
 [
     {
         "name": "vetro",
-        "max_kg": 50
+        "max_kg": 50,
+        "price_kg": 0.4
     },
     {
         "name": "plastica e lattine",
-        "max_kg": 15
+        "max_kg": 15,
+        "price_kg": 0.9
     },
     {
         "name": "carta",
-        "max_kg": 20
+        "max_kg": 20,
+        "price_kg": 0.3
     },
     {
         "name": "organico",
-        "max_kg": 3
+        "max_kg": 3,
+        "price_kg": 0.4
     },
     {
         "name": "sfralci e potature",
-        "max_kg": 25
+        "max_kg": 25,
+        "price_kg": 0.15
     },
     {
         "name": "olio",
-        "max_kg": 15
+        "max_kg": 15,
+        "price_kg": 1.0
     },
     {
         "name": "indifferenziata",
-        "max_kg": 4
+        "max_kg": 4,
+        "price_kg": 0.2
     }
 ]

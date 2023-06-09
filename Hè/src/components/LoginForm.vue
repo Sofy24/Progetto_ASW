@@ -60,7 +60,7 @@
                 <label for="password">Password</label>
                 <input type="password" id="password" v-model="password" required>
             </div>
-            <div v-if="errorMessage !== ''" class="error-message">
+            <div v-if="errorMessage !== ''" class="error-message error">
                 <p>{{ errorMessage }}</p>
             </div>
             <button type="submit">Login</button>
