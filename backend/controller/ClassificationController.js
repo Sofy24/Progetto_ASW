@@ -9,15 +9,35 @@ const currentYear = currentDate.getFullYear();
 const handleClassification = async (req, res) => {
     const createdAtFiltered = await (await Deposit.find({}, { createdAt: 1 })).filter(d => d.createdAt.getMonth() === (previousMonth - 1) && d.createdAt.getFullYear() === currentYear);
     const idIndifferenziata = new ObjectId('648437bac62e21f98afdf7fe');
+    const getDeposit = await Deposit.aggregate([
+        {
+            $match: {
+              "_id": {
+                  $in: createdAtFiltered.map(d => d._id)
+                }
+            }
+          }
+      ]);
     const indifByMunicip = await Bin.aggregate([ 
         {
             $lookup: {
-              from: "Deposit",
-              localField: "_id",
-              foreignField: "bin",
-              as: "deposit"
+            from: "Deposit",
+            localField: "_id",
+            foreignField: "bin",
+            let: { depositIds: "$deposit._id" },
+            pipeline: [
+                {
+                $match: {
+                    $expr: {
+                    $in: ["$_id", getDeposit.map(d => d._id)]
+                    }
+                }
+                }
+            ],
+            as: "deposit"
             }
         },
+        
         {
             $group: {
               _id: "$municipality",
@@ -34,24 +54,10 @@ const handleClassification = async (req, res) => {
         {
             $match: { _id: idIndifferenziata }
         }
+        
+        
       ]);
-      const getDeposit = await Deposit.aggregate([
-        {
-            $match: {
-              "_id": {
-                  $in: createdAtFiltered.map(d => d._id)
-                }
-            }
-          }
-      ]);
-/*{
-            $lookup: {
-              from: "Deposit",
-              localField: "_id",
-              foreignField: "bin",
-              as: "deposit"
-            }
-        },*/
+
 
     //console.log("create",createdAt);
 
