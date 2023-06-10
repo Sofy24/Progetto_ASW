@@ -6,7 +6,6 @@ const pepperValue = 'c7a3d8e9b2f541cb18f206e4108761c9';
 
 const handleLogin = async (req, res) => {
     try {
-        console.log(req.body);
         const { email, password } = req.body;
         const user = await User.findOne({ email });
         if (user != null ) {
@@ -24,14 +23,13 @@ const handleLogin = async (req, res) => {
                     email: user.email,
                 };
                 const token = jwt.sign(payload, secretKey, { expiresIn: '1h' });
-                console.log(token);
                 return res.status(200).json({ token });
             }
         }
         //unauthorized
         return res.status(401).json({ error: 'Email o Password errate' });
     } catch (error) {
-        console.error('Error registering user:', error);
+        //console.error('Error registering user:', error);
         res.status(500).json({ error: 'Failed to register user' });
     }
 };

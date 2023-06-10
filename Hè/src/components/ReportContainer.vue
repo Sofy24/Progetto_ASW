@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import { onMounted, ref, reactive, watch } from 'vue'
+    import { onMounted, ref, reactive} from 'vue'
     import { useRouter} from 'vue-router'
     import axios from 'axios'
     import { defineProps } from 'vue'
@@ -85,7 +85,6 @@
 
     onMounted(fetchData)
 
-    //watch([props.year, props.month], fetchData)
 </script>
 
 <template>

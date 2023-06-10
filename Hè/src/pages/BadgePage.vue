@@ -1,14 +1,12 @@
 <script setup lang="ts">
     import LogoutButton from "@/components/LogoutButton.vue"
     import BadgeContainer from "@/components/BadgeContainer.vue"
-    import { onMounted, computed } from "vue";
-    import { useStore } from 'vuex';
+    import {computed } from "vue"
+    import { useStore } from 'vuex'
 
-    const store = useStore();
-    const year = computed(() => store.getters.getBadgeYear);
-    const month = computed(() => store.getters.getBadgeMonth);
-    console.log("CONDIZIONALE: "+ year.value +" "+ month.value)
-    //onMounted(async () => { console.log(props.month, props.year) })
+    const store = useStore()
+    const year = computed(() => store.getters.getBadgeYear)
+    const month = computed(() => store.getters.getBadgeMonth)
 </script>
 
 <template>

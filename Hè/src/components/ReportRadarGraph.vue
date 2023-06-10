@@ -3,12 +3,13 @@
     import { defineProps, computed} from 'vue'
     import type { PropType } from 'vue'
 
+    //populate the graph
     const props = defineProps({
         columns: {
             type: Array as PropType<(string[] | number[])[]>,
             required: true,
         },
-    });
+    })
 
     //structure of the radar graph
     const chartOptions = computed(() => ({

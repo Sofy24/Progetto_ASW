@@ -1,30 +1,34 @@
 <script setup lang="ts">
     import axios from 'axios'
     import ReportTable from '@/components/ReportTable.vue'
-    import { computed } from '@vue/reactivity';
-    import { onMounted, reactive, ref } from 'vue';
+    import { computed } from '@vue/reactivity'
+    import { onMounted, reactive, ref } from 'vue'
     import {checkReportDateValidity} from '../utils/checkReport'
 
+    //current user email
     const props = defineProps({
         email: {
             type: String,
             required: true,
         }
-    });
+    })
 
     const report = ref()
     const typologyPrices = ref()
     const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto',
         'settembre', 'ottobre', 'novembre', 'dicembre']
+    //loaded = obtained from server without errors
+    //valid = there are data to show that represent something logical    
     const containerData = reactive({
         isDataLoaded: false,
         isDataValid: false
     })
 
+    //variable to control the month and year
     const reportMonthYear = computed(() => {
-        const currentDate = new Date();
-        const previousMonth = currentDate.getMonth(); // months are zero-based (0 - 11)
-        const currentYear = currentDate.getFullYear();
+        const currentDate = new Date()
+        const previousMonth = currentDate.getMonth() // months are zero-based (0 - 11)
+        const currentYear = currentDate.getFullYear()
         if (previousMonth == 0) {
             return [(currentYear - 1), 12]
         } else {
@@ -37,6 +41,7 @@
         .then(response => {
             containerData.isDataValid = response
         }).catch(ignored => {})
+        //retrieve the last report
         axios.get("http://localhost:3000/report", {
             params: {
                 email: props.email,
@@ -57,8 +62,8 @@
             //error in report (wrong date, server down, ...), redirect to standard report page 
             containerData.isDataValid = false
             containerData.isDataLoaded = true
-        });
-    });
+        })
+    })
 
 </script>
 
@@ -73,6 +78,9 @@
         <div v-else class="first-month">
             <p>Benvenuto/a, questo è ancora il tuo primo mese su Hé, con il tempo questa pagina si riempirà sempre più</p>
         </div>
+    </div>
+    <div v-else>
+        <p>LOADING...</p>
     </div>
 </template>
 

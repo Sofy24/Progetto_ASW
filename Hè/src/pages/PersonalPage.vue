@@ -11,6 +11,7 @@
         isDataLoaded: false,
     })
 
+    //check authorization
     onMounted(async () => {
         verifyToken()
         .then(result => {
@@ -19,7 +20,7 @@
         }).catch(error => {
             console.error("error: "+error)
             router.push('/login')
-        });
+        })
     })
 
 </script>

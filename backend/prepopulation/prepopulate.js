@@ -30,6 +30,8 @@ const populateDatabase = async () => {
     try { 
       await prepopulateDatabase('badges', Badge);
     } catch (error) {}
+    //following part is only for demonstration purposes during the exam
+    //creation of data to display site functions
     try {  
       await createBins();
       await Deposit.deleteMany({});
@@ -41,9 +43,9 @@ const populateDatabase = async () => {
         await Notification.deleteMany({});
     } catch (error) {}
     try {
-        await createDeposits();
+        await createDeposits();//this also create the notifications, they are very linked...
     } catch (error) {}
-    //following part is only for demonstration purposes during the exam
+    
 
   }
 
@@ -195,9 +197,6 @@ const createDeposits = async () => {
                             text: "Hai consegnato " + typologyName + " di peso " + randomKg + "kg. Questo ti verrà a costare " + payment + " euro."   
                         })
                         await depositNotification.save();
-
-
-                        // 
 
                         //update the kg in the bin
                         if (month == currentMonth && year == currentYear) {

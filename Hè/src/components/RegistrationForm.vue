@@ -16,6 +16,7 @@
     fetchMunicipalityNames()
   });
 
+  //all possible option for select
   const filteredOptions = computed(() => {
     const query = searchQuery.value.toLowerCase()
     return municipalities.value.filter((option) =>
@@ -23,11 +24,13 @@
     );
   });
 
+  //password check
   const isPasswordValid = computed(() => {
     const passwordRegex = new RegExp(/^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-+]).{8,}$/)
     return passwordRegex.test(password.value)
   });
 
+  //add the user to db
   const submitForm = () => {
     const formData = {
       name: name.value,
@@ -37,14 +40,11 @@
       password: password.value,
     };
 
-    console.log(formData)
 
     axios.post('http://localhost:3000/register', formData)
       .then((response) => {
         errorMessage.value=""
-        console.log('Form data sent and stored successfully:', response.data)
-        console.log("good"+response.statusText)
-        router.push('home');
+        router.push('/home');
       })
       .catch((error) => {
         if (error.response.status == 409) {
@@ -52,18 +52,19 @@
         } else if (error.response.status == 400){
           errorMessage.value = error.response.data.error
         } else {
-          console.error('Error sending form data:', error)
+          //console.error('Error sending form data:', error)
         }
       });
   };
 
+  //municipalities for select
   const fetchMunicipalityNames = () => {
     axios.get('http://localhost:3000/municipality/names')
       .then((response) => {
         municipalities.value = response.data;
       })
       .catch((error) => {
-        console.error('Error retrieving municipalities names:', error)
+        //console.error('Error retrieving municipalities names:', error)
       })
   };
 </script>
