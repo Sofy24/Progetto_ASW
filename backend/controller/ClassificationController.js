@@ -7,7 +7,7 @@ const currentYear = currentDate.getFullYear();
 
 
 const handleClassification = async (req, res) => {
-    const createdAtFiltered = await (await Deposit.find({}, { createdAt: 1 })).filter(d => d.createdAt.getMonth() === (previousMonth - 1) && d.createdAt.getFullYear() === currentYear);
+    const createdAtFiltered = await (await Deposit.find({}, { createdAt: 1 })).filter(d => d.createdAt.getMonth() === previousMonth && d.createdAt.getFullYear() === currentYear);
     const idIndifferenziata = new ObjectId('648437bac62e21f98afdf7fe');
     const getDeposit = await Deposit.aggregate([
         {
