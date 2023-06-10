@@ -98,13 +98,15 @@ const handleClassification = async (req, res) => {
       ]);
     const getActualKGDiff = difByMunicip.map(({ _id, bins }) => [_id, bins]).map(item => [item[0], item[1].reduce((accumulator, obj) => accumulator + obj.bins.actual_kg, 0)]);
     
-    const joinedArray = getActualKGDiff.map(([id, value]) => {
-        const [_, indiffValue] = getActualKGIndiff.find(([indiffId]) => indiffId === id) || [id, 0];
-        return [id, value, indiffValue];
+    const joinedArray = getActualKGDiff.map(([id, diffValue]) => {
+        const [_, indiffValue] = getActualKGIndiff.find(([indiffId]) => indiffId.equals(id));
+        return [id, diffValue, indiffValue];
     });
 
-    if (!indifByMunicip) return res.status(204).json({ 'message': 'The classification is not available' });
-    res.json(joinedArray);
+    const percentage = joinedArray.map( item => [item[0], item[1] / (item[1] + item[2])]);
+
+    if (!percentage) return res.status(204).json({ 'message': 'The classification is not available' });
+    res.json(percentage);
 }
 
 module.exports = {
