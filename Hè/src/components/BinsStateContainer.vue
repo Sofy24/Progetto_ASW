@@ -1,48 +1,71 @@
 <script setup lang="ts">
 import BinState from "@/components/BinState.vue"
+import axios from "axios"
 import { onMounted, ref } from "vue"
-import {type Note} from "../types/Note"
-//import { getNotifications} from '@/utils/api'
-
-//const bins = ref<Note[]>([])
-
-onMounted(()=>{
-  fetchData()
-  const interval = setInterval(fetchData, 60000);
-  
-  return () => {
-    clearInterval(interval);
-  };
-}) 
+import {type StateOfBins} from "../types/StateOfBins"
 
 
-const fetchData = () => {
 
-  /*getNotifications("ciaoo").then((response)=>{
-      console.log("this is response2, i'm client", response)
-      notifications.value = response.map((item: any): Note => {
-      return {
-        date: item.date,
-        email: item.email,
-        isRead: item.isRead,
-        text: item.text,
-        type: item. type
-      }
-    })
-    console.log("notifications print", notifications)
-    }).catch((error)=>{
-        // Handle the error
-        console.error(error);
-      });
-        // Handle the response data
-        */
-      } 
+const bins = ref<StateOfBins[]>([])
+
+const getBinState = async () => {
+  try {
+    const data = (await axios.get("http://localhost:3000/binState")).data
+    console.log("this is data", data)
+    bins.value = data.map((item: any): StateOfBins => {
+        return {
+            id: item._id,
+            actual_kg: item.actual_kg,
+            max_kg: item.typology[0].max_kg,
+            address: item.address, 
+            typology: item.typology[0].name,
+            municipality: item.municipality[0].name
+        }
+        })
+    
+    console.log("this is bins", bins.value)
+  } catch (e) {
+    console.error(e)
+  }
+}
+onMounted(getBinState)
 
 </script>
 
-<template v-if="bins !== undefined">
-  
+<template v-if="bins !== undefined" id="templateBinState">
+  <div id="currentBinContainer">
+    <h1 class="title">Stato corrente dei bidoni di {{ bins[0].municipality }}</h1>
+    <BinState class="innerContainer" v-for="n in bins" :n="n"/>
+  </div>
 </template>
 
 <style>
+#templateBinState{
+    display: flex;
+}
+
+#currentBinContainer{
+    background-color: #FFC700;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2), 1px 2px 2px 0 rgba(0, 0, 0, 0.19);
+    margin: auto;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+.title{
+    padding:2%;
+    color: black;
+    text-align: center;
+}
+
+.innerContainer{
+    background-color: #FFFFFF;
+    padding: 3% 0 0;
+    border-radius: 10px;
+    margin: 3%;
+    display: flex;
+    justify-content: space-around;
+}
+
 </style>

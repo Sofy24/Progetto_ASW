@@ -8,10 +8,10 @@ export async function verifyToken() : Promise<string> {
             Authorization: `Bearer ${token}`,
         },
         }).then((response) => {
-        console.log("valid token"+response.data.email)
+        //console.log("valid token"+response.data.email)
         resolve(response.data.email)
         }).catch((error) => {
-        console.log("wrong or expired token: "+ error)
+        //console.log("wrong or expired token: "+ error)
         // Redirect to login
         reject(error)
         })

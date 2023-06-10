@@ -68,7 +68,7 @@ const handleRegistration = async (req, res) => {
         
         return res.status(200).json({ message: 'Registrazione eseguita con successo' });
         } catch (error) {
-            console.error('Error registering user:', error);
+            //console.error('Error registering user:', error);
             res.status(500).json({ error: 'Failed to register user' });
         }
 };

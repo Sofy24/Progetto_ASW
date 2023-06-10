@@ -43,6 +43,7 @@ connectDB();
 app.use('/', require('./router/root'));
 app.use('/notification', require('./router/notificationRoute'));
 app.use('/binState', require('./router/binsStateRoute'));
+app.use('/classification', require('./router/classificationRoute'));
 app.use('/municipality', require('./router/municipalityRoute'));
 app.use('/register', require('./router/registerRoute'));
 app.use('/login', require('./router/loginRoute'));

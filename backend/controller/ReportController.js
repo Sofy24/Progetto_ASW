@@ -196,7 +196,10 @@ async function chargeReport(email,year, month){
     }
 
     console.log("DATE MAGGICHE: "+last_year+" "+last_month)
-
+    if (month == last_month && year == last_year) {
+        console.log("CIOCCOLATA");
+        return;
+    }
     const year_offset = (year-last_year)*12
 
     const offset = year_offset+(month-last_month)

@@ -39,7 +39,7 @@ const populateDatabase = async () => {
     } catch (error) {}
     try {
         await createDeposits();
-    } catch (error) {console.log(error)}
+    } catch (error) {}
     //following part is only for demonstration purposes during the exam
 
   }
@@ -53,7 +53,7 @@ const prepopulateDatabase = async (filename, Model) => {
     const count = await Model.countDocuments();
     if (count === 0) {
       await Model.insertMany(datas);
-      console.log(filename + ' loaded successfully');
+      //console.log(filename + ' loaded successfully');
     } else {
         throw new Error('Data already exists in the collection. Skipping population.');
     }
@@ -86,7 +86,7 @@ const createBins = async () => {
             await bin.save();
             }
         }
-        console.log('Bin loaded successfully');
+        //console.log('Bin loaded successfully');
     } else {
         throw new Error('Data already exists in the collection. Skipping population.');
     }
@@ -128,7 +128,7 @@ const createUser = async () => {
             });
             await user.save();
         }
-        console.log('Users created successfully');
+        //console.log('Users created successfully');
       } else {
         throw new Error('Data already exists in the collection. Skipping population.');
       }
@@ -164,7 +164,7 @@ const createDeposits = async () => {
                             year++; // Increment year by 1
                         }
 
-                        const randomKg = Math.round((Math.random() * (0.4 - 0.1) + 0.1) * 100) / 100;
+                        const randomKg = Math.round((Math.random() * (8.5 - 0.5) + 0.5) * 100) / 100;
                         // Create a new deposit
                         const deposit = new Deposit({
                         user: _id,
@@ -175,13 +175,15 @@ const createDeposits = async () => {
                         // Save the deposit to the database
                         await deposit.save();
                         //update the kg in the bin
-                        bin.actual_kg += randomKg;
-                        await bin.save();
+                        if (month == currentMonth && year == currentYear) {
+                            bin.actual_kg += randomKg;
+                            await bin.save();
+                        }
                     }
                 }
             }
             
-            console.log('Deposits created successfully');
+            //console.log('Deposits created successfully');
         } else {
             throw new Error('Data already exists in the collection. Skipping population.');
         }
@@ -192,5 +194,5 @@ const createDeposits = async () => {
 
 module.exports = {
     prepopulateDatabase,
-    populateDatabase
-  }
+    populateDatabase,
+}

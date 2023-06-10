@@ -1,5 +1,6 @@
 <script setup lang="ts">
     import { onMounted, ref, reactive, watch } from 'vue'
+    import { useRouter} from 'vue-router'
     import axios from 'axios'
     import { defineProps } from 'vue'
     import { verifyToken } from '@/utils/tokenUtils'
@@ -20,6 +21,7 @@
         },
     })
 
+    const router = useRouter()
     const userEmail = ref('')
     const report = ref()
     const typologyPrices = ref()
@@ -40,38 +42,42 @@
 
     //retieve report data
     const fetchData = async () => {
-        try {
         const currentDate = new Date()
         const previousMonth = currentDate.getMonth()
         const currentYear = currentDate.getFullYear()
-        //double-check if you are logged (in case of expired token)    
-        const result = await verifyToken()
-        userEmail.value = result
-        //check if month and year (future report)
-        if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
-            data.isDataLoaded = false
-            data.isDataValid = false
-        } else {
-            data.isDataValid = await checkReportDateValidity(currentYear, previousMonth, userEmail.value)
-            //reuqest the report
-            const response = await axios.get('http://localhost:3000/report', {
-            params: {
-                email: userEmail.value,
-                year: props.year,
-                month: props.month,
-            }})
-            //set report
-            report.value = response.data
-            //retieve the prices 
-            const res2 = await axios.get('http://localhost:3000/typology/price') 
-            typologyPrices.value = res2.data
-            console.log("PREZZI BASSI E FISSI: " + typologyPrices.value[0])
-            data.isDataLoaded = true
+        try {
+            //double-check if you are logged (in case of expired token)    
+            const result = await verifyToken()
+            userEmail.value = result
+        } catch {//failed authtentication
+            router.push('/login')
         }
+        try {
+            //check if month and year (future report)
+            if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
+                data.isDataValid = false
+                data.isDataLoaded = true
+            } else {
+                data.isDataValid = await checkReportDateValidity(currentYear, previousMonth, userEmail.value)
+                //reuqest the report
+                const response = await axios.get('http://localhost:3000/report', {
+                params: {
+                    email: userEmail.value,
+                    year: props.year,
+                    month: props.month,
+                }})
+                //set report
+                report.value = response.data
+                //retieve the prices for typology
+                const res2 = await axios.get('http://localhost:3000/typology/price') 
+                typologyPrices.value = res2.data
+                //show data
+                data.isDataLoaded = true
+            }
         } catch (error) {
-            //if you are not logged or queries produced an error
-            data.isDataLoaded = false
+            //if requests produced an error
             data.isDataValid = false
+            data.isDataLoaded = true
         }
     }
 
@@ -81,18 +87,23 @@
 </script>
 
 <template>
-    <p>Report Container {{ year }}</p>
-    <div v-if ="data.isDataLoaded && data.isDataValid">
-        <ReportTable :year="year" :month="month" :report="report" />
-        <ReportRadarGraph :columns="extractColumns(report)"/>
-        <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail" @navigate="fetchData"  /> 
-    </div>
+    <div v-if ="data.isDataLoaded">
+        <div v-if ="data.isDataValid">
+            <ReportTable :year="year" :month="month" :report="report" :prices="typologyPrices" />
+            <ReportRadarGraph :columns="extractColumns(report)"/>
+            <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail" @navigate="fetchData"  /> 
+        </div>
+        <div v-else>
+            <p>Questo report non può essere visualizzato, le possibili cause sono:</p>
+            <ul>
+                <li>Il report risale a prima che ti registrassi sulla piattaforma</li>
+                <li>Non è ancora passato un mese dalla tua registrazione alla piattaforma</li>
+            </ul>
+            <RouterLink to="/personal">Ritorna alla tua pagina personale</RouterLink>
+        </div>
+    </div> 
     <div v-else>
-        <p>Questo report non può essere visualizzato, le possibili cause sono:</p>
-        <ul>
-            <li>Il report risale a prima che ti registrassi sulla piattaforma</li>
-            <li>Non è ancora passato un mese dalla tua registrazione alla piattaforma</li>
-        </ul>
-        <RouterLink to="/personal">Ritorna alla tua pagina personale</RouterLink>
-    </div>
+        <p>LOADING...</p>
+    </div>   
+
 </template>

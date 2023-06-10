@@ -98,7 +98,7 @@
         <select id="municipality" v-model="municipality" required>
             <option value="">Seleziona il tuo Comune</option>
             <option v-for="option in filteredOptions" :value="option" :key="option">
-              {{ option}}
+              {{option}}
             </option>
         </select>
       </div>
