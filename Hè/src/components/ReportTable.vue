@@ -75,9 +75,9 @@
             </tr>
         </tbody>
         </table>
-        <div v-for="(row, index) in report">
-            <p>Hai prodotto {{ row[1] }}Kg di {{ row[0] }} al prezzo di {{ prices[index][1] }} al Kg</p>
-        </div>
+        <ul v-for="(row, index) in report">
+            <li>Hai prodotto {{ row[1] }}Kg di {{ row[0] }} al prezzo di {{ prices[index][1] }} al Kg</li>
+        </ul>
         <div>
             <p>Per un totale di {{ totalCost }}€</p>
         </div>
