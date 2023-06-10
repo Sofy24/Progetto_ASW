@@ -40,12 +40,12 @@ $primary-color: #FFC700;
         white-space: nowrap;
 
         &.up {
-            background-color: rgb(116, 254, 116);
+            background-color: rgb(152, 251, 152);
             color: black;
         }
 
         &.down {
-            background-color: rgb(255, 119, 119);
+            background-color: rgb(245, 147, 147);
             color: black;
         }
         }
@@ -55,14 +55,19 @@ $primary-color: #FFC700;
            
             table {
                 th, td {
-                    padding: 1%;
-                    font-size: 80%; 
+                    padding: 1%; 
                     overflow: hidden;
                     text-overflow: ellipsis;
                     overflow: visible;
                     text-overflow: unset;
                     white-space: normal;
 
+                }
+                th {
+                    font-size: 75%;
+                }
+                td {
+                    font-size: 80%;
                 }
             }
         }

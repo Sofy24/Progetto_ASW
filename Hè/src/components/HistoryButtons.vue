@@ -141,11 +141,39 @@ const props = defineProps({
 </script>
 
 <template>
-    <div v-if ="datacomp.isDataLoaded">
+    <div v-if ="datacomp.isDataLoaded" class="button-container">
         <button @click="handleClick(1)" :disabled="isForwardDisabled"> {{ followingText }}</button>
         <button @click="handleClick(-1)" :disabled="isBackwardDisabled"> {{ previousText }}</button>
     </div>
 </template>
 
 <style lang="scss">
+    .button-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 20px;
+
+        button {
+            background-color: #FFC700;
+            border-radius: 10px;
+            color: black;
+            padding: 1% 2%;
+            font-size: large;
+            text-align: center;
+
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+            &:active {
+                background-color: lighten(#FFC700, 30%);
+            }
+
+            &:disabled {
+                background-color: #ccc;
+                cursor: not-allowed;
+                box-shadow: none;
+            }
+        }
+    }
 </style>

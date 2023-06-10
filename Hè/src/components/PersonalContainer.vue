@@ -70,8 +70,15 @@
             <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" :prices="typologyPrices" />
             <RouterLink to="/report">Visualizza altri Report</RouterLink>
         </div>
-        <div v-else>
+        <div v-else class="first-month">
             <p>Benvenuto/a, questo è ancora il tuo primo mese su Hé, con il tempo questa pagina si riempirà sempre più</p>
         </div>
     </div>
 </template>
+
+<style lang="scss">
+    .first-month {
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+</style>

@@ -82,7 +82,7 @@
                 <th>Categoria</th>
                 <th>{{ months[month - 1] }} {{ year }}</th>
                 <th>{{ months[month - 2 === -1 ? 11 : month - 2] }} {{ month === 1 ? year - 1 : year }}</th>
-                <th>Change   </th>
+                <th>Variazione</th>
                 </tr>
             </thead>
             <tbody>
@@ -96,7 +96,7 @@
             </table>
         </div>
         <div class="ul-container">
-            <h2>Titolo spese</h2>
+            <h2>Riassunto spese</h2>
             <ul>
                 <li v-for="(row, index) in report">
                     Hai prodotto {{ row[1] }}Kg di {{ row[0] }} al prezzo di {{ prices[index][1] }} al Kg

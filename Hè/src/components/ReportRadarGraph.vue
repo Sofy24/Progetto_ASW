@@ -24,6 +24,9 @@
         },
         title: {
             text: 'Confronto ultimi 2 mesi',
+            style: {
+                fontWeight: 'bold', 
+            },
         },
         stroke: {
             width: 2,
@@ -58,4 +61,13 @@
 </template>
 
 <style lang="scss">
+    #chart {
+        margin-top: 20px;
+    }
+
+    .apexcharts-canvas {
+        background-color: #fff;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
 </style>

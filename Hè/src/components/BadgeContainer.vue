@@ -101,8 +101,7 @@
             
         } catch (error) {
             //not authorized (token expired or not logged in)
-            data.isDataValid = false
-            data.isDataLoaded = true
+            router.push('/login')
         }
     };
 
@@ -183,8 +182,15 @@
         </div>
         <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail" @navigate="fetchData" /> 
         </div>
-        <div v-else>
-            <p>MESSAGGIO DI ERRORE</p>
+        <div v-else class="first-month">
+            <p>Questa pagina non può essere visualizzata, le possibili cause sono:</p>
+            <ul>
+                <li>I dati richiesti risalgono a prima che ti registrassi sulla piattaforma</li>
+                <li>Non è ancora passato un mese dalla tua registrazione alla piattaforma</li>
+            </ul>
+            <div >
+                <RouterLink to="/personal">Ritorna alla tua pagina personale</RouterLink>
+            </div>
         </div>
     </div>
     <div v-else>
@@ -192,10 +198,28 @@
     </div>
 </template>
 
-<style>
-h3{
-    text-align: center;
-    color: white;
-}
+<style lang="scss">
+    h3{
+        text-align: center;
+        color: white;
+    }
+    .first-month {
+        margin-left: 20px;
+        margin-right: 20px;
 
+        div {
+            background-color: #FFC700;
+            border-radius: 10px;
+            color: black;
+            padding: 1% 2%;
+            font-size: large;
+
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+            &:active {
+                background-color: lighten(#FFC700, 30%);
+            }
+        }
+    }
 </style>

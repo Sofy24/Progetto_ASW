@@ -95,13 +95,15 @@
             <ReportRadarGraph :columns="extractColumns(report)"/>
             <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail" @navigate="fetchData"  /> 
         </div>
-        <div v-else>
+        <div v-else class="first-month">
             <p>Questo report non può essere visualizzato, le possibili cause sono:</p>
             <ul>
                 <li>Il report risale a prima che ti registrassi sulla piattaforma</li>
                 <li>Non è ancora passato un mese dalla tua registrazione alla piattaforma</li>
             </ul>
-            <RouterLink to="/personal">Ritorna alla tua pagina personale</RouterLink>
+            <div>
+                <RouterLink to="/personal">Ritorna alla tua pagina personale</RouterLink>
+            </div>
         </div>
     </div> 
     <div v-else>
@@ -111,4 +113,24 @@
 </template>
 
 <style lang="scss">
+    .first-month {
+        margin-left: 20px;
+        margin-right: 20px;
+
+        div {
+            background-color: #FFC700;
+            border-radius: 10px;
+            color: black;
+            padding: 1% 2%;
+            font-size: large;
+            text-align: center;
+
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+            &:active {
+                background-color: lighten(#FFC700, 30%);
+            }
+        }
+    }
 </style>

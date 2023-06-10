@@ -145,6 +145,7 @@ const createDeposits = async () => {
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth() + 1;
         const currentYear = currentDate.getFullYear();
+        let generate = true;
         // Fetch all users
         const users = await User.find().populate('municipality');
         const count = await Deposit.countDocuments();
@@ -157,7 +158,7 @@ const createDeposits = async () => {
                 
                 // Get the bins of the user's municipality
                 const bins = await Bin.find({ municipality: municipality._id });
-                
+                let generate = true
                 // Generate deposits for each bin
                 for (const bin of bins) {
                     let year = registrationYear;
@@ -195,12 +196,33 @@ const createDeposits = async () => {
                         })
                         await depositNotification.save();
 
+
+                        // 
+
                         //update the kg in the bin
                         if (month == currentMonth && year == currentYear) {
                             bin.actual_kg += randomKg;
                             await bin.save();
+                        } else {
+                            if (generate) {
+                                const months = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto',
+                                'settembre', 'ottobre', 'novembre', 'dicembre'];
+        
+                                const reportNotification = new Notification({
+                                    email,
+                                    date: {
+                                        month,
+                                        year
+                                    },
+                                    type: "report",
+                                    isRead: false,
+                                    text: "Il tuo report riguardo al " + months[month - 1] + " " + year + " è pronto!"   
+                                })
+                                await reportNotification.save();
+                            }
                         }
                     }
+                    generate = false;
                 }
             }
             
