@@ -53,16 +53,60 @@ const handleClassification = async (req, res) => {
         },
         {
             $match: { _id: idIndifferenziata }
-        }
-        
+        }        
         
       ]);
 
+      const getActualKGIndiff = indifByMunicip.flatMap(({ _id, bins }) => bins).map(item => [item._id, item.bins.actual_kg]);
+      const difByMunicip = await Bin.aggregate([ 
+        {
+            $lookup: {
+            from: "Deposit",
+            localField: "_id",
+            foreignField: "bin",
+            let: { depositIds: "$deposit._id" },
+            pipeline: [
+                {
+                $match: {
+                    $expr: {
+                    $in: ["$_id", getDeposit.map(d => d._id)]
+                    }
+                }
+                }
+            ],
+            as: "deposit"
+            }
+        },
+        
+        {
+            $group: {
+              _id: "$typology",
+              bins: { $push: "$$ROOT" }
+            }
+        },
+        { $unwind: "$bins" },
+        {
+            $match: { _id: {$ne: idIndifferenziata} }
+        },
+        {
+            $group: {
+              _id: "$bins.municipality",
+              bins: { $push: "$$ROOT" }
+            }
+        }      
+        
+      ]);
+    const getActualKGDiff = difByMunicip.map(({ _id, bins }) => [_id, bins]).map(item => [item[0], item[1].reduce((accumulator, obj) => accumulator + obj.bins.actual_kg, 0)]);
+    
+    const joinedArray = getActualKGDiff.map(([id, diffValue]) => {
+        const [_, indiffValue] = getActualKGIndiff.find(([indiffId]) => indiffId.equals(id));
+        return [id, diffValue, indiffValue];
+    });
 
-    //console.log("create",createdAt);
+    const percentage = joinedArray.map( item => [item[0], item[1] / (item[1] + item[2])]);
 
-    if (!indifByMunicip) return res.status(204).json({ 'message': 'The classification is not available' });
-    res.json(indifByMunicip);
+    if (!percentage) return res.status(204).json({ 'message': 'The classification is not available' });
+    res.json(percentage);
 }
 
 module.exports = {

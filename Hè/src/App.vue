@@ -48,7 +48,7 @@
           </button>
           <div class="dropdown-content">
             <RouterLink  to="/graph">Grafici</RouterLink>
-            <RouterLink  to="/classifica">Classifica</RouterLink>
+            <RouterLink  to="/classification">Classifica</RouterLink>
             <RouterLink  to="/">Home</RouterLink>
             <RouterLink  v-if="isAuthorized" to="/notification">MyNotifications</RouterLink>
             <RouterLink  v-if="isAuthorized" to="/binState">Stato corrente bidoni</RouterLink>
