@@ -53,16 +53,58 @@ const handleClassification = async (req, res) => {
         },
         {
             $match: { _id: idIndifferenziata }
-        }
-        
+        }        
         
       ]);
 
-
-    //console.log("create",createdAt);
+      const getActualKGIndiff = indifByMunicip.flatMap(({ _id, bins }) => bins).map(item => [item._id, item.bins.actual_kg]);
+      const difByMunicip = await Bin.aggregate([ 
+        {
+            $lookup: {
+            from: "Deposit",
+            localField: "_id",
+            foreignField: "bin",
+            let: { depositIds: "$deposit._id" },
+            pipeline: [
+                {
+                $match: {
+                    $expr: {
+                    $in: ["$_id", getDeposit.map(d => d._id)]
+                    }
+                }
+                }
+            ],
+            as: "deposit"
+            }
+        },
+        
+        {
+            $group: {
+              _id: "$typology",
+              bins: { $push: "$$ROOT" }
+            }
+        },
+        { $unwind: "$bins" },
+        {
+            $match: { _id: {$ne: idIndifferenziata} }
+        },
+        {
+            $group: {
+              _id: "$bins.municipality",
+              bins: { $push: "$$ROOT" }
+            }
+        }      
+        
+      ]);
+    const getActualKGDiff = difByMunicip.map(({ _id, bins }) => [_id, bins]).map(item => [item[0], item[1].reduce((accumulator, obj) => accumulator + obj.bins.actual_kg, 0)]);
+    
+    const joinedArray = getActualKGDiff.map(([id, value]) => {
+        const [_, indiffValue] = getActualKGIndiff.find(([indiffId]) => indiffId === id) || [id, 0];
+        return [id, value, indiffValue];
+    });
 
     if (!indifByMunicip) return res.status(204).json({ 'message': 'The classification is not available' });
-    res.json(indifByMunicip);
+    res.json(joinedArray);
 }
 
 module.exports = {
