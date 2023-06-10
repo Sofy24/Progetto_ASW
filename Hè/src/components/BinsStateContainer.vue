@@ -7,6 +7,7 @@ import {type StateOfBins} from "../types/StateOfBins"
 
 
 const bins = ref<StateOfBins[]>([])
+const municipality = ref<string>("")
 
 const getBinState = async () => {
   try {
@@ -22,8 +23,9 @@ const getBinState = async () => {
             municipality: item.municipality[0].name
         }
         })
-    
-    console.log("this is bins", bins.value)
+        if (bins !== undefined){
+          municipality.value = bins.value[0].municipality
+        }
   } catch (e) {
     console.error(e)
   }
@@ -34,7 +36,7 @@ onMounted(getBinState)
 
 <template v-if="bins !== undefined" id="templateBinState">
   <div id="currentBinContainer">
-    <h1 class="title">Stato corrente dei bidoni di {{ bins[0].municipality }}</h1>
+    <h1 class="title" >Stato corrente dei bidoni di {{ municipality ? municipality : "nessun comune" }}</h1>
     <BinState class="innerContainer" v-for="n in bins" :n="n"/>
   </div>
 </template>

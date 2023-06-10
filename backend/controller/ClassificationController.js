@@ -1,6 +1,7 @@
 const Bin = require('../model/Bin');
 const Deposit = require('../model/Deposit');
 const { ObjectId } = require('mongodb');
+const Municipality = require('../model/Municipality');
 const currentDate = new Date();
 const previousMonth = currentDate.getMonth(); // months are zero-based (0 - 11)
 const currentYear = currentDate.getFullYear();
@@ -103,10 +104,15 @@ const handleClassification = async (req, res) => {
         return [id, diffValue, indiffValue];
     });
 
-    const percentage = joinedArray.map( item => [item[0], item[1] / (item[1] + item[2])]);
+    const percentageID = joinedArray.map( item => [item[0], item[1] / (item[1] + item[2])]);
+
+    const percentage = await Promise.all(percentageID.map(async ([id, value]) => {
+        const result = await Municipality.findOne({ _id: id }, {name: 1});
+        return [result.name, value? value : 0];
+      }));
 
     if (!percentage) return res.status(204).json({ 'message': 'The classification is not available' });
-    res.json(percentage);
+    res.json(percentage.sort((a, b) => b[1] - a[1]));
 }
 
 module.exports = {
