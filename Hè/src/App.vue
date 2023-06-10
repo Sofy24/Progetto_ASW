@@ -60,19 +60,28 @@
     <div class="wrapper">
       <!----<HelloWorld msg="Hè" />-->
       <nav>
-        <RouterLink to="/">Home</RouterLink>
 
-        <RouterLink to="/graph">Grafici</RouterLink>
-        <RouterLink to="/classifica">Classifica</RouterLink>
-
-        <RouterLink v-if="!isAuthorized" to="/register">Register</RouterLink>
-        <RouterLink v-if="!isAuthorized" to="/login">Login</RouterLink>
-        <RouterLink v-if="isAuthorized" to="/notification">MyNotifications</RouterLink>
-        <RouterLink v-if="isAuthorized" to="/binState">Stato corrente bidoni</RouterLink>
-        <RouterLink v-if="isAuthorized" to="/personal">MyPage</RouterLink>
-        <RouterLink v-if="isAuthorized" :to="reportLink">Resoconto Mensile</RouterLink>
-        <RouterLink v-if="isAuthorized" :to="badgeLink">Le tue medaglie</RouterLink>
-        <RouterLink v-if="isAuthorized" to="/userGraph">MyGraph</RouterLink>
+        <RouterLink v-if="!isAuthorized" to="/register"><p >Register  </p><i class="pi pi-user-plus"></i></RouterLink>
+        <RouterLink v-if="!isAuthorized" to="/login"><p >Login  </p><i class="pi pi-sign-in"></i></RouterLink>
+        
+        <div class="dropdown">
+          <button class="dropbtn">
+            
+            <i class="pi pi-bars"></i>
+          </button>
+          <div class="dropdown-content">
+            <RouterLink  to="/graph">Grafici</RouterLink>
+            <RouterLink  to="/classifica">Classifica</RouterLink>
+            <RouterLink  to="/">Home</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/notification">MyNotifications</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/binState">Stato corrente bidoni</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/personal">MyPage</RouterLink>
+            <RouterLink  v-if="isAuthorized" :to="reportLink">Resoconto Mensile</RouterLink>
+            <RouterLink  v-if="isAuthorized" :to="badgeLink">Le tue medaglie</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/userGraph">MyGraph</RouterLink>
+          </div>
+        </div> 
+        
       </nav>
     </div>
   </header>

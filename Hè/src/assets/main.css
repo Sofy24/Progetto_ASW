@@ -1,5 +1,5 @@
 @import './base.css';
-
+@import 'primeicons/primeicons.css';
 
 
 /**
@@ -103,6 +103,23 @@ a,
 }
 
 @media (min-width: 1024px) {
+
+
+/*
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 999;
+  }*/
+/*
   body {
     display: flex;
     place-items: center;
@@ -111,7 +128,7 @@ a,
   .mainContent{
     padding: 2%;
   }
-  
+  */
   #app {
     width: 100%;
   /**  display: grid;

@@ -13,7 +13,7 @@ const handleBadges = async (req, res) => {
     const {email, year, month} = req.query;
 
     /**charge report */
-    await chargeReport(email, year, month)
+    //await chargeReport(email, year, month)
 
     
 
@@ -76,7 +76,7 @@ const handleBadges = async (req, res) => {
 
     //console.log(tm);
     for(var x =0;x<12;x++){
-        dates[x]=x+tm-11
+        dates[x]=tm-x
         //inside[x]=0
     }
 
@@ -101,10 +101,10 @@ const handleBadges = async (req, res) => {
     for(var i =0;i<12;i++)
     {
         var d = dates[i]
-        const startDate = new Date(year,d,01);
+        const startDate = new Date(year,d-1,01);
         const adjustedStartDate = new Date(startDate.getTime() + timezoneOffset * 60 * 1000);
         //console.log(adjustedStartDate)
-        const endDate = new Date(year,d+1,01);
+        const endDate = new Date(year,d,01);
         const adjustedEndDate = new Date(endDate.getTime() + timezoneOffset * 60 * 1000);
         //console.log(adjustedEndDate)
         const printDate =new Date(year,d-1,01);
@@ -261,7 +261,8 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
         //console.log(e)
         //console.log(typology)
         //console.log(media)
-        if(e[2]<e[1] || e[1]>media[typology]){
+        if((e[0]=="indifferenziata" && (e[2]>e[1] || e[1]<media[typology])) ||
+        (e[0]!="indifferenziata" && (e[2]<e[1] || e[1]>media[typology]))){
             
             Badges.findOne({name:e[0],is_multiple: false}).then(async (thisBadge)=>{
                 const badge = new UserBadges({
