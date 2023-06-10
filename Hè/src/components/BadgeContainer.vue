@@ -15,6 +15,7 @@
     import vetro from '../assets/images/vetro.png'
     import potature from '../assets/images/potature.png'
     import Timeline from 'primevue/timeline';
+    import prova from '../assets/images/vetro 100.png'
 
 
 
@@ -156,6 +157,7 @@
         <h1>Badge Container {{ year }}</h1>
         <h3> extra</h3>
         <div v-for="elem in extraBadges" >
+            <img :src=prova alt="pippo" width="42" height="42">
             <div>{{ elem }}</div>
         </div>
         <div class="medagliereGrid">
