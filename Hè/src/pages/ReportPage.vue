@@ -27,6 +27,7 @@
     <LogoutButton/>
 </template>
 
+<!--
 <style lang="scss">
     .ellipse {
   position: relative;
@@ -49,4 +50,4 @@
   padding-left: 150%;
   z-index: -1;
 }
-</style>
+</style>-->

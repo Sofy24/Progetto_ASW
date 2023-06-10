@@ -1,0 +1,118 @@
+$primary-color: #FFC700;
+
+.reporttable-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  
+    @media (max-width: 767px) {
+      flex-direction: column;
+    }
+
+    .table-container {
+    padding: 2% 4%;
+    margin-right: 1%;
+    margin-left: 1%;
+    flex-basis: 50%;
+
+    @media (min-width: 768px) {
+        margin-left: 1%;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th {
+        background-color: $primary-color;
+        color: black;
+        padding: 2% 3%;
+        text-align: center;
+        font-weight: bold;
+        font-size: large;
+        border: 1px solid black;
+        }
+
+        td {
+        padding: 2% 4%;
+        font-size: large;
+        border: 1px solid black;
+        white-space: nowrap;
+
+        &.up {
+            background-color: rgb(116, 254, 116);
+            color: black;
+        }
+
+        &.down {
+            background-color: rgb(255, 119, 119);
+            color: black;
+        }
+        }
+    }
+
+        @media (max-width: 767px) {
+           
+            table {
+                th, td {
+                    padding: 1%;
+                    font-size: 80%; 
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    overflow: visible;
+                    text-overflow: unset;
+                    white-space: normal;
+
+                }
+            }
+        }
+    }
+
+    .ul-container {
+        background-color: white;
+        padding: 2% 4%;
+        margin-left: 1%;
+        flex-basis: 50%;
+
+        @media (min-width: 768px) {
+            margin-right: 1%; 
+          }
+    
+        ul {
+        padding: 0;
+        border: 5px solid $primary-color;
+        border-radius: 5px;
+        background-color: $primary-color;
+        list-style-position: inside; 
+    
+        
+    
+            li {
+                padding: 2% 4%;
+                color: black;
+                font-size: large;
+                margin-bottom: 1%;
+
+                @media  (min-width: 768px) {
+                    padding: 1%;
+                }
+            }
+        }
+
+        h2 {
+            color: black;
+            font-weight: bold;
+            font-size: xx-large;
+            margin-bottom: 2%; 
+        }
+        
+        p {
+            color: black;
+            font-weight: bold;
+            font-size: large;
+            margin-top: 2%;
+        }
+        
+    }
+
+}
