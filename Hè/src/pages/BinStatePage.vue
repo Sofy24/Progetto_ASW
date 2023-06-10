@@ -3,7 +3,6 @@
 </script>
 
 <template>
-  <h1>Stato corrente dei bidoni</h1>
   <BinsStateContainer />
 </template>
 

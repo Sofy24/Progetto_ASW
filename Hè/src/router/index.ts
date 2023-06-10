@@ -61,6 +61,11 @@ const router = createRouter({
       component: () => import ('../pages/NotificationPage.vue')
     },
     {
+      path: '/binState',
+      name: 'binState',
+      component: () => import ('../pages/BinStatePage.vue')
+    },
+    {
       path: '/personal',
       name: 'personal',
       component: () => import ('../pages/PersonalPage.vue'),

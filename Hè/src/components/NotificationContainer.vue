@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Notification from "@/components/Notification.vue"
-import axios from "axios"
 import { onMounted, ref } from "vue"
 import {type Note} from "../types/Note"
 import { getNotifications} from '@/utils/api'
