@@ -55,7 +55,8 @@
         })
         .catch((error) => {
             //error in report (wrong date, server down, ...), redirect to standard report page 
-            console.log("error: " + error)
+            containerData.isDataValid = false
+            containerData.isDataLoaded = true
         });
     });
 
@@ -67,7 +68,7 @@
             <!-- put here the components that should not be seen the first month-->
             <h2>Report del mese di {{ months[reportMonthYear[1] - 1] }} {{ reportMonthYear[0] }}</h2>
             <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" :prices="typologyPrices" />
-            <RouterLink :to="`/report/${reportMonthYear[0]}/${reportMonthYear[1]}`">Visualizza altri Report</RouterLink>
+            <RouterLink to="/report">Visualizza altri Report</RouterLink>
         </div>
         <div v-else>
             <p>Benvenuto/a, questo è ancora il tuo primo mese su Hé, con il tempo questa pagina si riempirà sempre più</p>
