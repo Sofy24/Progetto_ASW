@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-  import { onMounted, ref } from "vue"
-
-
   const props = defineProps(["n"])
   function getGif(){
     /*const gifArray2 = [["136.306%", "https://gifer.com/embed/L9dQ"], ["100.000%", "https://gifer.com/embed/73Ve"],
