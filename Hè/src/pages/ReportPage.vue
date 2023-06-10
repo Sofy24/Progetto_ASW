@@ -1,18 +1,14 @@
 <script setup lang="ts">
     import LogoutButton from "@/components/LogoutButton.vue"
     import ReportContainer from "@/components/ReportContainer.vue"
+    import { computed } from "@vue/reactivity";
     import { useRouter } from 'vue-router'
+    import { useStore } from 'vuex';
 
-    const props = defineProps({
-        year: {
-            type: Number,
-            required: true,
-        },
-        month: {
-            type: Number,
-            required: true,
-        }
-    });
+    const store = useStore();
+    const year = computed(() => store.getters.getReportYear);
+    const month = computed(() => store.getters.getReportMonth);
+    console.log("RRURURURUR: "+ year.value + month.value)
     const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto',
         'settembre', 'ottobre', 'novembre', 'dicembre']
     const router = useRouter()
@@ -21,12 +17,14 @@
 
 <template>
     <div class="ellipse">
-        <h1>Report {{ months[month - 1] }} {{ year }} </h1>
+      <h1>Report {{ months[month - 1] }} {{ year }}</h1>
     </div>
     <ReportContainer :year="year" :month="month" />
     <LogoutButton/>
 </template>
 
+<style lang="scss">
+</style>
 <!--
 <style lang="scss">
     .ellipse {

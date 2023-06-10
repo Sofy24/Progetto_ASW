@@ -21,3 +21,6 @@ export default {
 <template>
     <button @click="logout">Logout</button>
 </template>
+
+<style lang="scss">
+</style>

@@ -7,6 +7,7 @@ import VueApexCharts from 'vue3-apexcharts'
 import PrimeVue from 'primevue/config'
 import "primevue/resources/themes/lara-light-indigo/theme.css"    
 import "primevue/resources/primevue.min.css"
+import store from './utils/store';
 
 /*
 import socketio from 'socket.io-client';
@@ -34,6 +35,7 @@ const app = createApp(App)
 app.use(router)
 app.use(VueApexCharts)
 app.use(PrimeVue)
+app.use(store);
 
 
 app.mount('#app')

@@ -12,6 +12,7 @@ const Badge = require('../model/Badge.js');
 const Bin = require('../model/Bin');
 const User = require('../model/User');
 const Deposit = require('../model/Deposit');
+const Notification = require('../model/Notification')
 
 
 const readFileAsync = promisify(fs.readFile);
@@ -32,10 +33,12 @@ const populateDatabase = async () => {
     try {  
       await createBins();
       await Deposit.deleteMany({});
+      await Notification.deleteMany({});
     } catch (error) {}
     try {
         await createUser();
         await Deposit.deleteMany({});
+        await Notification.deleteMany({});
     } catch (error) {}
     try {
         await createDeposits();
@@ -148,7 +151,7 @@ const createDeposits = async () => {
         if (count === 0) {
             // Create deposits for each user, month, and year
             for (const user of users) {
-                const { _id, date, municipality } = user;
+                const { _id, email, date, municipality } = user;
                 const registrationYear = date.year;
                 const registrationMonth = date.month;
                 
@@ -174,6 +177,24 @@ const createDeposits = async () => {
                         });
                         // Save the deposit to the database
                         await deposit.save();
+
+                        const binTypology = bin.typology;
+                        const typology = await Typology.findById(binTypology);
+                        const typologyName = typology.name;
+                        const typologyPrice = typology.price_kg;
+                        const payment = Math.round(((randomKg * typologyPrice) ) * 100) / 100;
+                        const depositNotification = new Notification({
+                            email,
+                            date: {
+                                month,
+                                year
+                            },
+                            type: "deposit",
+                            isRead: false,
+                            text: "Hai consegnato " + typologyName + " di peso " + randomKg + "kg. Questo ti verrà a costare " + payment + " euro."   
+                        })
+                        await depositNotification.save();
+
                         //update the kg in the bin
                         if (month == currentMonth && year == currentYear) {
                             bin.actual_kg += randomKg;

@@ -79,23 +79,15 @@ const router = createRouter({
       beforeEnter: requireAuth
     },
     {
-      path: '/report/:year/:month',
+      path: '/report',
       name: 'report',
       component: () => import ('../pages/ReportPage.vue'),
-      props: (route: RouteLocationNormalized) => ({
-        year: Number(route.params.year),
-        month: Number(route.params.month),
-      }),
       beforeEnter: requireAuth
     },
     {
-      path: '/badge/:year/:month',
+      path: '/badge',
       name: 'badge',
       component: () => import ('../pages/BadgePage.vue'),
-      props: (route: RouteLocationNormalized) => ({
-        year: Number(route.params.year),
-        month: Number(route.params.month),
-      }),
       beforeEnter: requireAuth
     }
   ]

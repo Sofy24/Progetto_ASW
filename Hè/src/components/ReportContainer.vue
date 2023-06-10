@@ -8,6 +8,7 @@
     import ReportTable from '@/components/ReportTable.vue'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
     import HistoryButtons from '@/components/HistoryButtons.vue'
+    
 
     //Data for getting the requested report
     const props = defineProps({
@@ -60,6 +61,7 @@
             } else {
                 data.isDataValid = await checkReportDateValidity(currentYear, previousMonth, userEmail.value)
                 //reuqest the report
+                console.log("GERUNDIO:" + props.year + " " + props.month)
                 const response = await axios.get('http://localhost:3000/report', {
                 params: {
                     email: userEmail.value,
@@ -107,3 +109,6 @@
     </div>   
 
 </template>
+
+<style lang="scss">
+</style>

@@ -2,7 +2,8 @@
 import { computed, watchEffect, reactive, ref, getCurrentInstance } from 'vue';
 import { useRouter} from 'vue-router'
 import axios from 'axios'
-
+import { useStore } from 'vuex';
+const store = useStore();
 const props = defineProps({
         mode: {
             type: String,
@@ -101,7 +102,7 @@ const props = defineProps({
                 return false
             }
         } else if (props.mode === 'year') {//sezione per badge
-            if (props.year - 1 < regYear.value) {
+            if (props.year - 1 < regYear.value || (props.year - 1  == regYear.value && props.month < regMonth.value)) {
                 return true
             } else {
                 return false
@@ -123,12 +124,14 @@ const props = defineProps({
                 gotoMonth = 12
                 gotoYear = gotoYear - 1
             }
-            router.push(props.route+"/"+gotoYear+"/"+gotoMonth)
+            store.commit('updateReportMonth', gotoMonth);
+            store.commit('updateReportYear', gotoYear);
         } else if (props.mode === 'year') {
             // scalare sulle medaglie
             let gotoMonth = props.month
             let gotoYear = props.year + scale
-            router.push(props.route+"/"+gotoYear+"/"+gotoMonth)
+            //store.commit('updateBadgeMonth', gotoMonth);
+            store.commit('updateBadgeYear', gotoYear);
         }
         if (instance != null) {
             instance.emit('navigate');
@@ -144,8 +147,5 @@ const props = defineProps({
     </div>
 </template>
 
-<style>
-div{
-    position: relative;
-}
+<style lang="scss">
 </style>

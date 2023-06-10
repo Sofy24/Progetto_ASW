@@ -56,3 +56,6 @@
         <apexchart type="radar" height="350" :options="chartOptions" :series="series"></apexchart>
     </div>
 </template>
+
+<style lang="scss">
+</style>

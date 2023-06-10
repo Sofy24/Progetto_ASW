@@ -38,16 +38,10 @@
     const extraBadges = ref()
     const data = reactive({
         isDataLoaded: false,
+        isDataValid: false,
     })
     const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto', 'settembre', 'ottobre', 'novembre', 'dicembre'];
 
-    const redirectToPreviousBadges = (currentYear: number, previousMonth: number) => {
-        if (previousMonth === 0) {
-            router.push(`/badge/${currentYear - 1}/12`);
-        } else {
-            router.push(`/badge/${currentYear}/${previousMonth}`);
-        }
-    };
 
 
     const fetchData = async () => {
@@ -61,7 +55,8 @@
                 const currentYear = currentDate.getFullYear();
 
                 if (currentYear < props.year || (currentYear === props.year && previousMonth < props.month)) {
-                    redirectToPreviousBadges(currentYear, previousMonth);
+                    data.isDataValid = false
+                    data.isDataLoaded = true
                 } else {
                     axios.get("http://localhost:3000/report", {
                     params: {
@@ -86,21 +81,28 @@
                         badges.value = response.data[1];
                         badgeMonth.value = response.data[0];
                         extraBadges.value = response.data[2];
-                        data.isDataLoaded = true;
+                        data.isDataValid =true
+                        data.isDataLoaded = true
+                        
                         console.log(response.data);
                     })
                     .catch((error) => {
-                        console.log("error: " + error);
-                        redirectToPreviousBadges(currentYear, previousMonth);
+                        console.log("LVE 1")
+                        data.isDataValid = false
+                        data.isDataLoaded = true
                     });
-                })
+                }).catch((error) => {
+                        console.log("LVE 2")
+                        data.isDataValid = false
+                        data.isDataLoaded = true
+                });
                     
             }
             
         } catch (error) {
             //not authorized (token expired or not logged in)
-            console.log("error: " + error);
-            router.push('/login');
+            data.isDataValid = false
+            data.isDataLoaded = true
         }
     };
 
@@ -110,7 +112,7 @@
         fetchData();
     });
 
-    watch([props.year, props.month], fetchData)
+    //watch([props.year, props.month], fetchData)
 
     function getImg(src:string){
         switch ( src ) {
@@ -154,6 +156,7 @@
 
 
     <div v-if ="data.isDataLoaded" class="yellow">
+        <div v-if = "data.isDataValid">
         <h1>Badge Container {{ year }}</h1>
         <h3> extra</h3>
         <div v-for="elem in extraBadges" >
@@ -166,7 +169,7 @@
                 <h3> {{elem}}</h3>
                 <div class="gridMedglie medagliere">
                     
-                    <div  v-for="element in badges[index]" :key="element" > 
+                    <div  v-for="element in badges[index]" > 
                         <!--<img :src="'../assets/images/'+ element +'.png'" alt={{element}} width="42" height="42" >
                         {{ element }}-->
                         <img :src="getImg(element)" alt="pippo" width="42" height="42">
@@ -179,6 +182,13 @@
             </div>
         </div>
         <HistoryButtons :mode='"year"' :year="year" :month="month" :route='"/badge"' :email="userEmail" @navigate="fetchData" /> 
+        </div>
+        <div v-else>
+            <p>MESSAGGIO DI ERRORE</p>
+        </div>
+    </div>
+    <div v-else>
+        <p>LOADING</p>
     </div>
 </template>
 
