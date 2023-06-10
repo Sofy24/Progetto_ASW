@@ -39,7 +39,7 @@ const populateDatabase = async () => {
     } catch (error) {}
     try {
         await createDeposits();
-    } catch (error) {console.log(error)}
+    } catch (error) {}
     //following part is only for demonstration purposes during the exam
 
   }
@@ -53,7 +53,7 @@ const prepopulateDatabase = async (filename, Model) => {
     const count = await Model.countDocuments();
     if (count === 0) {
       await Model.insertMany(datas);
-      console.log(filename + ' loaded successfully');
+      //console.log(filename + ' loaded successfully');
     } else {
         throw new Error('Data already exists in the collection. Skipping population.');
     }
@@ -86,7 +86,7 @@ const createBins = async () => {
             await bin.save();
             }
         }
-        console.log('Bin loaded successfully');
+        //console.log('Bin loaded successfully');
     } else {
         throw new Error('Data already exists in the collection. Skipping population.');
     }
@@ -128,7 +128,7 @@ const createUser = async () => {
             });
             await user.save();
         }
-        console.log('Users created successfully');
+        //console.log('Users created successfully');
       } else {
         throw new Error('Data already exists in the collection. Skipping population.');
       }
@@ -183,7 +183,7 @@ const createDeposits = async () => {
                 }
             }
             
-            console.log('Deposits created successfully');
+            //console.log('Deposits created successfully');
         } else {
             throw new Error('Data already exists in the collection. Skipping population.');
         }
@@ -194,5 +194,5 @@ const createDeposits = async () => {
 
 module.exports = {
     prepopulateDatabase,
-    populateDatabase
-  }
+    populateDatabase,
+}
