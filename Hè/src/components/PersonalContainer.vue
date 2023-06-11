@@ -1,4 +1,5 @@
 <script setup lang="ts">
+    import SpecialBadgeContainer from '@/components/SpecialBadgeContainer.vue'
     import axios from 'axios'
     import ReportTable from '@/components/ReportTable.vue'
     import { computed } from '@vue/reactivity'
@@ -14,6 +15,7 @@
         }
     })
 
+    const extraBadges = ref()
     const report = ref()
     const typologyPrices = ref()
     const months: string[] = ['gennaio', 'febbraio', 'marzo', 'aprile', 'maggio', 'giugno', 'luglio', 'agosto',
@@ -58,12 +60,36 @@
                 typologyPrices.value = response.data
                 containerData.isDataLoaded = true
             }).catch(ignored =>{})
-        })
+        }).then((response) => {
+                    //data retrieved, now the template can load
+                    
+                    //data.isDataLoaded = true
+                    axios.get("http://localhost:3000/badge", {
+                        params: {
+                            email: props.email,
+                            year: reportMonthYear.value[0],
+                            month: reportMonthYear.value[1]
+                            //report: report
+                        },
+                    }).then((response) => {
+                        
+                        extraBadges.value = response.data[2];
+                        
+                        
+                        console.log(response.data);
+                    })
+                })
         .catch((error) => {
             //error in report (wrong date, server down, ...), redirect to standard report page 
             containerData.isDataValid = false
             containerData.isDataLoaded = true
         })
+        
+        
+        
+                    
+
+
     })
 
 </script>
@@ -85,6 +111,9 @@
             <div class="badge-block">
                 <div class="section-title">
                     <h2>Medagliere</h2>
+                </div>
+                <div class="grey">
+                    <SpecialBadgeContainer :year="reportMonthYear[0]" :month="reportMonthYear[1]" :extraBadges="extraBadges" :full=false></SpecialBadgeContainer>
                 </div>
                 
                 <div class="goto-link">

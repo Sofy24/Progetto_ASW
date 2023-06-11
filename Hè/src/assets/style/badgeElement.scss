@@ -1,0 +1,47 @@
+.badgeButtonClass{
+    margin: 20% 0 10%;
+}
+.imageBadges{
+    display: inline;
+}
+h2{
+        text-align: center;
+        color: white;
+    }
+    h3{
+        text-align: center;
+        color: black;
+    }
+    .first-month {
+        margin-left: 2%;
+        margin-right: 20%;
+
+        div {
+            background-color: #FFC700;
+            border-radius: 10px;
+            color: black;
+            padding: 1% 2%;
+            font-size: large;
+            text-align: center;
+            width: 50%;
+
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+            &:active {
+                background-color: lighten(#FFC700, 30%);
+            }
+            @media (max-width: 767px) {
+                width: 100%; 
+            }
+        }
+    }
+@media (min-width: 1024px) {
+    .specialbadge{
+        width:10%;
+        height:10%;
+    }
+    .badgeButtonClass{
+    margin: 10% 0 5%;
+}
+}
