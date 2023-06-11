@@ -136,13 +136,19 @@ export function getLineDataPeriodically(input: string) {
 
 export function getNotifications(input: string) {
   return new Promise<number[]>((resolve, reject) => {
-    console.log("this is emit not")
-    setInterval(() => {
-      socket.emit('getNotification', input, (response: number[]) => {
-        resolve(response);
+    verifyToken().then(res => {
+      console.log("this is emit not")
+      setInterval(() => {
+        socket.emit('getNotification', res, (response: number[]) => {
+          resolve(response);
+  
+        })
+      }, 60*100);
 
-      })
-    }, 60*100);
+    }).catch((error) => {
+      console.error(error);
+      throw error;
+    });
   }); 
 }
 
@@ -162,26 +168,3 @@ export function sendEmail() {
       throw error;
     });
 }
-
-
-/*export async function sendEmail() {
-  verifyToken()
-  .then((tokenValue) => {
-    //post request to send the email of the user
-    try { //make a post request
-      const response = axios.post("http://localhost:3000/binState",
-      {
-        email: tokenValue,
-      }     
-      )
-      console.log("this is response", response)
-      return response
-    } catch (err) { //error handler
-        console.log(err)
-        throw err
-    }})
-    .catch((error) => {
-      console.error(error)
-      throw error
-    })
-}*/

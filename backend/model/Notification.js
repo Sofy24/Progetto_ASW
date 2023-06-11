@@ -21,6 +21,6 @@ const notificationSchema = mongoose.Schema({
         type: String,
         required: true
     }
-});
+}, { collection: 'Notifications' });
 
 module.exports = mongoose.model('Notification', notificationSchema);
