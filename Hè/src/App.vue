@@ -32,7 +32,7 @@
 
 <template>
   <header>
-    <img alt="Vue logo" class="logo" src="@/assets/images/logo.png" />
+    <img alt="Vue logo" class="logo" src="@/assets/images/logo2.png" />
     
     <div class="wrapper">
       <!----<HelloWorld msg="Hè" />-->
