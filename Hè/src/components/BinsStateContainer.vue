@@ -3,7 +3,7 @@ import BinState from "@/components/BinState.vue"
 import axios from "axios"
 import { onMounted, ref } from "vue"
 import {type StateOfBins} from "../types/StateOfBins"
-
+import { sendEmail} from '@/utils/api'
 
 
 const bins = ref<StateOfBins[]>([])
@@ -11,9 +11,9 @@ const municipality = ref<string>("")
 
 const getBinState = async () => {
   try {
-    const data = (await axios.get("http://localhost:3000/binState")).data
+    const data = sendEmail() //(await axios.get("http://localhost:3000/binState")).data
     console.log("this is data", data)
-    bins.value = data.map((item: any): StateOfBins => {
+    /*bins.value = data.map((item: any): StateOfBins => {
         return {
             id: item._id,
             actual_kg: item.actual_kg,
@@ -25,7 +25,7 @@ const getBinState = async () => {
         })
         if (bins !== undefined){
           municipality.value = bins.value[0].municipality
-        }
+        }*/
   } catch (e) {
     console.error(e)
   }

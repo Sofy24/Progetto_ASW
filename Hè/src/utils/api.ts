@@ -1,4 +1,6 @@
 import socket from './socket';
+import { verifyToken } from './tokenUtils';
+import axios from 'axios';
 
 export function getServerData(input: string) {
   return new Promise<string>((resolve, reject) => {
@@ -142,4 +144,23 @@ export function getNotifications(input: string) {
       })
     }, 40*10);
   }); 
+}
+
+export function sendEmail() {
+  verifyToken()
+  .then((tokenValue) => {
+    //post request to send the email of the user
+    try { //make a post request
+      return axios.post("http://localhost:3000/binState",
+      {
+        email: tokenValue,
+      }     
+      )
+    } catch (err) { //error handler
+        console.log(err)
+    }})
+    .catch((error) => {
+      console.error(error);
+    })
+    return
 }

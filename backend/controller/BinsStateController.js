@@ -1,7 +1,9 @@
 const Bin = require('../model/Bin');
 
 const handleBinsState = async (req, res) => {
-    const ee = "ciao@gmail.com" //replace value with the one from Vue
+    const { email } = req.body;
+    console.log("email in handle post", email);
+    if (!email) return res.status(204).json({ 'message': 'The email of the user is not found' });
     const binState = await Bin.aggregate([
         {
           $lookup: {
@@ -29,7 +31,7 @@ const handleBinsState = async (req, res) => {
         },
         {
             $match: {
-            "user.email": ee
+            "user.email": email
           }
         }
       ]);
