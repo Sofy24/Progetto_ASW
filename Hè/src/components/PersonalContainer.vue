@@ -112,9 +112,12 @@
                 <div class="section-title">
                     <h2>Medagliere</h2>
                 </div>
-                <div class="grey">
+               
+                <div class="medagliere">
                     <SpecialBadgeContainer :year="reportMonthYear[0]" :month="reportMonthYear[1]" :extraBadges="extraBadges" :full=false></SpecialBadgeContainer>
                 </div>
+                    
+                
                 
                 <div class="goto-link">
                     <RouterLink to="/badge">Visualizza i medaglieri</RouterLink>

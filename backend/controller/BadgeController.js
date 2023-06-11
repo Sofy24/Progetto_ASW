@@ -175,37 +175,34 @@ const handleBadges = async (req, res) => {
             foreignField: '_id',
             as: "badge"
         }},
-        {$match: {"badge.is_multiple": false}},
-        {$group: {_id:"$badge.name",count: {$sum: 1} }}
+        {$match: {"badge.is_multiple": true}},
+        {$group: {_id:"$badge.name",count: {$max: "$badge.repetition"} }}
     ])
-
-    var specialBadgeList = [['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente'],
-    ['niente','niente','niente','niente','niente']]
-    const numBadgeList = [5,20,50,75,100]
+    /*console.log(specialBadge)
+    console.log(specialBadge.badge)*/
+    specialBadge.forEach(e=>{
+        console.log(e.badge)
+        console.log(e._id, e.count)
+    })
+    var specialBadgeList = ['niente','niente','niente','niente','niente','niente','niente','niente']
+    /*
     const numBadge = await Badges.aggregate([{$match: {is_multiple: true}},{$group: {_id:"$repetition" }}])
-    const numList=numBadge.map(e=>e._id)
+    const numList=numBadge.map(e=>e._id)*/
     //console.log(numList)
     specialBadge.forEach(e=>{
-        numList.forEach(n=>{
+        //numList.forEach(n=>{
+        var idt=list.indexOf(e._id[0])
+        specialBadgeList[idt]=(e._id[0]).concat(" ").concat(e.count)
+        /*if(e.count>n){
+            //console.log(e._id[0])
+            //var element = 
+            //console.log(element)
             
-            if(e.count>n){
-                //console.log(e._id[0])
-                //var element = 
-                //console.log(element)
-                var idt=list.indexOf(e._id[0])
-                var idn=numBadgeList.indexOf(n)
-                specialBadgeList[idt][idn]=(e._id[0]).concat(" ").concat(n)
-                //specialBadgeList.push((e._id[0]).concat(" ").concat(n))
-            }
+            //specialBadgeList.push((e._id[0]).concat(" ").concat(n))
+        }*/
            // console.log(n)
             //console.log("SPECIAL "+specialBadgeList)
-        })
+        //})
         
         
     })
@@ -266,33 +263,36 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
     })
     //console.log(waste)
     //console.log(media)
-    reportData.forEach(e=>{
-        var typology=waste.indexOf(e[0])
-        //console.log(" DEBUG ")
-        //console.log(e)
-        //console.log(typology)
-        //console.log(media)
-        if((e[0]=="indifferenziata" && (e[2]>e[1] || e[1]<media[typology])) ||
-        (e[0]!="indifferenziata" && (e[2]<e[1] || e[1]>media[typology]))){
-            
-            Badges.findOne({name:e[0],is_multiple: false}).then(async (thisBadge)=>{
-                const badge = new UserBadges({
-                    user:thisUser._id,
-                    badge: thisBadge._id,
-                    createdAt:adjustedDate
-
-                })
-                await badge.save();
-                //console.log("SALVATO")
+    const waiting = reportData.map(async e=>{
+            var typology=waste.indexOf(e[0])
+            //console.log(" DEBUG ")
+            //console.log(e)
+            //console.log(typology)
+            //console.log(media)
+            if((e[0]=="indifferenziata" && (e[2]>e[1] || e[1]<media[typology])) ||
+            (e[0]!="indifferenziata" && (e[2]<e[1] || e[1]>media[typology]))){
                 
-            })
-        }else{
-            //console.log("MUST TOTAL FALSE")
-            must_create_total = false
-        }
+                await Badges.findOne({name:e[0],is_multiple: false}).then(async (thisBadge)=>{
+                    const badge = new UserBadges({
+                        user:thisUser._id,
+                        badge: thisBadge._id,
+                        createdAt:adjustedDate
 
-    })
+                    })
+                    await badge.save();
+                    //console.log("SALVATO")
+                    
+                })
+            }else{
+                //console.log("MUST TOTAL FALSE")
+                must_create_total = false
+            }
+            return "fanculo"
 
+        })
+    await Promise.all(waiting)
+    
+    
     if(must_create_total){
         //console.log("IS TRUE")
         Badges.findOne({name:"tutto", is_multiple: false}).then(async (thisBadge)=>{
@@ -301,7 +301,9 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
                 badge: thisBadge._id,
                 createdAt:adjustedDate
             })
+            console.log( adjustedDate)
             await badge.save();
+            //console.log("created badge at: "+adjustedDate)
         })
     }
 
@@ -320,18 +322,22 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
             as: "badge"
         }},
         {$match: {"badge.is_multiple": false}},
-        {$group: {_id:"$badge.name",count: {$sum: 1} }}
+        {$group: {_id:"$badge.name",count: {$sum: 1},data:{$max:"$createdAt"} }},
+        {$match: {"data": adjustedDate}}
     ])
 
+    console.log(specialBadge)
     var specialBadgeList = []
     const numBadge = await Badges.aggregate([{$match: {is_multiple: true}},{$group: {_id:"$repetition" }}])
     const numList=numBadge.map(e=>e._id)
     //console.log(numList)
     specialBadge.forEach(e=>{
+        console.log(e.data, adjustedDate)
         numList.forEach(n=>{
             
-            if(e.count=n){
+            if(e.count==n){
 
+                console.log("passa"+ e._id + n)
                 Badges.findOne({name:e._id[0],is_multiple: true, repetition:n}).then(async (thisBadge)=>{
                     const badge = new UserBadges({
                         user:thisUser._id,
@@ -352,6 +358,11 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
         
         
     })
+    
+
+    
+
+    
     
 }
 

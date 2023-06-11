@@ -155,9 +155,8 @@
     <div v-if ="data.isDataLoaded">
         <h1>Badge Container {{ year }}</h1>
         <div v-if = "data.isDataValid" class="yellow">
-            <div class="grey">
-                
-                <h2> I tuoi badge speciali</h2>
+            <h2> I tuoi badge speciali</h2>
+            <div class="medagliere">
                 <SpecialBadgeContainer :year="year" :month="month" :extraBadges="extraBadges" :full=true />
                 <!--
                 <div v-for="(elem,index) in extraBadges" :key="index">

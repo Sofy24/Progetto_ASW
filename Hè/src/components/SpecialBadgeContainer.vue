@@ -47,7 +47,7 @@
     import { computed} from 'vue'
 
     //complex types
-    type SpecialBadgeItem = [string]
+    type SpecialBadgeItem = string
 
     //argument passed from reportContainer
     const props = defineProps({
@@ -159,13 +159,13 @@
 </script>
 
 <template>
-   <div v-for="(elem,index) in extraBadges" :key="index">
+   
                     
-        <div v-for="element in extraBadges[index]" class="imageBadges">
-            
-            <img :src="getImg(element)" alt="badge"  width="52" height="52" class="specialbadge">
-        </div>
+    <div v-for="element in extraBadges" class="imageBadges">
+        
+        <img :src="getImg(element)" alt="badge"  width="52" height="52" class="specialbadge">
     </div>
+   
 </template>
 
 <style lang="scss">
