@@ -11,9 +11,10 @@ const municipality = ref<string>("")
 
 const getBinState = async () => {
   try {
-    const data = sendEmail() //(await axios.get("http://localhost:3000/binState")).data
-    console.log("this is data", data)
-    /*bins.value = data.map((item: any): StateOfBins => {
+    sendEmail()
+  .then((responseData) => {
+    console.log("Response data:", responseData);
+    bins.value = responseData.map((item: any): StateOfBins => {
         return {
             id: item._id,
             actual_kg: item.actual_kg,
@@ -25,7 +26,12 @@ const getBinState = async () => {
         })
         if (bins !== undefined){
           municipality.value = bins.value[0].municipality
-        }*/
+        }
+  })
+  .catch((error) => {
+    console.log("Error:", error);
+    // Handle the error if needed
+  }); 
   } catch (e) {
     console.error(e)
   }
@@ -54,6 +60,8 @@ onMounted(getBinState)
     display: flex;
     flex-direction: column;
     width: 50%;
+    margin-top: 2%;
+    margin-bottom: 3%;
 }
 .title{
     padding:2%;

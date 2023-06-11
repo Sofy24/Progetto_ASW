@@ -147,20 +147,41 @@ export function getNotifications(input: string) {
 }
 
 export function sendEmail() {
+  return verifyToken()
+    .then((tokenValue) => {
+      return axios.post("http://localhost:3000/binState", {
+        email: tokenValue,
+      })
+      .then((response) => {
+        console.log("this is response", response.data);
+        return response.data;
+      });
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
+}
+
+
+/*export async function sendEmail() {
   verifyToken()
   .then((tokenValue) => {
     //post request to send the email of the user
     try { //make a post request
-      return axios.post("http://localhost:3000/binState",
+      const response = axios.post("http://localhost:3000/binState",
       {
         email: tokenValue,
       }     
       )
+      console.log("this is response", response)
+      return response
     } catch (err) { //error handler
         console.log(err)
+        throw err
     }})
     .catch((error) => {
-      console.error(error);
+      console.error(error)
+      throw error
     })
-    return
-}
+}*/
