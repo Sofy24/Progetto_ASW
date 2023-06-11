@@ -69,11 +69,26 @@
 
 <template>
     <div v-if ="containerData.isDataLoaded">
-        <div v-if="containerData.isDataValid">
+        <div v-if="containerData.isDataValid" class="personal-container">
             <!-- put here the components that should not be seen the first month-->
-            <h2>Report del mese di {{ months[reportMonthYear[1] - 1] }} {{ reportMonthYear[0] }}</h2>
-            <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" :prices="typologyPrices" />
-            <RouterLink to="/report">Visualizza altri Report</RouterLink>
+            <!--<h2>Report del mese di {{ months[reportMonthYear[1] - 1] }} {{ reportMonthYear[0] }}</h2>-->
+            <div class="last-report-block">
+                <div class="section-title">
+                    <h2>Report dell'ultimo mese</h2>
+                </div>
+                <ReportTable :year="reportMonthYear[0]" :month="reportMonthYear[1]" :report="report" :prices="typologyPrices" :full=false />
+                <div class="goto-link">
+                    <RouterLink to="/report">Visualizza altri Report</RouterLink>
+                </div>
+            </div>
+            <div class="badge-block">
+                <div class="section-title">
+                    <h2>Medagliere</h2>
+                </div>
+                <div class="goto-link">
+                    <RouterLink to="/badge">Visualizza i medaglieri</RouterLink>
+                </div>    
+            </div>
         </div>
         <div v-else class="first-month">
             <p>Benvenuto/a, questo è ancora il tuo primo mese su Hé, con il tempo questa pagina si riempirà sempre più</p>
@@ -85,8 +100,63 @@
 </template>
 
 <style lang="scss">
+    .personal-container {
+        display: grid;
+        grid-template-columns: 60% 40%;
+        grid-gap: 20px;
+    }
+
+    .last-report-block {
+        width:150%;
+    }
+    .badge-block {
+        width: 100%;
+    }
+
+    @media (max-width: 767px) {
+        .personal-container {
+            grid-template-columns: 100%;
+        }
+
+        .last-report-block {
+            width:100%;
+        }
+    }
+
     .first-month {
         margin-left: 20px;
         margin-right: 20px;
+
     }
+    .section-title {
+        display: flex;
+        justify-content: left;
+        align-items: left; 
+        margin-left: 15%;
+            
+        h1 {
+            text-align: center;
+        }
+    }
+
+    .goto-link{
+        background-color: #FFC700;
+        border-radius: 10px;
+        color: black;
+        padding: 1% 2%;
+        font-size: medium;
+        text-align: center;
+        width: 50%;
+        margin: 1% 1%;
+
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+        &:active {
+            background-color: lighten(#FFC700, 30%);
+        }
+        @media (max-width: 767px) {
+            width: 100%; 
+        }
+    }    
 </style>

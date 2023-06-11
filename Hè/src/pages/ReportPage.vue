@@ -16,7 +16,7 @@
 </script>
 
 <template>
-    <div>
+    <div class="page-title">
       <h1>Report {{ months[month - 1] }} {{ year }}</h1>
     </div>
     <ReportContainer :year="year" :month="month" />
@@ -24,5 +24,15 @@
 </template>
 
 <style lang="scss">
-    //TODO
+    .page-title {
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+        
+    h1 {
+        text-align: center;
+    }
+    }
+
+
 </style>

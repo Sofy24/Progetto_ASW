@@ -204,9 +204,8 @@
         color: white;
     }
     .first-month {
-        margin-left: 20px;
-        margin-right: 20px;
-        background-color: white;
+        margin-left: 2%;
+        margin-right: 20%;
 
         div {
             background-color: #FFC700;
@@ -214,12 +213,17 @@
             color: black;
             padding: 1% 2%;
             font-size: large;
+            text-align: center;
+            width: 50%;
 
             transition: background-color 0.3s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
             &:active {
                 background-color: lighten(#FFC700, 30%);
+            }
+            @media (max-width: 767px) {
+                width: 100%; 
             }
         }
     }
