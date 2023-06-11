@@ -61,7 +61,6 @@
             } else {
                 data.isDataValid = await checkReportDateValidity(currentYear, previousMonth, userEmail.value)
                 //reuqest the report
-                console.log("GERUNDIO:" + props.year + " " + props.month)
                 const response = await axios.get('http://localhost:3000/report', {
                 params: {
                     email: userEmail.value,

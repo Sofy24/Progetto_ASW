@@ -154,8 +154,8 @@
 
 
 
-    <div v-if ="data.isDataLoaded" class="yellow">
-        <div v-if = "data.isDataValid">
+    <div v-if ="data.isDataLoaded">
+        <div v-if = "data.isDataValid" class="yellow">
         <h1>Badge Container {{ year }}</h1>
         <h3> extra</h3>
         <div v-for="elem in extraBadges" >
@@ -206,6 +206,7 @@
     .first-month {
         margin-left: 20px;
         margin-right: 20px;
+        background-color: white;
 
         div {
             background-color: #FFC700;
