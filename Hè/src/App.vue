@@ -2,30 +2,35 @@
   import { RouterLink, RouterView} from 'vue-router'
   import { onMounted, ref} from 'vue'
   import { verifyToken } from '@/utils/tokenUtils'
-  import { useRouter } from 'vue-router';
+  import { useRouter } from 'vue-router'
   
   const router = useRouter()
   const isAuthorized = ref(false)
 
   onMounted(() => { 
-    checkAuthorization()
+    //checkAuthorization()
   })
+
+  const excludedPaths = ['/login', '/register', '/home', '/classification', '/graph']
+
   router.beforeEach((to, from, next) => {
-      //every time i change route it check if it is still logged
-      checkAuthorization()
-      next();
+    if (excludedPaths.includes(to.path)) {
+    next()
+    return
+    } 
+    //every time i change route to a protected one it check if it is still logged
+    checkAuthorization()
+    next()
   })
 
   async function checkAuthorization(): Promise<boolean> {
     try {
-      await verifyToken();
-      console.log("True");
+      await verifyToken()
       isAuthorized.value = true
-      return true;
+      return true
     } catch (error) {
-      console.log("False");
       isAuthorized.value = false
-      return false;
+      return false
     }
   } 
 </script>
