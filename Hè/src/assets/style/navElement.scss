@@ -37,8 +37,9 @@ header .wrapper {
   
 .logo {
     display: block;
-    margin: 1rem auto 0;
-    width: 100%;
+    margin: 0 25% ;
+    width: 50%;
+    align-self: center;
     //max-width: 10px;
 }
 
@@ -48,7 +49,7 @@ nav{
     text-decoration-color: $secondary-color;*/
     width: 100%;
     font-size: 12px;
-    text-align: center;
+    text-align: right;
     vertical-align: center;
     margin-top: 1rem;
     margin-bottom: 1rem;
@@ -230,7 +231,7 @@ nav a i{
 
     .logo {
       margin: 0 1rem 0 0;
-      max-width: 50%;
+      max-width: 20%;
     }
   
     header .wrapper {
