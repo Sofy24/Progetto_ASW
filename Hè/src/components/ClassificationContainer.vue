@@ -42,7 +42,8 @@ onMounted(getPercentage)
     
 }
 
-#OuterContainer{
+@media (min-width: 851px) {
+  #OuterContainer{
     background-color: #FFC700;
     box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2), 1px 2px 2px 0 rgba(0, 0, 0, 0.19);
     margin: auto;
@@ -57,7 +58,25 @@ onMounted(getPercentage)
       padding: 0 3% 0;
       text-align: center;
     }
+  }
 }
+
+@media (max-width: 850px) {
+  #OuterContainer{
+    background-color: #FFC700;
+    box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2), 1px 2px 2px 0 rgba(0, 0, 0, 0.19);
+    margin: 5%;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+
+    h2{
+      padding: 0 3% 0;
+      text-align: center;
+    }
+}
+}
+
 
 
 #InnerContainer{
