@@ -2,6 +2,7 @@ const Bin = require('../model/Bin');
 const Deposit = require('../model/Deposit');
 const { ObjectId } = require('mongodb');
 const Municipality = require('../model/Municipality');
+const Typology = require('../model/Typology');
 const currentDate = new Date();
 const previousMonth = currentDate.getMonth(); // months are zero-based (0 - 11)
 const currentYear = currentDate.getFullYear();
@@ -9,7 +10,8 @@ const currentYear = currentDate.getFullYear();
 
 const handleClassification = async (req, res) => {
     const createdAtFiltered = await (await Deposit.find({}, { createdAt: 1 })).filter(d => d.createdAt.getMonth() === previousMonth && d.createdAt.getFullYear() === currentYear);
-    const idIndifferenziata = new ObjectId('648437bac62e21f98afdf7fe');
+    const idIndifferenziata = await Typology.findOne({ name: "indifferenziata" }, { _id: 1 });
+
     const getDeposit = await Deposit.aggregate([
         {
             $match: {
@@ -38,7 +40,6 @@ const handleClassification = async (req, res) => {
             as: "deposit"
             }
         },
-        
         {
             $group: {
               _id: "$municipality",
@@ -53,12 +54,11 @@ const handleClassification = async (req, res) => {
             }
         },
         {
-            $match: { _id: idIndifferenziata }
-        }        
+            $match: { _id: idIndifferenziata._id }
+        }       
         
       ]);
 
-      console.log("indifByMunicip", indifByMunicip);
       const difByMunicip = await Bin.aggregate([ 
         {
             $lookup: {
@@ -87,7 +87,7 @@ const handleClassification = async (req, res) => {
         },
         { $unwind: "$bins" },
         {
-            $match: { _id: {$ne: idIndifferenziata} }
+            $match: { _id: {$ne: idIndifferenziata._id} }
         },
         {
             $group: {
@@ -98,7 +98,7 @@ const handleClassification = async (req, res) => {
         
       ]);
 
-    if(indifByMunicip.length > 0 && difByMunicip > 0){
+    if(indifByMunicip.length > 0 && difByMunicip.length > 0){
         const getActualKGIndiff = indifByMunicip.flatMap(({ _id, bins }) => bins).map(item => [item._id, item.bins.actual_kg]);
         const getActualKGDiff = difByMunicip.map(({ _id, bins }) => [_id, bins]).map(item => [item[0], item[1].reduce((accumulator, obj) => accumulator + obj.bins.actual_kg, 0)]);
         
@@ -114,10 +114,10 @@ const handleClassification = async (req, res) => {
             return [result.name, value? (value * 100).toFixed(3) : 0];
           }));
     
-        if (!percentage) return res.json({ 'message': 'The classification is not available' });
+        if (!percentage) return res.status(204).json({ 'message': 'The classification is not available' });
         res.json(percentage.sort((a, b) => b[1] - a[1]));
     } else {
-        return res.json({ 'message': "There aren't enough data" });
+        res.status(204).json({ 'message': "There aren't enough data" });
     }
     
 }
