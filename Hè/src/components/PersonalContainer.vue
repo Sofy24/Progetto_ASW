@@ -86,6 +86,7 @@
                 <div class="section-title">
                     <h2>Medagliere</h2>
                 </div>
+                
                 <div class="goto-link">
                     <RouterLink to="/badge">Visualizza i medaglieri</RouterLink>
                 </div>    

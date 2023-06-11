@@ -46,7 +46,7 @@
         </div>
         <PersonalContainer :email="userEmail" />
     </div>
-    <LogoutButton/>
+    
 </template>
 
 <style lang="scss">

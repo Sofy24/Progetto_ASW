@@ -57,7 +57,15 @@ nav{
     float: right;
 }
 
-
+nav button{
+    color: $secondary-color;
+    background-color: $primary-color;
+    border-radius: $border-radius;
+    margin-right: 1rem;
+    font-weight: bold;
+    font-size: large;
+    
+}
 
 nav a.router-link-exact-active {
     color: $primary-color;
@@ -68,10 +76,10 @@ nav a p{
     display: none;
 }
 
-nav a {
+nav a{
     display: inline-block;
     padding: 0 1rem;
-    
+    background-color: $primary-color;
     color: $secondary-color;
 }
 nav a i{
@@ -108,7 +116,7 @@ nav a i{
     overflow: hidden;
 }
 
-.dropdown .dropbtn{
+.dropdown .dropbtn, nav button {
     font-size: 16px;  
     border: none;
     outline: none;
@@ -122,8 +130,10 @@ nav a i{
 }
 .dropbtn  i{
     font-size: 1.5rem;
+    
 }
-.navbar a:hover, .dropdown:hover .dropbtn {
+
+.navbar a:hover, .dropdown:hover .dropbtn, nav button:hover{
     background-color: $secondary-color;
     color: $primary-color;
 }

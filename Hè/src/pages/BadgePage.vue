@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import LogoutButton from "@/components/LogoutButton.vue"
+
     import BadgeContainer from "@/components/BadgeContainer.vue"
     import {computed } from "vue"
     import { useStore } from 'vuex'
@@ -12,7 +12,7 @@
 <template>
     <div class="mainContent">
         <BadgeContainer :year="year" :month="month" />
-        <LogoutButton />
+        
     </div>
     
 </template>

@@ -3,7 +3,8 @@
   import { onMounted, ref} from 'vue'
   import { verifyToken } from '@/utils/tokenUtils'
   import { useRouter } from 'vue-router'
-  
+  import LogoutButton from "@/components/LogoutButton.vue"
+
   const router = useRouter()
   const isAuthorized = ref(false)
 
@@ -43,6 +44,7 @@
       <!----<HelloWorld msg="Hè" />-->
       <nav>
 
+        <LogoutButton v-if="isAuthorized"/>
         <RouterLink v-if="!isAuthorized" to="/register"><p >Register  </p><i class="pi pi-user-plus"></i></RouterLink>
         <RouterLink v-if="!isAuthorized" to="/login"><p >Login  </p><i class="pi pi-sign-in"></i></RouterLink>
         
