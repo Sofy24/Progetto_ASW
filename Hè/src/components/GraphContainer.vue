@@ -19,19 +19,19 @@ import { io } from "socket.io-client"
      </WelcomeItem></template>
   -->
   <div>
-    <h3>Grafico mese corrente</h3>
+    <h3>Distribuzione dei rifiuti prodotti nel mese corrente</h3>
     <PieGraph :email='"general"'/>
   </div>
     
 
   <div>
-    <h3>Grafico confornto kg </h3>
+    <h3>Rifiuti prodotti nel corso dell'anno (in kg) </h3>
       <LineGraph :email='"general"'/>
   </div>
 
 
   <div>
-    <h3>Grafo confronto percentuale</h3>
+    <h3>Distribuzione rifiuti prodotti nel corso dell'anno (%)</h3>
     
     <ImpiledGraph :email='"general"'/>
     
@@ -39,7 +39,7 @@ import { io } from "socket.io-client"
 
   
   <div>
-  <h3>Grafo confronto mese scorso</h3>
+  <h3>Confronto tra i risultati ottenuti questo mese e il mese scorso</h3>
     <RadarGraph :email='"general"' />
   </div>
   
@@ -47,7 +47,7 @@ import { io } from "socket.io-client"
   
     
   <div>
-    <h3>Grafo kg depositati e media</h3>
+    <h3>Rifiuti depositati in questo mese rispetto alla media mensile (in kg)</h3>
     <ColumnGraph :email='"general"' />
   </div>
   

@@ -20,10 +20,10 @@ const chartOptions={
       left: 1,
       top: 1
     }
-  },
+  },/*
   title: {
     text: 'Radar Chart - Multi Series'
-  },
+  },*/
   stroke: {
     width: 2
   },
@@ -101,10 +101,10 @@ onMounted(()=>{
       console.log(toRaw(radarvalues.value))
       console.log(radarvalues.value)
       series.value=[{
-        name: 'This Month',
+        name: 'Questo mese',
         data: toRaw(radarvalues.value)[0],
       }, {
-        name: 'Last month',
+        name: 'Mese scorso',
         data: toRaw(radarvalues.value[1]),
       }]
       console.log(series)
