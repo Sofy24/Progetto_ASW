@@ -16,6 +16,7 @@
     import potature from '../assets/images/potature.png'
     import Timeline from 'primevue/timeline';
     import prova from '../assets/images/vetro 100.png'
+    import LoadingScreen from '@/components/LoadingScreen.vue'
 
 
 
@@ -194,7 +195,7 @@
         </div>
     </div>
     <div v-else>
-        <p>LOADING</p>
+        <LoadingScreen />
     </div>
 </template>
 

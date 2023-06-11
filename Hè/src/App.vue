@@ -55,12 +55,12 @@
             <RouterLink  to="/graph">Grafici</RouterLink>
             <RouterLink  to="/classification">Classifica</RouterLink>
             <RouterLink  to="/">Home</RouterLink>
-            <RouterLink  v-if="isAuthorized" to="/notification">MyNotifications</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/notification">Notifiche</RouterLink>
             <RouterLink  v-if="isAuthorized" to="/binState">Stato corrente bidoni</RouterLink>
             <RouterLink  v-if="isAuthorized" to="/personal">MyPage</RouterLink>
-            <RouterLink  v-if="isAuthorized" to="/report">Resoconto Mensile</RouterLink>
-            <RouterLink  v-if="isAuthorized" to=/badge>Le tue medaglie</RouterLink>
-            <RouterLink  v-if="isAuthorized" to="/userGraph">MyGraph</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/report">Report Mensile</RouterLink>
+            <RouterLink  v-if="isAuthorized" to=/badge>Medagliere</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/userGraph">Statistiche</RouterLink>
           </div>
         </div> 
         

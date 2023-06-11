@@ -4,6 +4,7 @@
     import { computed } from '@vue/reactivity'
     import { onMounted, reactive, ref } from 'vue'
     import {checkReportDateValidity} from '../utils/checkReport'
+    import LoadingScreen from '@/components/LoadingScreen.vue'
 
     //current user email
     const props = defineProps({
@@ -95,7 +96,7 @@
         </div>
     </div>
     <div v-else>
-        <p>LOADING...</p>
+        <LoadingScreen />>
     </div>
 </template>
 

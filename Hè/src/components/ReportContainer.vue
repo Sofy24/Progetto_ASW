@@ -8,6 +8,7 @@
     import ReportTable from '@/components/ReportTable.vue'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
     import HistoryButtons from '@/components/HistoryButtons.vue'
+    import LoadingScreen from '@/components/LoadingScreen.vue'
     
 
     //Data for getting the requested report
@@ -105,7 +106,7 @@
         </div>
     </div> 
     <div v-else>
-        <p>LOADING...</p>
+        <LoadingScreen />
     </div>   
 
 </template>
