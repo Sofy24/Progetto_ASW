@@ -1,10 +1,11 @@
 const { Server } = require('socket.io');
-const Radar = require("./controller/RadarController")
-const Column = require("./controller/ColumnController")
-const Pie = require("./controller/PieController")
-const Impiled = require("./controller/ImpiledController")
+const Radar = require("./controller/RadarController");
+const Column = require("./controller/ColumnController");
+const Pie = require("./controller/PieController");
+const Impiled = require("./controller/ImpiledController");
 const Line = require("./controller/LineController");
 const { handleNewNote } = require('./Controller/NotificationController');
+const Notification = require('./model/Notification');
 
 // Define a function to handle the socket connections
 function handleSocketConnections(server) {
@@ -105,12 +106,13 @@ function handleSocketConnections(server) {
         }
     });
 
-    socket.on('getNotification', (data, callback) => {
-        handleNewNote().then((res)=>{
+
+    socket.on('getNotification', (email, callback) => {
+        handleNewNote(email).then((res)=>{
             callback(res);
         });
 
-    })
+    });
 
 
     });
