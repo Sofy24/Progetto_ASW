@@ -108,7 +108,7 @@ const handleClassification = async (req, res) => {
 
     const percentage = await Promise.all(percentageID.map(async ([id, value]) => {
         const result = await Municipality.findOne({ _id: id }, {name: 1});
-        return [result.name, value? value : 0];
+        return [result.name, value? (value * 100).toFixed(3) : 0];
       }));
 
     if (!percentage) return res.status(204).json({ 'message': 'The classification is not available' });
