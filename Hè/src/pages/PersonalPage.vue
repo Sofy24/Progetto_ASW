@@ -1,6 +1,5 @@
 <script setup lang="ts">
     import PersonalContainer from "@/components/PersonalContainer.vue"
-    import LogoutButton from "@/components/LogoutButton.vue"
     import { onMounted, ref, reactive } from 'vue'
     import { useRouter } from 'vue-router'
     import { verifyToken } from '@/utils/tokenUtils'

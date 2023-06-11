@@ -1,5 +1,5 @@
 <script setup lang="ts">
-    import LogoutButton from "@/components/LogoutButton.vue"
+    
     import ReportContainer from "@/components/ReportContainer.vue"
     import { computed } from "@vue/reactivity"
     import { useRouter } from 'vue-router'
@@ -20,7 +20,7 @@
       <h1>Report {{ months[month - 1] }} {{ year }}</h1>
     </div>
     <ReportContainer :year="year" :month="month" />
-    <LogoutButton/>
+   
 </template>
 
 <style lang="scss">
