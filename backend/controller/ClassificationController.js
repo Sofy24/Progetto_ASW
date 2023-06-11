@@ -58,7 +58,7 @@ const handleClassification = async (req, res) => {
         
       ]);
 
-      const getActualKGIndiff = indifByMunicip.flatMap(({ _id, bins }) => bins).map(item => [item._id, item.bins.actual_kg]);
+      console.log("indifByMunicip", indifByMunicip);
       const difByMunicip = await Bin.aggregate([ 
         {
             $lookup: {
@@ -97,22 +97,29 @@ const handleClassification = async (req, res) => {
         }      
         
       ]);
-    const getActualKGDiff = difByMunicip.map(({ _id, bins }) => [_id, bins]).map(item => [item[0], item[1].reduce((accumulator, obj) => accumulator + obj.bins.actual_kg, 0)]);
+
+    if(indifByMunicip.length > 0 && difByMunicip > 0){
+        const getActualKGIndiff = indifByMunicip.flatMap(({ _id, bins }) => bins).map(item => [item._id, item.bins.actual_kg]);
+        const getActualKGDiff = difByMunicip.map(({ _id, bins }) => [_id, bins]).map(item => [item[0], item[1].reduce((accumulator, obj) => accumulator + obj.bins.actual_kg, 0)]);
+        
+        const joinedArray = getActualKGDiff.map(([id, diffValue]) => {
+            const [_, indiffValue] = getActualKGIndiff.find(([indiffId]) => indiffId.equals(id));
+            return [id, diffValue, indiffValue];
+        });
     
-    const joinedArray = getActualKGDiff.map(([id, diffValue]) => {
-        const [_, indiffValue] = getActualKGIndiff.find(([indiffId]) => indiffId.equals(id));
-        return [id, diffValue, indiffValue];
-    });
-
-    const percentageID = joinedArray.map( item => [item[0], item[1] / (item[1] + item[2])]);
-
-    const percentage = await Promise.all(percentageID.map(async ([id, value]) => {
-        const result = await Municipality.findOne({ _id: id }, {name: 1});
-        return [result.name, value? (value * 100).toFixed(3) : 0];
-      }));
-
-    if (!percentage) return res.status(204).json({ 'message': 'The classification is not available' });
-    res.json(percentage.sort((a, b) => b[1] - a[1]));
+        const percentageID = joinedArray.map( item => [item[0], item[1] / (item[1] + item[2])]);
+    
+        const percentage = await Promise.all(percentageID.map(async ([id, value]) => {
+            const result = await Municipality.findOne({ _id: id }, {name: 1});
+            return [result.name, value? (value * 100).toFixed(3) : 0];
+          }));
+    
+        if (!percentage) return res.json({ 'message': 'The classification is not available' });
+        res.json(percentage.sort((a, b) => b[1] - a[1]));
+    } else {
+        return res.json({ 'message': "There aren't enough data" });
+    }
+    
 }
 
 module.exports = {

@@ -19,16 +19,17 @@ onMounted(()=>{
 const fetchData = () => {
 
   getNotifications("ciaoo").then((response)=>{
-      console.log("this is response2, i'm client", response)
-      notifications.value = response.map((item: any): Note => {
-      return {
-        date: item.date,
-        email: item.email,
-        isRead: item.isRead,
-        text: item.text,
-        type: item. type
-      }
-    })
+    notifications.value = []
+    console.log("this is response2, i'm client", response)
+    notifications.value = response.map((item: any): Note => {
+    return {
+      date: item.date,
+      email: item.email,
+      isRead: item.isRead,
+      text: item.text,
+      type: item. type
+    }
+  })
     console.log("notifications print", notifications)
     }).catch((error)=>{
         // Handle the error

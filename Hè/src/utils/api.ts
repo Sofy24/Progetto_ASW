@@ -142,7 +142,7 @@ export function getNotifications(input: string) {
         resolve(response);
 
       })
-    }, 60*1000);
+    }, 60*100);
   }); 
 }
 
