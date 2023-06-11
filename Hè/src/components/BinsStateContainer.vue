@@ -59,8 +59,8 @@ onMounted(getBinState)
     border-radius: 10px;
     display: flex;
     flex-direction: column;
-    width: 50%;
-    margin-top: 2%;
+    width: 90%;
+    margin-top: 5%;
     margin-bottom: 3%;
 }
 .title{

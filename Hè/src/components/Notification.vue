@@ -3,18 +3,17 @@
   import Card from 'primevue/card';
 
   const props = defineProps(["n"])
-
 </script>
 
 
 <template>
   <div v-if="n !== undefined">
-  <Card class="cards" :style="{ backgroundColor: n.isRead ? 'red' : 'yellow' }">
-    <template #title> Notifica </template>
-    <template #subtitle>{{ n.isRead ? "Letta" : "!Da leggere" }}</template>
+  <Card class="cards" :style="{ backgroundColor: '#f9f5ba' }">
+    
+    <template #title> Notifica <span class="subtitle">{{ n.isRead ? "" :  "!Da leggere" }}</span></template>
     <template #content>
         <p v-if="n.type === 'report'" >
-          {{n.text}} <RouterLink to="/graph">Link al report</RouterLink>
+          {{n.text}}
         </p>
         <p v-if="n.type === 'deposit'">
           {{n.text}}
@@ -26,10 +25,38 @@
 
 <style scoped>
 
-.p-card {
-  background-color: rgb(249, 245, 186);
+@media (min-width: 1167px) {
+  .subtitle{
+    color: rgb(255, 255, 255);
+    background-color: #ab0808;
+    margin-left: 80%; 
+    padding: 1%;
+    border-radius: 5px;
+    font-size: 50%;
+  }
 }
 
+@media (min-width: 801px) and (max-width: 1166px) {
+  .subtitle{
+    color: rgb(255, 255, 255);
+    background-color: #ab0808;
+    margin-left: 60%; 
+    padding: 1%;
+    border-radius: 5px;
+    font-size: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  .subtitle{
+    color: rgb(255, 255, 255);
+    background-color: #ab0808;
+    margin-left: 40%; 
+    padding: 1%;
+    border-radius: 5px;
+    font-size: 50%;
+  }
+}
 
 
 h1 {
@@ -37,8 +64,6 @@ h1 {
   font-size: 100%;
   top: -10px;
 }
-/*.p-card .p-card-subtitle */
-
 
 .notify h1 {
   text-align: center;

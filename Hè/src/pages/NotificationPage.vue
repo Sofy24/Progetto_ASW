@@ -7,3 +7,9 @@
   <NotificationContainer />
 </template>
 
+<style>
+  h1{
+    text-align: center;
+    margin: 1% 0 1%;
+  }
+</style>
