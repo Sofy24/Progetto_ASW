@@ -12,8 +12,9 @@ export async function verifyToken() : Promise<string> {
         resolve(response.data.email)
         }).catch((error) => {
         //console.log("wrong or expired token: "+ error)
+        localStorage.removeItem('token');
         // Redirect to login
-        reject(error)
+        reject(error)        
         })
     })
 }
