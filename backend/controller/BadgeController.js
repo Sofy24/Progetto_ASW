@@ -179,7 +179,15 @@ const handleBadges = async (req, res) => {
         {$group: {_id:"$badge.name",count: {$sum: 1} }}
     ])
 
-    var specialBadgeList = []
+    var specialBadgeList = [['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente'],
+    ['niente','niente','niente','niente','niente']]
+    const numBadgeList = [5,20,50,75,100]
     const numBadge = await Badges.aggregate([{$match: {is_multiple: true}},{$group: {_id:"$repetition" }}])
     const numList=numBadge.map(e=>e._id)
     //console.log(numList)
@@ -190,7 +198,10 @@ const handleBadges = async (req, res) => {
                 //console.log(e._id[0])
                 //var element = 
                 //console.log(element)
-                specialBadgeList.push((e._id[0]).concat(" ").concat(n))
+                var idt=list.indexOf(e._id[0])
+                var idn=numBadgeList.indexOf(n)
+                specialBadgeList[idt][idn]=(e._id[0]).concat(" ").concat(n)
+                //specialBadgeList.push((e._id[0]).concat(" ").concat(n))
             }
            // console.log(n)
             //console.log("SPECIAL "+specialBadgeList)
