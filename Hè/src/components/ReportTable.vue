@@ -23,6 +23,10 @@
         prices: {
             type: Array as () => Array<PriceItem>,
             required: true,
+        },
+        full: {
+            type: Boolean,
+            required: true,
         }
     })
     //string for all months
@@ -96,7 +100,7 @@
             </tbody>
             </table>
         </div>
-        <div class="ul-container">
+        <div v-if=full class="ul-container">
             <h2>Riassunto spese</h2>
             <ul>
                 <li v-for="(row, index) in report">

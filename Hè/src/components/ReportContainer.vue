@@ -8,6 +8,7 @@
     import ReportTable from '@/components/ReportTable.vue'
     import ReportRadarGraph from '@/components/ReportRadarGraph.vue'
     import HistoryButtons from '@/components/HistoryButtons.vue'
+    import LoadingScreen from '@/components/LoadingScreen.vue'
     
 
     //Data for getting the requested report
@@ -89,7 +90,7 @@
 <template>
     <div v-if ="data.isDataLoaded">
         <div v-if ="data.isDataValid">
-            <ReportTable :year="year" :month="month" :report="report" :prices="typologyPrices" />
+            <ReportTable :year="year" :month="month" :report="report" :prices="typologyPrices" :full=true />
             <ReportRadarGraph :columns="extractColumns(report)"/>
             <HistoryButtons :mode='"month"' :year="year" :month="month" :route='"/report"' :email="userEmail" @navigate="fetchData"  /> 
         </div>
@@ -105,15 +106,15 @@
         </div>
     </div> 
     <div v-else>
-        <p>LOADING...</p>
+        <LoadingScreen />
     </div>   
 
 </template>
 
 <style lang="scss">
     .first-month {
-        margin-left: 20px;
-        margin-right: 20px;
+        margin-left: 2%;
+        margin-right: 20%;
 
         div {
             background-color: #FFC700;
@@ -122,12 +123,16 @@
             padding: 1% 2%;
             font-size: large;
             text-align: center;
+            width: 50%;
 
             transition: background-color 0.3s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
             &:active {
                 background-color: lighten(#FFC700, 30%);
+            }
+            @media (max-width: 767px) {
+                width: 100%; 
             }
         }
     }

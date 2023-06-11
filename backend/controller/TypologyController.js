@@ -4,7 +4,6 @@ const handleTypologyPrice = async (req, res) => {
     try {
         const typologies = await Typology.find({});
         const typologiesArray = typologies.map(typology => [typology.name, typology.price_kg]);
-        console.log("PREZZI BASSI E FISSI: " + typologiesArray)
         // Return the typologies data as an array
         res.json(typologiesArray);
     } catch (error) {

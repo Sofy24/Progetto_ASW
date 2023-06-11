@@ -3,7 +3,11 @@
 </script>
 
 <template>
-  <h1>Classifica dei comuni più virtuosi</h1>
+  
   <ClassificationContainer />
 </template>
+
+<style>
+
+</style>
 

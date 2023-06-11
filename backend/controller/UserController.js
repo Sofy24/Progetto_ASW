@@ -6,7 +6,6 @@ const handleVerification = async (req, res) => {
     const token = req.headers.authorization.split(' ')[1];
   
     try {
-        console.log(token);
       // Verify the token
       const decoded = jwt.verify(token, secretKey);
   
@@ -29,12 +28,12 @@ const handleVerification = async (req, res) => {
       return res.status(200).json({ id, email });
     } catch (error) {
       // Handle token verification errors (e.g., invalid token, signature verification failed)
-      console.error('Token verification error:', error);
+      //console.error('Token verification error:', error);
       return res.status(401).json({ error: 'Invalid token' });
     }
   };
 
-  const handleRegistrationDate = async (req, res) => {
+const handleRegistrationDate = async (req, res) => {
     const { email } = req.query;
     try {
         const user = await User.findOne({ email });
@@ -47,9 +46,27 @@ const handleVerification = async (req, res) => {
     } catch (error) {
         res.status(500).json({ error: 'Internal server error' });
     }
-  }
+}
 
+const handleFullName = async (req, res) => {
+    const { email } = req.query;
+    try {
+        const user = await User.findOne({ email });
+        if (user) {
+            const name = user.name;
+            const surname = user.surname;
+            res.status(200).json([name, surname]);
+        } else {
+            res.status(404).json({ error: 'User not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ error: 'Internal server error' });
+    }
+
+}
+  
 module.exports = {
     handleVerification,
-    handleRegistrationDate
+    handleRegistrationDate,
+    handleFullName,
 }

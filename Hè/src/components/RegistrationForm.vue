@@ -44,7 +44,7 @@
     axios.post('http://localhost:3000/register', formData)
       .then((response) => {
         errorMessage.value=""
-        router.push('/home');
+        router.push('/');
       })
       .catch((error) => {
         if (error.response.status == 409) {

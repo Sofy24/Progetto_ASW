@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { computed, watchEffect, reactive, ref, getCurrentInstance } from 'vue';
+import { computed, watchEffect, reactive, ref, getCurrentInstance } from 'vue'
 import { useRouter} from 'vue-router'
 import axios from 'axios'
-import { useStore } from 'vuex';
-const store = useStore();
+import { useStore } from 'vuex'
+const store = useStore()
 const props = defineProps({
         mode: {
             type: String,
@@ -25,15 +25,15 @@ const props = defineProps({
             type: String,
             required: true,
         }
-    });
+    })
 
     const router = useRouter()
     const regYear = ref(0)
     const regMonth = ref(0)
-    const currentDate = new Date();
-    const currentMonth = currentDate.getMonth() + 1; // Adding 1 because months are zero-based (0 - 11)
-    const currentYear = currentDate.getFullYear();
-    const instance = getCurrentInstance(); // Get the current component instance
+    const currentDate = new Date()
+    const currentMonth = currentDate.getMonth() + 1 // Adding 1 because months are zero-based (0 - 11)
+    const currentYear = currentDate.getFullYear()
+    const instance = getCurrentInstance() // Get the current component instance
     const datacomp = reactive({
         isDataLoaded: false,
     })
@@ -51,30 +51,29 @@ const props = defineProps({
                 datacomp.isDataLoaded = true
             })
             .catch((error) => {
-                console.error(error)
                 router.push('/login')
             })
-    });
+    })
 
     //button texts
     const followingText = computed(() => {
         if (props.mode === 'month') {
-            return 'mese successivo';
+            return 'mese successivo'
         } else if (props.mode === 'year') {
             return 'anno successivo'
         } else {
             return ''
         }
-    });
+    })
     const previousText = computed(() => {
         if (props.mode === 'month') {
-            return 'mese precedente';
+            return 'mese precedente'
         } else if (props.mode === 'year') {
             return 'anno precedente'
         } else {
             return ''
         }
-    });
+    })
 
     //buttons are enabled or not
     const isForwardDisabled = computed(() => {
@@ -93,7 +92,7 @@ const props = defineProps({
         } else {
             return true
         }
-    });
+    })
     const isBackwardDisabled = computed(() => {
         if (props.mode === 'month') {
             if (props.year < regYear.value || ( props.year === regYear.value && (props.month) <= regMonth.value )) {
@@ -110,7 +109,7 @@ const props = defineProps({
         } else {
             return true
         }
-    });
+    })
 
     const handleClick = (scale : number) => {//scale == 1 -> next, scale == -1 -> previous
         if (props.mode === 'month') {
@@ -124,17 +123,17 @@ const props = defineProps({
                 gotoMonth = 12
                 gotoYear = gotoYear - 1
             }
-            store.commit('updateReportMonth', gotoMonth);
-            store.commit('updateReportYear', gotoYear);
+            store.commit('updateReportMonth', gotoMonth)
+            store.commit('updateReportYear', gotoYear)
         } else if (props.mode === 'year') {
             // scalare sulle medaglie
             let gotoMonth = props.month
             let gotoYear = props.year + scale
-            //store.commit('updateBadgeMonth', gotoMonth);
-            store.commit('updateBadgeYear', gotoYear);
+            //store.commit('updateBadgeMonth', gotoMonth)
+            store.commit('updateBadgeYear', gotoYear)
         }
         if (instance != null) {
-            instance.emit('navigate');
+            instance.emit('navigate')
         }
     }
 

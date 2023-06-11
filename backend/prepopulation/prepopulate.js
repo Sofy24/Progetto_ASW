@@ -132,6 +132,9 @@ const createUser = async () => {
                 date: { month, year }
             });
             await user.save();
+
+            municipality.users += 1;
+            await municipality.save();
         }
         //console.log('Users created successfully');
       } else {

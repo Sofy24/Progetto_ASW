@@ -1,4 +1,5 @@
 const express = require('express');
+const session = require('express-session');
 const app = express();
 const mongoose = require('mongoose')
 //var random = require('mongoose-random');
@@ -10,6 +11,11 @@ const populator = require('./prepopulation/prepopulate');
 const http = require('http');
 const { handleSocketConnections } = require('./socketController');
 app.use(cors());
+app.use(session({
+  secret: 'your-secret-key',
+  resave: false,
+  saveUninitialized: true
+}));
 
 //NON CANCELLARE
 const startServer = async () => {
@@ -229,3 +235,4 @@ app.get('/dataradar', async (req, res) => {
 
 
 
+module.exports = app;

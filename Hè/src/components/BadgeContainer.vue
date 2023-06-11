@@ -17,6 +17,7 @@
     import organico from '../assets/images/organico.png'
     import vetro from '../assets/images/vetro.png'
     import potature from '../assets/images/potature.png'
+
     import carta5 from '../assets/images/carta 5.png'
     import plastica5 from '../assets/images/plastica e lattine 5.png'
     import indifferenziata5 from '../assets/images/indifferenziata 5.png'
@@ -57,7 +58,8 @@
     import organico100 from '../assets/images/organico 100.png'
     import vetro100 from '../assets/images/vetro 100.png'
     import potature100 from '../assets/images/potature 100.png'
-    //import images from '../assets/images'
+    import LoadingScreen from '@/components/LoadingScreen.vue'
+
 
     
 
@@ -325,7 +327,7 @@
         </div>
     </div>
     <div v-else>
-        <p>LOADING</p>
+        <LoadingScreen />
     </div>
 </template>
 
@@ -345,9 +347,8 @@ h2{
         color: black;
     }
     .first-month {
-        margin-left: 20px;
-        margin-right: 20px;
-        background-color: white;
+        margin-left: 2%;
+        margin-right: 20%;
 
         div {
             background-color: #FFC700;
@@ -355,12 +356,17 @@ h2{
             color: black;
             padding: 1% 2%;
             font-size: large;
+            text-align: center;
+            width: 50%;
 
             transition: background-color 0.3s ease;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 
             &:active {
                 background-color: lighten(#FFC700, 30%);
+            }
+            @media (max-width: 767px) {
+                width: 100%; 
             }
         }
     }
