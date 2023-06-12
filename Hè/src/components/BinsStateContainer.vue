@@ -42,7 +42,7 @@ onMounted(getBinState)
 <template v-if="bins !== undefined" id="templateBinState">
   <div id="currentBinContainer">
     <h1 class="title" >Stato corrente dei bidoni di {{ municipality ? municipality : "nessun comune" }}</h1>
-    <BinState class="innerContainer" v-for="n in bins" :n="n"/>
+    <div id="alignBins"><BinState class="innerContainer" v-for="n in bins" :n="n"/></div>
   </div>
 </template>
 
@@ -55,13 +55,20 @@ onMounted(getBinState)
     background-color: #FFC700;
     box-shadow: 1px 1px 4px 1px rgba(0, 0, 0, 0.2), 1px 2px 2px 0 rgba(0, 0, 0, 0.19);
     margin: auto;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
     width: 90%;
+    border-radius: 10px;
     margin-top: 5%;
     margin-bottom: 3%;
+    
 }
+
+#alignBins{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
 .title{
     padding:2%;
     color: black;
@@ -69,12 +76,11 @@ onMounted(getBinState)
 }
 
 .innerContainer{
+    display: inline-block;
     background-color: #FFFFFF;
-    padding: 3% 0 0;
+    padding: 3% 2% 0;
     border-radius: 10px;
-    margin: 3%;
-    display: flex;
-    justify-content: space-around;
+    margin: 2%;
 }
 
 </style>
