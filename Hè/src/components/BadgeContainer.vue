@@ -156,7 +156,8 @@
         <h1>Badge Container {{ year }}</h1>
         <div v-if = "data.isDataValid" class="yellow">
             <h2> I tuoi badge speciali</h2>
-            <div class="medagliere">
+            <div class="medagliere_speciale_to_pad">
+            <div class="gridMedglieSpeciali">
                 <SpecialBadgeContainer :year="year" :month="month" :extraBadges="extraBadges" :full=true />
                 <!--
                 <div v-for="(elem,index) in extraBadges" :key="index">
@@ -167,6 +168,7 @@
                     </div>
                 </div>
                 -->
+            </div>
             </div>
         
             <div class="medagliereGrid">

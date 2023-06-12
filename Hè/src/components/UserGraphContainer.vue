@@ -50,7 +50,7 @@
 
 
     <div>
-        <h3>GDistribuzione rifiuti prodotti nel corso dell'anno (%)</h3>
+        <h3>Distribuzione rifiuti prodotti nel corso dell'anno (%)</h3>
         
         <ImpiledGraph :email="userEmail"/>
         

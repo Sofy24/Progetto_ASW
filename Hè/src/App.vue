@@ -9,10 +9,11 @@
   const isAuthorized = ref(false)
 
   onMounted(() => { 
-    //checkAuthorization()
+    checkAuthorization()
+    console.log(isAuthorized.value)
   })
 
-  const excludedPaths = ['/login', '/register', '/home', '/classification', '/graph']
+  const excludedPaths = ['/login', '/register', '/classification', '/graph']
 
   router.beforeEach((to, from, next) => {
     if (excludedPaths.includes(to.path)) {
@@ -21,6 +22,7 @@
     } 
     //every time i change route to a protected one it check if it is still logged
     checkAuthorization()
+    console.log(isAuthorized.value)
     next()
   })
 
@@ -28,6 +30,7 @@
     try {
       await verifyToken()
       isAuthorized.value = true
+      
       return true
     } catch (error) {
       isAuthorized.value = false
@@ -62,7 +65,7 @@
             <RouterLink  v-if="isAuthorized" to="/personal">MyPage</RouterLink>
             <RouterLink  v-if="isAuthorized" to="/report">Report Mensile</RouterLink>
             <RouterLink  v-if="isAuthorized" to=/badge>Medagliere</RouterLink>
-            <RouterLink  v-if="isAuthorized" to="/userGraph">Statistiche</RouterLink>
+            <RouterLink  v-if="isAuthorized" to="/userGraph">Statistiche utente</RouterLink>
           </div>
         </div> 
         

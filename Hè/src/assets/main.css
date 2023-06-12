@@ -68,7 +68,11 @@ a,
   background-size: cover;
 
 }
-
+.medagliere_speciale_to_pad{
+  background-image: url("./images/sfondo.jpg");
+  background-size: cover;
+  padding: 0 0 10% ;
+}
 
 
 .medagliereGrid{
@@ -79,7 +83,7 @@ a,
   overflow:none;
 }
 
-.gridMedglie{
+.gridMedglie, .gridMedglieSpeciali{
   height: 120%;
   word-break: break-all;
   overflow:none;
@@ -100,7 +104,7 @@ a,
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 767px) {
 
   #app {
     width: 100%;
@@ -136,6 +140,20 @@ a,
     gap: 30% 5%;
   }
 
+  .gridMedglieSpeciali{
+    height: 120%;
+    /*word-break: break-all;*/
+    overflow:none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));/*1fr 1fr 1fr 1fr;*/
+    /*grid-template-columns: repeat(4, minmax(0, 3fr));/*2fr 2fr 2fr 2fr;
+    grid-auto-rows: minmax(min-content, max-content);*/
+    /*padding-left: 5%;
+    padding-top: 8%;*/
+    padding: 8% 5% 8%;
+    gap: 10% 5%;
+  }
+
   .yellow_div{
     justify-content: right;
     display: flex;
@@ -146,5 +164,14 @@ a,
     /*position: relative;
     right: 0;*/
     margin-right: 0;
+  }
+
+  .medagliere_speciale_to_pad{
+    background-image: url("./images/sfondo.jpg");
+    background-size: cover;
+    padding: 0 0 ;
+    /*display: inline-block;
+    max-width: fit-content;*/
+    margin: 0 30%;
   }
 }
