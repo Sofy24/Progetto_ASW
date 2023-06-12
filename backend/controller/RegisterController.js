@@ -27,7 +27,7 @@ const handleRegistration = async (req, res) => {
             return res.status(400).json({ error: 'Comune assente o errato' });
         }
 
-        const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$ %^&*-]).{8,}$/;
+        const passwordRegex = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[+#?!@$ %^&*-]).{8,}$/;
         if (password == null || !passwordRegex.test(password)) {
             return res.status(400).json({ error: 'Password assente o errata' });
         }

@@ -26,9 +26,15 @@
 
   async function checkAuthorization(): Promise<boolean> {
     try {
+
+      const token = localStorage.getItem('token');
+      if (token == null) {
+        isAuthorized.value = false
+        return false
+      }
+
       await verifyToken()
       isAuthorized.value = true
-      
       return true
     } catch (error) {
       isAuthorized.value = false

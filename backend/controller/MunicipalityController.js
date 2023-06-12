@@ -6,7 +6,7 @@ const handleMunicipalitiesNames = async (req, res) => {
         municipalityNames.sort((a, b) => a.localeCompare(b));
         res.json(municipalityNames);
       } catch (error) {
-        console.error('Error retrieving municipalities:', error);
+        //console.error('Error retrieving municipalities:', error);
         res.status(500).json({ error: 'Failed to retrieve municipalities' });
       }
 };
