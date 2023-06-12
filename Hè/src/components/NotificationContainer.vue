@@ -69,4 +69,5 @@ const fetchData = () => {
     margin-bottom: 3%;
   }
 }
+
 </style>

@@ -1,21 +1,33 @@
 <script setup lang="ts">
-  import { ref, watch } from "vue"
-  import Card from 'primevue/card';
+  import Card from 'primevue/card'
+  import { ref } from "vue"
+  import Dialog from 'primevue/dialog'
 
-  const props = defineProps(["n"])
+  function reading() {
+    props.n.isRead = false
+    read.value = true
+}
+
+const props = defineProps(["n"])
+const visible = ref(false);
+const read = ref(props.n.isRead)
+
 </script>
 
 
 <template>
   <div v-if="n !== undefined">
-  <Card class="cards" :style="{ backgroundColor: '#f9f5ba' }">
-    
-    <template #title> Notifica <span class="subtitle">{{ n.isRead ? "" :  "!Da leggere" }}</span></template>
+  <template>
+    <div class="card flex justify-content-center">
+        <Dialog v-model:visible="visible" modal header="Notifica" :style="{ width: '50vw' }">
+            <p>{{ n.text }} </p>
+        </Dialog>
+    </div>
+  </template>
+  <Card class="cards" @click="reading(), visible = true" :style="{ backgroundColor: '#f9f5ba' }">
+    <template #title> Notifica <span v-if="read === false" class="subtitle">"!Da leggere"</span></template>
     <template #content>
-        <p v-if="n.type === 'report'" >
-          {{n.text}}
-        </p>
-        <p v-if="n.type === 'deposit'">
+        <p v-if="n.isRead === true || read === true" >
           {{n.text}}
         </p>
     </template>
@@ -74,4 +86,10 @@ h1 {
     text-align: left;
   }
 }
+
+.cardsContainer:hover{
+  background-color: blue;
+}
+
+
 </style>
