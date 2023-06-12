@@ -11,6 +11,7 @@
     return gifArray[Math.floor(Math.random() * gifArray.length)];
   }
   const gifValue = getGif()
+  const percentage = (props.n.actual_kg * 100 / props.n.max_kg).toFixed(2)
 </script>
 
 
@@ -18,7 +19,7 @@
   <div class="specificBin" v-if="n !== undefined">
     <div class="leftSide">
       <div style="padding-top:100%;position:relative;"><iframe :src="gifValue" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen></iframe></div>
-      <p class="percent">Percentuale riempimento bidone {{n.actual_kg*100/n.max_kg}}%</p>
+      <p class="percent">Percentuale riempimento bidone {{percentage}}%</p>
     </div>
     <p class="info">
         id bidone: {{ n.id }}<br>
