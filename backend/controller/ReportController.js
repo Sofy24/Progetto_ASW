@@ -7,21 +7,21 @@ const BadgeController = require('../controller/BadgeController');
 
 const handleMonthlyReport = async (req, res) => {
     const {email, year, month} = req.query;
-    console.log("params report"+email+year+month);
+
     
     try {
         await chargeReport(email, year, month);
-        console.log("DEVE AVER FINITO");
+        
         const user = await User.findOne({ email });
         const report = await Report.findOne({ user, 'date.month': month, 'date.year': year });
-        console.log("direct "+report);
+        
         res.json(report.quantities)
     } catch (err) {
         try {//if there is no report try to generate one based on deposits 
             const { date: { month: registrationMonth, year: registrationYear } } = await User.findOne({ email }, 'date.month date.year');
-            console.log("SESSO ASSOLUTO: "+ registrationMonth + " "+ month)
+           
             if (registrationYear > year || (registrationYear == year && (registrationMonth) > month)) {
-                console.log("NONONONO")
+                
                 return res.status(400).json({ error: 'asked report before registration date' });
             }
             const quantities = await produceReport(email, year, month - 1);
@@ -42,17 +42,15 @@ async function produceReport(email, year, month) {
         let futureDate;
         //check if month is december
         if ((parseInt(month) + 1) === 12) {
-            console.log("dec-jan")
+          
             futureDate = new Date((parseInt(year) + 1), 0 , 01);
         } else {
-            console.log("normal")
+         
             futureDate = new Date(year, (parseInt(month) + 1), 01);
         }
         //applying timezone offset
         const adjustedFutureDate = new Date(futureDate.getTime() + timezoneOffset *60000);
-        console.log(month + "  "+year)
-        console.log("DATE: "+ currentDate + "---" + futureDate)
-        console.log("DATE: "+ adjustedDate + "---" + adjustedFutureDate)
+
         //deposit in ended month
         const depositEndedMonth = await Deposit.aggregate([
             {$lookup:{
@@ -94,7 +92,7 @@ async function produceReport(email, year, month) {
         }
         //applying timezone offset
         const adjustedLastDate = new Date(lastDate.getTime() + timezoneOffset * 60 * 1000);
-        console.log("DATE: "+ adjustedDate + "---" + adjustedLastDate)
+
         //deposit last month
         const depositLastMonth= await Deposit.aggregate([
             {$lookup:{
@@ -128,12 +126,10 @@ async function produceReport(email, year, month) {
 
         const typologies = await Typology.find({}, 'name');
         const typologiesData = typologies.map(typology => [typology.name, 0, 0]);
-        console.log(typologiesData);
-        console.log("DATA LAST MONTH "+dataEndedMonth)
+
         
         //add data previously retrieved
         dataEndedMonth.forEach(e => {
-            console.log(e[0], e[1])
             if (e[0] != undefined) {
                 index=typologiesData.findIndex(item => item[0] === e[0]);
                 typologiesData[index][1] = e[1]
@@ -146,7 +142,7 @@ async function produceReport(email, year, month) {
             }
         });
         
-        console.log(typologiesData);
+
 
         // Save the user document to the database for future request 
         const user = await User.findOne({ email });
@@ -162,8 +158,6 @@ async function produceReport(email, year, month) {
             await report.save();
         }
 
-        console.log("in report: "+adjustedDate)
-
 
         await BadgeController.createBadges(typologiesData,email,adjustedDate,adjustedFutureDate)
 
@@ -175,38 +169,30 @@ async function produceReport(email, year, month) {
 
 async function chargeReport(email,year, month){
 
-    //console.log(month)
 
     const last_report = await Report.aggregate([
         {$sort:{"date.year":-1, "date.month":-1}},
         {$limit:1}
     ]);
 
-    console.log("???"+last_report)
-
     let last_year = last_report.map(e=>e.date.year)
     let last_month = last_report.map(e=>e.date.month)
 
     if (last_report.length == 0) {
-        console.log("BANANA")
         const user = await User.findOne({ email });
-        console.log("ARANCIA");
+        
         last_year = user.date.year;
         last_month = user.date.month;
     }
 
-    console.log("DATE MAGGICHE: "+last_year+" "+last_month)
     if (month == last_month && year == last_year) {
-        console.log("CIOCCOLATA");
+       
         return;
     }
     const year_offset = (year-last_year)*12
 
     const offset = year_offset+(month-last_month)
 
-    console.log(year_offset+" "+(month-last_month))
-    console.log(offset)
-    console.log("FINISHED")
 
     let iyear = last_year;
     for (let imonth = last_month; imonth <= month || year != iyear ; imonth++) {
@@ -214,7 +200,6 @@ async function chargeReport(email,year, month){
             imonth = 1; // Reset month to January
             iyear++; // Increment year by 1
         }
-        console.log("RUNNING YEAR MONTH: " + iyear + " " + imonth)
         await produceReport(email, iyear, imonth - 1);
     } 
 }

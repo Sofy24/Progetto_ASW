@@ -13,19 +13,7 @@ header {
     place-items: flex-start;
     flex-wrap: wrap;
     line-height: 1.5;
-    //max-height: 100vh;
     background-color: $primary-color;
-/**   
-    position: sticky;
-    right: 0;
-    width: 100%;
-    left: 0;
- 
-
-    position: fixed;
-    top: 0;
-    right: 0;
-    width: 100%;*/
 }
 
 header .wrapper {
@@ -40,13 +28,10 @@ header .wrapper {
     margin: 0 25% ;
     width: 50%;
     align-self: center;
-    //max-width: 10px;
+    
 }
 
 nav{
-    /*
-    background-color: $primary-color;
-    text-decoration-color: $secondary-color;*/
     width: 100%;
     font-size: 12px;
     text-align: right;
@@ -96,8 +81,6 @@ nav a i{
 
 .navbar {
     overflow: hidden;
-    /*background-color: #333;
-    font-family: Arial, Helvetica, sans-serif;*/
 }
 
 .navbar a{
@@ -108,7 +91,6 @@ nav a i{
     padding: 14px 16px;
     text-decoration: none;
     overflow: hidden;
-    //background-color: #333;
 }
 
 .dropdown{
@@ -121,8 +103,6 @@ nav a i{
     border: none;
     outline: none;
     color: $secondary-color;
-    
-    //padding: 14px 16px;
     background-color: inherit;
     font-family: inherit;
     margin-right: 1rem;
@@ -156,16 +136,7 @@ nav a i{
     display: block;
     text-align: left;
 }
-/*
-.dropdown-content a:hover{
-    color: $primary-color;
-    background-color: $secondary-color-trasparent;
-}
 
-.dropdown-content a.router-link-exact-active {
-    color: $primary-color;
-    background-color: $secondary-color-trasparent;
-}*/
 .dropdown-content a.router-link-exact-active, .dropdown-content a:hover{
     background-color: $primary-color;
     border-right: 10px solid $secondary-color;
@@ -180,63 +151,6 @@ nav a i{
 
 
 @media (min-width: 767px) {
-    /*html {
-        height: 100%;
-    }*/
-    /*
-    body {
-        display: flex;
-        //flex-direction: column;
-        
-        height: 100%;   
-        overflow: hidden;
-        
-
-        place-items: start;
-        */
-        /*
-        margin: 0px;  // removes default style 
-          // enables flex content for its children 
-        box-sizing: border-box;*/
-    //}
-    /*
-    header {
-      display: flex;
-      flex: 0 0 0;
-      //flex-shrink: 0;
-      place-items: start center;
-      //position: relative;
-      //place-self: top;
-      //padding-right: calc(var(--section-gap) / 2);
-    }*/
-  
-/*
-    html, body {
-        margin:0;
-        padding: 0;
-        height:100%;
-        min-height:100%;
-      }
-      body {
-        margin:0;
-        padding: 0;
-        height:100%;
-        min-height:100%;
-        display: flex;
-        flex-direction: column;
-      }
-      header {
-        flex: 0 0 0;
-        //background:red;
-      }*/
-
-
-
-
-
-
-
-
 
 
     .logo {
@@ -254,7 +168,7 @@ nav a i{
     nav {
       
       text-align: right;
-     // margin-left: -1rem;
+      
       font-size: 1rem;
   
       padding: 2rem 2rem;

@@ -5,8 +5,8 @@ const Bins = require('../model/Bin');
 
 async function generalData(){
   const current =new Date()
-  var year = current.getFullYear()//.toString();
-  var month = current.getMonth()//.toString();
+  var year = current.getFullYear()
+  var month = current.getMonth()
   var final1=[0,0,0,0,0,0,0]
   var final2=[0,0,0,0,0,0,0]
 
@@ -14,7 +14,7 @@ async function generalData(){
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  //console.log(adjustedDate);
+
 
   const depositThisMonth = await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedDate}}},
@@ -38,8 +38,6 @@ async function generalData(){
   ])
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
-  //console.log(res1)
-  
   const depositTotal= await Deposit.aggregate([
     {$match: {createdAt:{ $lt : adjustedDate}}},
     {$lookup:{
@@ -69,15 +67,13 @@ async function generalData(){
       }
     }}
   ])
-  /*
-  console.log("banana: ")*/
-  //console.log(depositTotal)
+
   depositTotal.forEach(e=>{
     
       e.month++
     
   })
-  //console.log(depositTotal)
+
   const res2 = depositTotal.map(element =>[element.bin_typology[0],(element.total_kg)/(element.month)])
   const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   
@@ -91,13 +87,7 @@ async function generalData(){
     final2[index]=e[1]
   });
 
-  /*
-  console.log(final1)
-  //res.json();
-  console.log("GUDIHGDIBHB ")
-
-  console.log([final1,final2])
-*/
+  
   return [final1,final2]
 
         
@@ -107,8 +97,8 @@ async function generalData(){
 async function userData(email){
   userEmail = email
   const current =new Date()
-  var year = current.getFullYear()//.toString();
-  var month = current.getMonth()//.toString();
+  var year = current.getFullYear()
+  var month = current.getMonth()
   var final1=[0,0,0,0,0,0,0]
   var final2=[0,0,0,0,0,0,0]
 
@@ -116,7 +106,6 @@ async function userData(email){
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  //console.log(adjustedDate);
 
   const depositThisMonth = await Deposit.aggregate([
     {$lookup:{
@@ -147,7 +136,6 @@ async function userData(email){
   ])
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
-  //console.log(res1)
   
   const depositTotal= await Deposit.aggregate([
     {$lookup:{
@@ -183,10 +171,7 @@ async function userData(email){
       }
     }}
   ])
-  /*
-  console.log("banana: ")
-  console.log(depositTotal)
-  */
+
   const res2 = depositTotal.map(element =>[element.bin_typology[0],(element.total_kg)/(element.month)])
   const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
   
@@ -200,13 +185,7 @@ async function userData(email){
     final2[index]=e[1]
   });
 
-  /*
-  console.log(final1)
-  //res.json();
-  console.log("GUDIHGDIBHB ")
-
-  console.log([final1,final2])
-*/
+  
   return [final1,final2]
 
         

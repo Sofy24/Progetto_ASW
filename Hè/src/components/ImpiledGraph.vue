@@ -10,7 +10,6 @@ const props = defineProps({
   },
 })
 
-//const series=ref([]as number[])
 onMounted(()=>{
   fetchData()
   const interval = setInterval(fetchData, 60000);
@@ -27,10 +26,7 @@ var res = ref([] as { name: string; data: number[];}[])
 
 const fetchData = () => {
   getImpiledData(props.email).then((response)=>{
-    console.log("response")
-    console.log(response)
-    console.log(response[0])
-    console.log(response[1])
+
     for(var i=0;i<labels.length;i++){
       res.value[i]=({
         name: labels[i],
@@ -38,21 +34,12 @@ const fetchData = () => {
       })
     }
     timelabels.value = response[1]
-    console.log(toRaw( timelabels.value))
-    console.log( timelabels)
-    console.log(toRaw( timelabels))
-    console.log( timelabels.value)
+
   }).catch((error)=>{
         
     console.error(error);
   });        
 }
-
-
-//var chartOptions=
-
-
-
 
 
 

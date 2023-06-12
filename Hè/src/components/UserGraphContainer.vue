@@ -31,9 +31,6 @@
 <template>
   <div v-if="data.isDataLoaded"  class="grid">
 
-    <!--<UserPieContainer :email="userEmail" />-->
-  
-
     <div>
         <h3>Distribuzione dei rifiuti prodotti nel mese corrente</h3>
         

@@ -29,7 +29,6 @@ const fetchData = () => {
 
   getColumnData(props.email).then((response) => {
       series.value = response
-      console.log(series)
       for(var i=0;i<labels.length;i++){
         res.value[i]=({
         x: labels[i],
@@ -50,20 +49,9 @@ const fetchData = () => {
       console.error('Error retrieving municipalities names:', error)
     })
 };
-/*
-const fetchOptions = () =>{
-  axios.get('http://localhost:3000/options')
-    .then((response) => {
-      chartOptions.value = response.data
-    })
-    .catch((error) => {
-      console.error('Error retrieving municipalities names:', error)
-    });
-};*/
 
 
-console.log(res)
-console.log(series)
+
 
 
 
@@ -85,16 +73,15 @@ console.log(series)
           columnWidth: '60%'
         }
       },
-      //colors: ['#00E396'],
       dataLabels: {
         enabled: false
       },
       legend: {
         show: true,
         showForSingleSeries: true,
-        customLegendItems: [/*'Actual',*/ 'kg medi'],
+        customLegendItems: [ 'kg medi'],
         markers: {
-          fillColors: [/*'#00E396',*/ '#ff0000']
+          fillColors: [ '#ff0000']
         }
       }
     }" :series="[

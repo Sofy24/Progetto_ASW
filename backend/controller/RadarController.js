@@ -1,12 +1,11 @@
 const Deposit = require('../model/Deposit');
 const Typology = require('../model/Typology');
 const Bins = require('../model/Bin');
-//const Server = require("../socketController")
 
 async function generalData(){
   const current =new Date()
-  var year = current.getFullYear()//.toString();
-  var month = current.getMonth()//.toString();
+  var year = current.getFullYear()
+  var month = current.getMonth()
   var final1=[0,0,0,0,0,0,0]
   var final2=[0,0,0,0,0,0,0]
 
@@ -14,7 +13,6 @@ async function generalData(){
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  //console.log(adjustedDate);
 
   const depositThisMonth = await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedDate}}},
@@ -36,11 +34,9 @@ async function generalData(){
       total_kg: '$total_kg'
     }}
   ])
-  //console.log(depositThisMonth)
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
 
-  //console.log(res1)
   
   var lastMonth
   if(month==0){
@@ -86,13 +82,7 @@ async function generalData(){
     final2[index]=e[1]
   });
   
-  /*
-  console.log(final1)
-  //res.json();
-  console.log("GUDIHGDIBHB ")
-
-  console.log([final1,final2])
-*/
+  
   return [final1,final2]
 
         
@@ -102,8 +92,8 @@ async function generalData(){
 async function userData(email){
   userEmail = email
   const current =new Date()
-  var year = current.getFullYear()//.toString();
-  var month = current.getMonth()//.toString();
+  var year = current.getFullYear()
+  var month = current.getMonth()
   var final1=[0,0,0,0,0,0,0]
   var final2=[0,0,0,0,0,0,0]
 
@@ -111,7 +101,6 @@ async function userData(email){
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  //console.log(adjustedDate);
 
   const depositThisMonth = await Deposit.aggregate([
     {$lookup:{
@@ -140,11 +129,9 @@ async function userData(email){
       total_kg: '$total_kg'
     }}
   ])
-  //console.log(depositThisMonth)
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
 
-  //console.log(res1)
   
   
   const lastDate = new Date(year,month-1,01);
@@ -191,13 +178,7 @@ async function userData(email){
     final2[index]=e[1]
   });
   
-  /*
-  console.log(final1)
-  //res.json();
-  console.log("GUDIHGDIBHB ")
 
-  console.log([final1,final2])
-*/
   return [final1,final2]
 
         

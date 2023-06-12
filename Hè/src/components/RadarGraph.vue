@@ -20,10 +20,7 @@ const chartOptions={
       left: 1,
       top: 1
     }
-  },/*
-  title: {
-    text: 'Radar Chart - Multi Series'
-  },*/
+  },
   stroke: {
     width: 2
   },
@@ -41,46 +38,7 @@ const chartOptions={
 
 const radarvalues= ref([] as number[][])
 const series = ref([] as { name: string; data: number[]; }[])
-/*
- setup lang="ts">
-import { ref, onMounted, reactive, toRaw } from 'vue'
-import axios from 'axios'
 
-
-onMounted(()=>{
-  fetchData()
-  //fetchOptions()
-}) 
-const fetchData = () => {
-  axios.get(props.path)
-    .then((response) => {
-      radarvalues.value = response.data
-      console.log(toRaw(radarvalues.value))
-      console.log(radarvalues.value)
-      series.value=[{
-        name: 'This Month',
-        data: toRaw(radarvalues.value)[0],
-      }, {
-        name: 'Last month',
-        data: toRaw(radarvalues.value[1]),
-      }]
-      console.log(series)
-    })
-    .catch((error) => {
-      console.error('Error retrieving municipalities names:', error)
-    })
-};
-
-
-
-*/
-  /** SOCKET IO  */
-  /*import { socket } from "../socket.js";
-  socket.on("dataReturn", (arg) => {
-    console.log("RRUURURURUR"+arg); // world
-  });*/
-  //RAPYNO TRY
-  //import {socket} from "../socket.ts"
   
 
 onMounted(()=>{
@@ -92,14 +50,9 @@ onMounted(()=>{
   };
 }) 
   const fetchData = () => {
-    /*
-    const res = getRadarData("graph")
-    radarvalues.value=res
-    */
+    
     getRadarData(props.email).then((response)=>{
       radarvalues.value = response
-      console.log(toRaw(radarvalues.value))
-      console.log(radarvalues.value)
       series.value=[{
         name: 'Questo mese',
         data: toRaw(radarvalues.value)[0],
@@ -107,7 +60,6 @@ onMounted(()=>{
         name: 'Mese scorso',
         data: toRaw(radarvalues.value[1]),
       }]
-      console.log(series)
     }).catch((error)=>{
         // Handle the error
         console.error(error);
@@ -115,21 +67,7 @@ onMounted(()=>{
         // Handle the response data
         
       } 
- //   },
-  //}
-  /*
-  export default {
-    async mounted() {
-      try {
-        const response = await getServerData("graph");
-        // Handle the response data
-        console.log(response);
-      } catch (error) {
-        // Handle the error
-        console.error(error);
-      }
-    },
-  };*/
+ 
 </script>
 
 <template>

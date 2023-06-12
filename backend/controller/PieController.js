@@ -5,15 +5,14 @@ const Bins = require('../model/Bin');
 
 async function generalData(){
   const current =new Date()
-  var year = current.getFullYear()//.toString();
-  var month = current.getMonth()//.toString();
+  var year = current.getFullYear()
+  var month = current.getMonth()
   var final1=[0,0,0,0,0,0,0]
 
   const timezoneOffset = +120; // GMT+2:00 (2 hours ahead of GMT)
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  //console.log(adjustedDate);
 
   const depositThisMonth = await Deposit.aggregate([
     {$match: {createdAt:{ $gte : adjustedDate}}},
@@ -37,7 +36,6 @@ async function generalData(){
   ])
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
-  //console.log(res1)
   
   
   const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
@@ -49,7 +47,6 @@ async function generalData(){
   });
   
   
-  //console.log(final1)
   
   
   return final1
@@ -62,15 +59,14 @@ async function generalData(){
 async function userData(email){
   userEmail = email
   const current =new Date()
-  var year = current.getFullYear()//.toString();
-  var month = current.getMonth()//.toString();
+  var year = current.getFullYear()
+  var month = current.getMonth()
   var final1=[0,0,0,0,0,0,0]
 
   const timezoneOffset = new Date().getTimezoneOffset() + 120; // GMT+2:00 (2 hours ahead of GMT)
   const currentDate = new Date(year,month,01);
   const adjustedDate = new Date(currentDate.getTime() + timezoneOffset * 60 * 1000);
   
-  //console.log(adjustedDate);
 
   const depositThisMonth = await Deposit.aggregate([
     {$lookup:{
@@ -101,7 +97,6 @@ async function userData(email){
   ])
   const res1 = depositThisMonth.map(element =>[element.bin_typology[0],element.total_kg])
 
-  //console.log(res1)
   
   
   const list=['carta', 'plastica e lattine', 'vetro', 'sfralci e potature', 'organico', 'indifferenziata','olio']
@@ -113,7 +108,6 @@ async function userData(email){
   });
   
   
-  //console.log(final1)
   
   
   return final1

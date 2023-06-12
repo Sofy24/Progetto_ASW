@@ -12,7 +12,6 @@ const props = defineProps({
 
 const series=ref([]as number[])
 onMounted(()=>{
-  console.log("mount pie")
   fetchData()
   const interval = setInterval(fetchData, 60000);
   
@@ -24,10 +23,7 @@ onMounted(()=>{
 const fetchData = () => {
   
   getPieData(props.email).then((response)=>{
-    console.log("sto QUA ME STO AD AGGIORNA")
     series.value = response
-    console.log(toRaw(series.value))
-    console.log(series.value)
     
   }).catch((error)=>{
         
@@ -47,15 +43,9 @@ const fetchData = () => {
             },
             labels: ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', 'indifferenziata','olio'],
             colors:['#0062CC', '#edca3d','#097416','#3ded49','#742727','#bdbdbd','#ff671b'],
-            //fill:{
-              //colors:['#3d63ed', '#edca3d', '#ed663d','#3ded49','#742727','#742727','#bdbdbd']
-            //},
             responsive: [{
               breakpoint: 325,
               options: {
-                /*chart: {
-                  width: 250
-                },*/
                 legend: {
                   position: 'bottom'
                 }

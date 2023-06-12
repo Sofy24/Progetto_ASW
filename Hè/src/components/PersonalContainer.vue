@@ -76,7 +76,6 @@
                         extraBadges.value = response.data[2];
                         
                         
-                        console.log(response.data);
                     })
                 })
         .catch((error) => {

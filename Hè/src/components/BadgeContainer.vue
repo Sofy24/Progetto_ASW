@@ -1,6 +1,5 @@
 <script setup lang="ts">
     
-    //import require from 'node'
     import SpecialBadgeContainer from '@/components/SpecialBadgeContainer.vue'
     import axios from 'axios'
     import { onMounted, ref, reactive, watch, onBeforeMount} from 'vue'
@@ -72,13 +71,11 @@
                 .then((response) => {
                     //data retrieved, now the template can load
                     report.value = response.data
-                    //data.isDataLoaded = true
                     axios.get("http://localhost:3000/badge", {
                         params: {
                             email: userEmail.value,
                             year: props.year,
                             month: props.month,
-                            //report: report
                         },
                     })
                     .then((response) => {
@@ -88,7 +85,6 @@
                         data.isDataValid =true
                         data.isDataLoaded = true
                         
-                        console.log(response.data);
                     })
                     .catch((error) => {
                         console.log("LVE 1")
@@ -115,13 +111,9 @@
         fetchData();
     });
 
-    //watch([props.year, props.month], fetchData)
-
     function getImg(src:string){
 
         
-        //return src
-        //return require(src)
         
         switch ( src ) {
             case "niente":
@@ -159,36 +151,17 @@
             <div class="medagliere_speciale_to_pad">
             <div class="gridMedglieSpeciali">
                 <SpecialBadgeContainer :year="year" :month="month" :extraBadges="extraBadges" :full=true />
-                <!--
-                <div v-for="(elem,index) in extraBadges" :key="index">
-                    
-                    <div v-for="element in extraBadges[index]" class="imageBadges">
-                        
-                        <img :src="getImg(element)" alt="badge"  width="52" height="52" class="specialbadge">
-                    </div>
-                </div>
-                -->
             </div>
             </div>
         
             <div class="medagliereGrid">
-                <!-- grey" class="grid-item"  -->
                 <div  v-for="(elem,index) in badgeMonth" :key="index"  class="medagliere_to_pad">
                     <h3> {{elem}}</h3>
                     <div class="gridMedglie medagliere">
                         
                         <div  v-for="element in badges[index]" > 
-                            <!--
-                            <img :src="require('../assets/images/'+ element +'.png')" alt={{element}} width="42" height="42" >
-                            
-                            <img :src="'../assets/images/'+ element +'.png'" alt={{element}} width="42" height="42" >
-                            {{ element }}:src="require(item.imagePath)"-->
                             <img :src="getImg(element)" alt="badge" width="42" height="42">
                         </div>
-                        <!--
-                        <img v-for="element in badges[index]" :src="'../../assets/images/'+ element +'.png'" :alt="element" width="42" height="42">
-                        <img src="../assets/images/niente.png" alt="pippo" width="42" height="42">
-                        -->
                     </div>
                 </div>
             </div>

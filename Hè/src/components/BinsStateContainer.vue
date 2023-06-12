@@ -13,7 +13,6 @@ const getBinState = async () => {
   try {
     sendEmail()
   .then((responseData) => {
-    console.log("Response data:", responseData);
     bins.value = responseData.map((item: any): StateOfBins => {
         return {
             id: item._id,

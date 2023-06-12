@@ -8,7 +8,7 @@ const props = defineProps({
     required: true,
   },
 })
-//const series=ref([]as number[])
+
 onMounted(()=>{
   fetchData()
   const interval = setInterval(fetchData, 60000);
@@ -24,10 +24,7 @@ const labels= ['carta', 'plastica e lattine', 'vetro', 'potature', 'organico', '
 var res = ref([] as { name: string; data: number[];}[])
 const fetchData = () => {
   getLineData(props.email).then((response)=>{
-    console.log("response")
-    console.log(response)
-    console.log(response[0])
-    console.log(response[1])
+
     for(var i=0;i<labels.length;i++){
       res.value[i]=({
         name: labels[i],
@@ -35,8 +32,7 @@ const fetchData = () => {
       })
     }
     timelabels.value = response[1]
-    //console.log(toRaw(series.value))
-    //console.log(series.value)
+    
   }).catch((error)=>{
         
     console.error(error);
@@ -46,12 +42,6 @@ const fetchData = () => {
 
 
 
-
-
-/*"[{
-        name: labels[0],
-        data: series
-      }]"*/
 </script>
 
 <template>
@@ -70,29 +60,3 @@ const fetchData = () => {
 
 
 
-<!--
-  <style scoped>
-h1 {
-  font-weight: 500;
-  font-size: 2.6rem;
-  top: -10px;
-}
-
-h3 {
-  font-size: 1.2rem;
-}
-
-.greetings h1,
-.greetings h3 {
-  text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .greetings h1,
-  .greetings h3 {
-    text-align: left;
-  }
-}
-</style>
-
--->
