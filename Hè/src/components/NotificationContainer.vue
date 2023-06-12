@@ -3,8 +3,11 @@ import Notification from "@/components/Notification.vue"
 import { onMounted, ref } from "vue"
 import {type Note} from "../types/Note"
 import { getNotifications} from '@/utils/api'
+import LoadingScreen from '@/components/LoadingScreen.vue'
 
 const notifications = ref<Note[]>([])
+
+const isDataLoaded = ref<boolean>(false)
 
 onMounted(()=>{
   fetchData()
@@ -29,11 +32,13 @@ const fetchData = () => {
       text: item.text,
       type: item. type
     }
-  })
+    })
+    isDataLoaded.value = true
     console.log("notifications print", notifications)
     }).catch((error)=>{
         // Handle the error
-        console.error(error);
+        console.error(error)
+        isDataLoaded.value = false
       });
         // Handle the response data
         
@@ -42,9 +47,14 @@ const fetchData = () => {
 </script>
 
 <template v-if="notifications !== undefined">
+  <div v-if ="isDataLoaded">
   <h1>Notifiche</h1>
   <div id="containerNotification">
     <Notification class="notificationElement" v-for="n in notifications" :n="n"/>
+  </div>
+  </div>
+  <div v-else>
+      <LoadingScreen />
   </div>
 </template>
 
