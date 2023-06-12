@@ -15,12 +15,10 @@
                 password: password.value,
             };
 
-            console.log(formData);
-
             // Send the login request to the server
             axios.post('http://localhost:3000/login', formData)
                 .then(response => {
-                    console.log('Login successful')
+                    //console.log('Login successful')
                     //save the auth token in local storage
                     const token = response.data.token;
                     localStorage.setItem('token', token);
@@ -33,7 +31,7 @@
                     if (error.response.status == 401){
                         errorMessage.value = "Email o Password errata"
                     }
-                    console.error('Login failed:', error)
+                    //console.error('Login failed:', error)
                     // Handle login failure, such as displaying an error message
                 })
         }

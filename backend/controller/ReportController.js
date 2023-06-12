@@ -167,8 +167,8 @@ async function produceReport(email, year, month) {
     }
 }
 
+//load all report that can be created from last seen or first month
 async function chargeReport(email,year, month){
-
 
     const last_report = await Report.aggregate([
         {$sort:{"date.year":-1, "date.month":-1}},

@@ -191,7 +191,7 @@ async function createBadges(reportData,email,adjustedDate,adjustedFutureDate) {
                 
                 must_create_total = false
             }
-            return "fanculo"
+            return " "
 
         })
     await Promise.all(waiting)

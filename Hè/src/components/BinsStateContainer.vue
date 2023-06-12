@@ -4,10 +4,12 @@ import axios from "axios"
 import { onMounted, ref } from "vue"
 import {type StateOfBins} from "../types/StateOfBins"
 import { sendEmail} from '@/utils/api'
+import LoadingScreen from '@/components/LoadingScreen.vue'
 
 
 const bins = ref<StateOfBins[]>([])
 const municipality = ref<string>("")
+const isDataLoaded = ref<boolean>(false)
 
 const getBinState = async () => {
   try {
@@ -26,6 +28,7 @@ const getBinState = async () => {
         if (bins !== undefined){
           municipality.value = bins.value[0].municipality
         }
+        isDataLoaded.value = true
   })
   .catch((error) => {
     console.log("Error:", error);
@@ -33,16 +36,22 @@ const getBinState = async () => {
   }); 
   } catch (e) {
     console.error(e)
+    isDataLoaded.value = false
   }
 }
 onMounted(getBinState)
 
 </script>
 
-<template v-if="bins !== undefined" id="templateBinState">
+<template v-if="bins !== undefined" >
+  <div v-if ="isDataLoaded" id="templateBinState">
   <div id="currentBinContainer">
     <h1 class="title" >Stato corrente dei bidoni di {{ municipality ? municipality : "nessun comune" }}</h1>
     <div id="alignBins"><BinState class="innerContainer" v-for="n in bins" :n="n"/></div>
+  </div>
+  </div>
+  <div v-else>
+      <LoadingScreen />
   </div>
 </template>
 
@@ -78,7 +87,7 @@ onMounted(getBinState)
 .innerContainer{
     display: inline-block;
     background-color: #FFFFFF;
-    padding: 3% 2% 0;
+    padding: 1% 2% 0;
     border-radius: 10px;
     margin: 2%;
 }

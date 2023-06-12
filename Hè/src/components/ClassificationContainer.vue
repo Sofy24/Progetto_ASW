@@ -2,9 +2,10 @@
 import axios from "axios"
 import { onMounted, ref } from "vue"
 import {type Classification} from "../types/Classification"
+import LoadingScreen from '@/components/LoadingScreen.vue'
 
 
-
+const isDataLoaded = ref<boolean>(false)
 const classification = ref<Classification[]>([])
 
 const getPercentage = async () => {
@@ -16,15 +17,18 @@ const getPercentage = async () => {
             percentage: item[1]
         }
         })
+    isDataLoaded.value = true
   } catch (e) {
     console.error(e)
+    isDataLoaded.value = false
   }
 }
 onMounted(getPercentage)
 
 </script>
 
-<template v-if="classification !== undefined" id="templateClassification">
+<template v-if="classification !== undefined">
+<div v-if ="isDataLoaded" id="templateClassification">
   <div id="OuterContainer">
     <h1 id="title">Classifica dei comuni più virtuosi</h1>
     <h2>Viene mostrata la percentuale dei rifiuti riciclati sul totale dei rifiuti</h2>
@@ -33,6 +37,10 @@ onMounted(getPercentage)
         <li v-for="i in classification" class="item">{{ i.municipality }} = {{ i.percentage }}%</li>
       </ol> 
     </div>
+  </div>
+</div>
+  <div v-else>
+      <LoadingScreen />
   </div>
 </template>
 
