@@ -108,7 +108,7 @@
                 </div>
             </div>
             <div class="badge-block">
-                <div class="section-title">
+                <div class="section-title-medaglie">
                     <h2>Medagliere</h2>
                 </div>
                 <div>
@@ -207,13 +207,23 @@
         display: flex;
         justify-content: left;
         align-items: left; 
-        margin-left: 15%;
+        margin-left: 5%;
             
         h1 {
             text-align: center;
         }
     }
 
+    .section-title-medaglie {
+        display: flex;
+        justify-content: left;
+        align-items: left; 
+        //margin-left: 5%;
+            
+        h1 {
+            text-align: center;
+        }
+    }
     .goto-link{
         background-color: #FFC700;
         border-radius: 10px;
