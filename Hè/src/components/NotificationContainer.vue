@@ -2,7 +2,7 @@
 import Notification from "@/components/Notification.vue"
 import { onMounted, ref } from "vue"
 import {type Note} from "../types/Note"
-import { getNotifications} from '@/utils/api'
+import { getNotifications, getNotReadNotification} from '@/utils/api'
 import LoadingScreen from '@/components/LoadingScreen.vue'
 
 const notifications = ref<Note[]>([])
@@ -11,7 +11,7 @@ const notRead = ref<number>(0)
 
 onMounted(()=>{
   fetchData()
-  const interval = setInterval(fetchData, 60000);
+  const interval = setInterval(fetchData, 6000);
   
   return () => {
     clearInterval(interval);
@@ -34,25 +34,33 @@ const fetchData = () => {
       type: item. type
     }
     })
-    if(!isDataLoaded){
-      notRead.value = notifications.value.filter(item => !item.isRead).length
-    }
     isDataLoaded.value = true
-    console.log("notifications print", notRead.value)
     }).catch((error)=>{
         // Handle the error
         console.error(error)
         isDataLoaded.value = false
-      });
+    })
         // Handle the response data
-        
-      } 
+      
+  getNotReadNotification("not read").then((res) =>{
+    //insert res
+    console.log("res count", res)
+    notRead.value = res
+  }).catch((error)=>{
+        // Handle the error
+        console.error(error)
+    })
+} 
 
 </script>
 
 <template v-if="notifications !== undefined">
   <div v-if ="isDataLoaded">
   <h1>Notifiche</h1>
+  <div id="containerCounter">
+    <h2 id="notReadCounter">Notifiche da leggere:</h2>
+    <p id="counter">{{ notRead }}</p>
+  </div>
   <div id="containerNotification">
     <Notification class="notificationElement" v-for="n in notifications" :n="n" :notRead="notRead"/>
   </div>
@@ -89,5 +97,28 @@ h1{
     text-align: center;
     margin: 1% 0 1%;
   }
+
+#notReadCounter{
+  font-size: small;
+  margin-bottom: 2%;
+}
+
+#counter{
+  font-size: small;
+  text-align: center;
+  margin-bottom: 2%;
+  margin-left: 1%;
+  background-color: #ab0808;
+  color: white;
+  font-weight: bold;
+  border-radius: 50px;
+  width: 40px;
+}
+
+#containerCounter{
+  margin-right: 10%;
+  display: flex;
+  justify-content: flex-end;
+}
 
 </style>

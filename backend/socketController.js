@@ -4,7 +4,7 @@ const Column = require("./controller/ColumnController");
 const Pie = require("./controller/PieController");
 const Impiled = require("./controller/ImpiledController");
 const Line = require("./controller/LineController");
-const { handleNewNote, handleReadNote } = require('./Controller/NotificationController');
+const { handleNewNote, handleReadNote, handleGetNotReadNote } = require('./Controller/NotificationController');
 const Notification = require('./model/Notification');
 
 // Define a function to handle the socket connections
@@ -106,6 +106,13 @@ function handleSocketConnections(server) {
 
     socket.on('readNotification', (id, callback) => {
         handleReadNote(id).then((res)=>{
+            callback(res);
+        });
+
+    });
+
+    socket.on('getNotReadNotification', (email, callback) => {
+        handleGetNotReadNote(email).then((res)=>{
             callback(res);
         });
 

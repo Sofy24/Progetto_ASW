@@ -7,7 +7,6 @@ async function handleNewNote(email){
 
 async function handleReadNote(id){
     try {
-        console.log(id);
         await Notification.updateOne({ _id: id }, { isRead: true });
         return "Note updated";
         } catch (err) {
@@ -16,15 +15,20 @@ async function handleReadNote(id){
         }
 }
 
-/*const handleNewNote = async (req, res) => {
-    const sms = await Notification.find({});
-    if (!sms) return res.status(204).json({ 'message': 'Notifications not found' });
-    res.json(sms);
 
-}*/
+async function handleGetNotReadNote(email) {
+    try {
+        const count = await Notification.countDocuments({ isRead: false, email: email });
+        return count;
+    } catch (err) {
+        console.log(err);
+        return 0; 
+    }
+    }
 
 
 module.exports = {
     handleNewNote,
-    handleReadNote
+    handleReadNote,
+    handleGetNotReadNote
 }
