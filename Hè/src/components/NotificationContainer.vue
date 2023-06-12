@@ -6,8 +6,8 @@ import { getNotifications} from '@/utils/api'
 import LoadingScreen from '@/components/LoadingScreen.vue'
 
 const notifications = ref<Note[]>([])
-
 const isDataLoaded = ref<boolean>(false)
+const notRead = ref<number>(0)
 
 onMounted(()=>{
   fetchData()
@@ -21,11 +21,12 @@ onMounted(()=>{
 
 const fetchData = () => {
 
-  getNotifications("ciaoo").then((response)=>{
+  getNotifications("notificationss").then((response)=>{
     notifications.value = []
     console.log("this is response2, i'm client", response)
     notifications.value = response.map((item: any): Note => {
     return {
+      id: item._id,
       date: item.date,
       email: item.email,
       isRead: item.isRead,
@@ -33,8 +34,11 @@ const fetchData = () => {
       type: item. type
     }
     })
+    if(!isDataLoaded){
+      notRead.value = notifications.value.filter(item => !item.isRead).length
+    }
     isDataLoaded.value = true
-    console.log("notifications print", notifications)
+    console.log("notifications print", notRead.value)
     }).catch((error)=>{
         // Handle the error
         console.error(error)
@@ -50,7 +54,7 @@ const fetchData = () => {
   <div v-if ="isDataLoaded">
   <h1>Notifiche</h1>
   <div id="containerNotification">
-    <Notification class="notificationElement" v-for="n in notifications" :n="n"/>
+    <Notification class="notificationElement" v-for="n in notifications" :n="n" :notRead="notRead"/>
   </div>
   </div>
   <div v-else>

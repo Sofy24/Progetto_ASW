@@ -2,14 +2,16 @@
   import Card from 'primevue/card'
   import { ref } from "vue"
   import Dialog from 'primevue/dialog'
+  import { readNotification} from '@/utils/api'
 
   function reading() {
     props.n.isRead = false
     read.value = true
+    readNotification(props.n.id)
 }
 
 const props = defineProps(["n"])
-const visible = ref(false);
+const visible = ref(false)
 const read = ref(props.n.isRead)
 
 </script>
