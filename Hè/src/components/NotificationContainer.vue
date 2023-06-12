@@ -42,6 +42,7 @@ const fetchData = () => {
 </script>
 
 <template v-if="notifications !== undefined">
+  <h1>Notifiche</h1>
   <div id="containerNotification">
     <Notification class="notificationElement" v-for="n in notifications" :n="n"/>
   </div>
@@ -69,5 +70,10 @@ const fetchData = () => {
     margin-bottom: 3%;
   }
 }
+
+h1{
+    text-align: center;
+    margin: 1% 0 1%;
+  }
 
 </style>

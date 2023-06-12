@@ -1,24 +1,15 @@
 <script setup lang="ts">
-
+  import carta from '../assets/images/carta.png'
   const props = defineProps(["n"])
-  function getGif(){
-    /*const gifArray2 = [["136.306%", "https://gifer.com/embed/L9dQ"], ["100.000%", "https://gifer.com/embed/73Ve"],
-    ["83.333%", "https://gifer.com/embed/EZaC"], ["56.200%", "https://gifer.com/embed/94Sy"], ["100.000%", "https://gifer.com/embed/LekV"],
-    ["56.300%", "https://gifer.com/embed/CkgR"], ["60.938%", "https://gifer.com/embed/1Faa"], ["78.889%", "https://gifer.com/embed/OOn"] ];
-    */
-   const gifArray = ["https://gifer.com/embed/L9dQ", "https://gifer.com/embed/73Ve", "https://gifer.com/embed/EZaC", "https://gifer.com/embed/94Sy",
-    "https://gifer.com/embed/LekV", "https://gifer.com/embed/CkgR", "https://gifer.com/embed/1Faa", "https://gifer.com/embed/OOn"];
-    return gifArray[Math.floor(Math.random() * gifArray.length)];
-  }
-  const gifValue = getGif()
   const percentage = (props.n.actual_kg * 100 / props.n.max_kg).toFixed(2)
+  
 </script>
 
 
 <template>
   <div class="specificBin" v-if="n !== undefined">
     <div class="leftSide">
-      <div style="padding-top:100%;position:relative;"><iframe :src="gifValue" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen></iframe></div>
+      <img width="50" height="50" :src="carta" alt="paper bin"/>
       <p class="percent">Percentuale riempimento bidone {{percentage}}%</p>
     </div>
     <p class="info">
@@ -26,8 +17,8 @@
         tipologia: {{ n.typology }}<br>
         indirizzo: {{ n.address }}<br>
         località: {{n.municipality}}<br>
-        capacità: {{ n.max_kg }}<br>
-        riempimento attuale: {{ n.actual_kg }}<br>
+        capacità: {{ n.max_kg }} kg<br>
+        riempimento attuale: {{ n.actual_kg.toFixed(2) }} kg<br>
     </p>
   </div>
 </template>
@@ -37,20 +28,23 @@
     background-color: rgb(245, 245, 245);
     border-radius: 10px;
 }
-/*.specificBin p{
-    padding: 8%;
-    background-color: aqua;
 
-}*/
 
 .leftSide{
-    width: 50%;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 
+.leftSide img{
+  margin-left: 5%;
+  margin-top: 1%;
 }
 
 .percent{
     font-weight: bold;
     padding: 2%;
+    margin-left: 1%;
 }
 
 .info{
