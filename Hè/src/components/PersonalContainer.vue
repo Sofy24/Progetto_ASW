@@ -125,7 +125,7 @@
                     </p>
                 </div>
                
-                <div class="medagliere">
+                <div class="medagliere marginAdd">
                     <div class="gridMedglieSpeciali">
                         <SpecialBadgeContainer :year="reportMonthYear[0]" :month="reportMonthYear[1]" :extraBadges="extraBadges" :full=false></SpecialBadgeContainer>
                 
@@ -148,7 +148,7 @@
 </template>
 
 <style lang="scss">
-.medagliere{
+.marginAdd{
     margin: 5%;
 }
     .personal-container {

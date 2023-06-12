@@ -1,5 +1,32 @@
 <script setup lang="ts">
-  import carta from '../assets/images/carta.png'
+  import carta from '../assets/images/bidone_carta.jpg'
+  import vetro from '../assets/images/bidone_vetro.jpg'
+  import plastica from '../assets/images/bidone_plastica.jpg'
+  import indifferenziata from '../assets/images/bidone_indifferenziata.jpg'
+  import organico from '../assets/images/bidone_organico.jpg'
+  import potature from '../assets/images/bidone_potatura.jpg'
+  import olio from '../assets/images/bidone_olio.jpg'
+
+  function getImg(src:string){
+
+  switch ( src ) {
+    case "carta":
+        return carta
+    case "vetro":
+        return vetro
+    case "plastica e lattine":
+        return plastica
+    case "indifferenziata":
+        return indifferenziata
+    case "organico":
+        return organico
+    case "olio":
+        return olio
+    case "sfralci e potature":
+        return potature
+  }
+}
+
   const props = defineProps(["n"])
   const percentage = (props.n.actual_kg * 100 / props.n.max_kg).toFixed(2)
   
@@ -9,7 +36,7 @@
 <template>
   <div class="specificBin" v-if="n !== undefined">
     <div class="leftSide">
-      <img width="50" height="50" :src="carta" alt="paper bin"/>
+      <img width="50" height="50" :src="getImg(props.n.typology)" alt="paper bin"/>
       <p class="percent">Percentuale riempimento bidone {{percentage}}%</p>
     </div>
     <p class="info">
@@ -37,7 +64,6 @@
 }
 
 .leftSide img{
-  margin-left: 5%;
   margin-top: 1%;
 }
 

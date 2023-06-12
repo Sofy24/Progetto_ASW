@@ -78,7 +78,7 @@ onMounted(getBinState)
 .innerContainer{
     display: inline-block;
     background-color: #FFFFFF;
-    padding: 3% 2% 0;
+    padding: 1% 2% 0;
     border-radius: 10px;
     margin: 2%;
 }
