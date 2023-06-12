@@ -148,6 +148,9 @@
 </template>
 
 <style lang="scss">
+.medagliere{
+    margin: 5%;
+}
     .personal-container {
         display: grid;
         grid-template-columns: 60% 40%;
