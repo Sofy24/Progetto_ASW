@@ -15,16 +15,16 @@ import SupportIcon from './icons/IconSupport.vue'
       <h1>Chi siamo</h1>
 
       <div class="white_div">
-        Siamo un'azienda che si occupa di raccogliere i rifiuti, riciclando quanto più possibile.
+        <p>Siamo un'azienda che si occupa di raccogliere i rifiuti, riciclando quanto più possibile.
         Siamo convinti che insieme si può fare la differenza, di conseguenza ci stiamo impegando sempre di più a sensibilizzare i cittadini sul tema del riciclaggio.
-        Visita la nostra sezione <a href="/graph">grafici</a> per scoprire di più sui risultati che abbiamo ottenuto.
+        Visita la nostra sezione <a href="/graph">grafici</a> per scoprire di più sui risultati che abbiamo ottenuto.</p>
       </div>
     </div>
     <div class="yellow_div">
       <h1>Dove operiamo</h1>
 
       <div class="white_div">
-        Operiamo su tutto il territorio della romagna
+        <p>Operiamo su tutto il territorio della romagna</p>
         <img src="../assets/images/Romagna.jpg" alt="Romagna" width="100%" >
       </div>
       
