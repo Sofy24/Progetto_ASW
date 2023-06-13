@@ -51,13 +51,13 @@
       <nav>
 
         <LogoutButton v-if="isAuthorized"/>
-        <RouterLink v-if="!isAuthorized" to="/register"><p >Register  </p><i class="pi pi-user-plus"></i></RouterLink>
-        <RouterLink v-if="!isAuthorized" to="/login"><p >Login  </p><i class="pi pi-sign-in"></i></RouterLink>
+        <RouterLink v-if="!isAuthorized" to="/register"><p >Register  </p><em class="pi pi-user-plus"></em></RouterLink>
+        <RouterLink v-if="!isAuthorized" to="/login"><p >Login  </p><em class="pi pi-sign-in"></em></RouterLink>
         
         <div class="dropdown">
           <button class="dropbtn">
             
-            <i class="pi pi-bars"></i>
+            <em class="pi pi-bars"></em>
           </button>
           <div class="dropdown-content">
             <RouterLink  to="/graph">Grafici</RouterLink>
