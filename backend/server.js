@@ -11,7 +11,6 @@ const { handleSocketConnections } = require('./socketController');
 app.use(cors());
 
 
-//NON CANCELLARE
 const startServer = async () => {
   try {
     await populator.populateDatabase();
@@ -39,6 +38,7 @@ startServer();
 app.use('/static', express.static(path.join(__dirname, 'public')));
 app.use(express.json());
 connectDB();
+
 //routes
 app.use('/', require('./router/root'));
 app.use('/notification', require('./router/notificationRoute'));

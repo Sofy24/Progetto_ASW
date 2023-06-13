@@ -1,4 +1,5 @@
 interface Note {
+    id: string
     date: Array<number>
     email: string
     isRead: boolean

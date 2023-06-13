@@ -103,7 +103,6 @@ export function getImpiledDataPeriodically(input: string) {
 
 
 export function getLineData(input: string) {
-  //getLineDataPeriodically(input)
   return new Promise<number[][][]>((resolve, reject) => {
     
     socket.emit('getLineData', input, (response: number[][][]) => {
@@ -138,6 +137,32 @@ export function getNotifications(input: string) {
       throw error;
     });
   }); 
+}
+
+export function readNotification(input: string){
+  return new Promise<number[][][]>((resolve, reject) => {
+    socket.emit('readNotification', input, (response: number[][][]) => {
+      resolve(response);
+    });
+  
+  });
+}
+
+export function getNotReadNotification(input: string){
+  return new Promise<number>((resolve, reject) => {
+    verifyToken().then(res => {
+      setInterval(() => {
+        socket.emit('getNotReadNotification', res, (response: number) => {
+          resolve(response)
+        })
+      }, 60*100)
+
+    }).catch((error) => {
+      console.error(error)
+      throw error
+    })
+  })
+
 }
 
 export function sendEmail() {
