@@ -56,7 +56,7 @@ const fetchData = () => {
 
 <template v-if="notifications !== undefined">
   <div v-if ="isDataLoaded">
-  <h1>Notifiche</h1>
+  <h1 id="titleNotifiche">Notifiche</h1>
   <div id="containerCounter">
     <h2 id="notReadCounter">Notifiche da leggere:</h2>
     <p id="counter">{{ notRead }}</p>
@@ -64,6 +64,8 @@ const fetchData = () => {
   <div id="containerNotification">
     <Notification class="notificationElement" v-for="n in notifications" :n="n" :notRead="notRead"/>
   </div>
+  <!--<button @click="previous">Previous</button>
+  <button @click="next">Next</button>-->
   </div>
   <div v-else>
       <LoadingScreen />
@@ -93,7 +95,7 @@ const fetchData = () => {
   }
 }
 
-h1{
+#titleNotifiche{
     text-align: center;
     margin: 1% 0 1%;
   }
