@@ -68,13 +68,13 @@ a,
   grid-template-columns: 1fr ;
   height: 120%;
   word-break: break-all;
-  overflow:none;
+  /*overflow:none;*/
 }
 
 .gridMedglie, .gridMedglieSpeciali{
   height: 120%;
   word-break: break-all;
-  overflow:none;
+  /*overflow:none;*/
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   padding-left: 5%;
@@ -109,7 +109,7 @@ a,
     /*gap: 15% 0;*/
     height: 103%;
     word-break: break-all;
-    overflow:none;
+    /*overflow:none;*/
     
   }
 
@@ -117,7 +117,7 @@ a,
 
   .gridMedglie{
     height: 120%;
-    overflow:none;
+    /*overflow:none;*/
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     padding-left: 5%;
@@ -127,7 +127,7 @@ a,
 
   .gridMedglieSpeciali{
     height: 120%;
-    overflow:none;
+    /*overflow:none;*/
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     padding: 8% 5% 8%;

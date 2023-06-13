@@ -169,7 +169,7 @@
     .gridMedglieSpeciali{
     height: 120%;
     
-    overflow:none;
+    /*overflow:none;*/
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));/*1fr 1fr 1fr 1fr;*/
     
@@ -189,7 +189,7 @@
         .gridMedglieSpeciali{
             height: 120%;
             
-            overflow:none;
+           /* overflow:none;*/
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));/*1fr 1fr 1fr 1fr;*/
             
@@ -206,7 +206,7 @@
     .section-title {
         display: flex;
         justify-content: left;
-        align-items: left; 
+        align-items: start; 
         margin-left: 5%;
             
         h1 {
@@ -217,7 +217,7 @@
     .section-title-medaglie {
         display: flex;
         justify-content: left;
-        align-items: left; 
+        align-items: start; 
         //margin-left: 5%;
             
         h1 {

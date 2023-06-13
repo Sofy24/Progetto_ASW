@@ -163,7 +163,7 @@
                     
     <div v-for="element in extraBadges" class="imageBadges">
         
-        <img :src="getImg(element)" alt="badge"  width="52" height="52" class="specialbadge">
+        <img :src="getImg(element)" alt="special badge"  width="52" height="52" class="specialbadge">
     </div>
    
 </template>
