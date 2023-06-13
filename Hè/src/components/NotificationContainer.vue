@@ -64,6 +64,8 @@ const fetchData = () => {
   <div id="containerNotification">
     <Notification class="notificationElement" v-for="n in notifications" :n="n" :notRead="notRead"/>
   </div>
+  <!--<button @click="previous">Previous</button>
+  <button @click="next">Next</button>-->
   </div>
   <div v-else>
       <LoadingScreen />

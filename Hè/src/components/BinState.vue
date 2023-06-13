@@ -36,7 +36,7 @@
 <template>
   <div class="specificBin" v-if="n !== undefined">
     <div class="leftSide">
-      <img width="50" height="50" :src="getImg(props.n.typology)" alt="paper bin"/>
+      <img width="50" height="50" :src="getImg(props.n.typology)" alt="bin of the correct typology"/>
       <p class="percent">Percentuale riempimento bidone {{percentage}}%</p>
     </div>
     <p class="info">
