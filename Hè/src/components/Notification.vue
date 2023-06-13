@@ -65,7 +65,7 @@ const read = ref(props.n.isRead)
   .subtitle{
     color: rgb(255, 255, 255);
     background-color: #ab0808;
-    margin-left: 40%; 
+    margin-left: 30%; 
     padding: 1%;
     border-radius: 5px;
     font-size: 50%;

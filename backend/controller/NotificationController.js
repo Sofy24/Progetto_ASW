@@ -1,10 +1,12 @@
 const Notification = require('../model/Notification');
 
+//handle to get notification for a specific user
 async function handleNewNote(email){
     const sms = await Notification.find({email: email});
-    return sms;
+    return sms.reverse();
 }
 
+//handle to set a notification as "read"
 async function handleReadNote(id){
     try {
         await Notification.updateOne({ _id: id }, { isRead: true });
@@ -15,7 +17,7 @@ async function handleReadNote(id){
         }
 }
 
-
+//handle to get the number of notifications not read for a specific user
 async function handleGetNotReadNote(email) {
     try {
         const count = await Notification.countDocuments({ isRead: false, email: email });

@@ -62,7 +62,7 @@ const fetchData = () => {
     <p id="counter">{{ notRead }}</p>
   </div>
   <div id="containerNotification">
-    <Notification class="notificationElement" v-for="n in notifications" :n="n" :notRead="notRead"/>
+    <Notification class="notificationElement" v-for="n in notifications" :n="n"/>
   </div>
   <!--<button @click="previous">Previous</button>
   <button @click="next">Next</button>-->
