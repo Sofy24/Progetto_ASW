@@ -4,6 +4,7 @@
 
 <template>
   <div class="mainContent">
+    <h1>Grafici </h1>
     <div class="grid">
       <GraphContainer />
     </div>

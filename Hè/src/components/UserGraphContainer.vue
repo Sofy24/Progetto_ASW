@@ -29,8 +29,10 @@
 </script>
 
 <template>
+    <h1>I tuoi grafici</h1>
   <div v-if="data.isDataLoaded"  class="grid">
 
+    
     <div>
         <h3>Distribuzione dei rifiuti prodotti nel mese corrente</h3>
         

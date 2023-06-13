@@ -145,7 +145,7 @@
 <template>
     
     <div v-if ="data.isDataLoaded">
-        <h1>Badge Container {{ year }}</h1>
+        <h1>Medagliere {{ year }}</h1>
         <div v-if = "data.isDataValid" class="yellow">
             <h2> I tuoi badge speciali</h2>
             <div class="medagliere_speciale_to_pad">
