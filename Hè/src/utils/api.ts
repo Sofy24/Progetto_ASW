@@ -12,7 +12,6 @@ export function getServerData(input: string) {
 }
 
 export function getRadarData(input: string) {
-  //getRadarDataPeriodically(input)
   return new Promise<number[][]>((resolve, reject) => {
     socket.emit('getRadarData', input, (response: number[][]) => {
       resolve(response);
@@ -21,22 +20,11 @@ export function getRadarData(input: string) {
   });
 }
 
-export function getRadarDataPeriodically(input: string) {
-  return new Promise<number[][]>((resolve, reject) => {
-    setInterval(() => {
-      socket.emit('getRadarData', input, (response: number[][]) => {
-        resolve(response);
-      })
-    }, 60*1000);
-    
-  });
-}
 
 
 
 
 export function getColumnData(input: string) {
-  //getColumnDataPeriodically(input)
   return new Promise<number[][]>((resolve, reject) => {
     
     socket.emit('getColumnData', input, (response: number[][]) => {
@@ -46,20 +34,10 @@ export function getColumnData(input: string) {
   });
 }
 
-export function getColumnDataPeriodically(input: string) {
-  return new Promise<number[][]>((resolve, reject) => {
-    setInterval(() => {
-      socket.emit('getColumnData', input, (response: number[][]) => {
-        resolve(response);
-      })
-    }, 60*1000);
-  });
-}
 
 
 
 export function getPieData(input: string) {
-  //getPieDataPeriodically(input)
   return new Promise<number[]>((resolve, reject) => {
     
     socket.emit('getPieData', input, (response: number[]) => {
@@ -69,19 +47,7 @@ export function getPieData(input: string) {
   });
 }
   
-export function getPieDataPeriodically(input: string) {
-  return new Promise<number[]>((resolve, reject) => {
-    setInterval(() => {
-      socket.emit('getPieData', input, (response: number[]) => {
-        resolve(response);
-      })
-    }, 60*1000);
-  });
-}
-
-
 export function getImpiledData(input: string) {
-  //getImpiledDataPeriodically(input)
   return new Promise<number[][][]>((resolve, reject) => {
     
     socket.emit('getImpiledData', input, (response: number[][][]) => {
@@ -91,16 +57,6 @@ export function getImpiledData(input: string) {
   });
 }
   
-export function getImpiledDataPeriodically(input: string) {
-  return new Promise<number[][][]>((resolve, reject) => {
-    setInterval(() => {
-      socket.emit('getImpiledData', input, (response: number[][][]) => {
-        resolve(response);
-      })
-    }, 60*1000);
-  });
-}
-
 
 export function getLineData(input: string) {
   return new Promise<number[][][]>((resolve, reject) => {
@@ -112,15 +68,6 @@ export function getLineData(input: string) {
   });
 }
   
-export function getLineDataPeriodically(input: string) {
-  return new Promise<number[][][]>((resolve, reject) => {
-    setInterval(() => {
-      socket.emit('getLineData', input, (response: number[][][]) => {
-        resolve(response);
-      })
-    }, 60*1000);
-  });
-}
 
 export function getNotifications(input: string) {
   return new Promise<number[]>((resolve, reject) => {
