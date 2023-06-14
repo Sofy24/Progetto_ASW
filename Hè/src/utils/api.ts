@@ -98,12 +98,9 @@ export function readNotification(input: string){
 export function getNotReadNotification(input: string){
   return new Promise<number>((resolve, reject) => {
     verifyToken().then(res => {
-      setInterval(() => {
-        socket.emit('getNotReadNotification', res, (response: number) => {
-          resolve(response)
-        })
-      }, 60*100)
-
+      socket.emit('getNotReadNotification', res, (response: number) => {
+        resolve(response)
+      })
     }).catch((error) => {
       console.error(error)
       throw error

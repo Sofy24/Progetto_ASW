@@ -25,7 +25,6 @@ const fetchData = () => {
   //get all the notifications given the email of the user
   getNotifications("notificationss").then((response)=>{
     notifications.value = []
-    console.log("this is response2, i'm client", response)
     notifications.value = response.map((item: any): Note => {
     return {
       id: item._id,
