@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Notification from "@/components/Notification.vue"
-import { onMounted, ref } from "vue"
+import { onMounted, ref, computed } from "vue"
 import {type Note} from "../types/Note"
 import { getNotifications, getNotReadNotification} from '@/utils/api'
 import LoadingScreen from '@/components/LoadingScreen.vue'
@@ -8,6 +8,8 @@ import LoadingScreen from '@/components/LoadingScreen.vue'
 const notifications = ref<Note[]>([])
 const isDataLoaded = ref<boolean>(false)
 const notRead = ref<number>(0)
+const currentIndex = ref<number>(0)
+const itemsPerPage = ref<number>(5)
 
 onMounted(()=>{
   fetchData()
@@ -20,7 +22,7 @@ onMounted(()=>{
 
 
 const fetchData = () => {
-
+  //get all the notifications given the email of the user
   getNotifications("notificationss").then((response)=>{
     notifications.value = []
     console.log("this is response2, i'm client", response)
@@ -40,17 +42,45 @@ const fetchData = () => {
         console.error(error)
         isDataLoaded.value = false
     })
-        // Handle the response data
-      
+        
+  //get the notifications not read    
   getNotReadNotification("not read").then((res) =>{
-    //insert res
-    console.log("res count", res)
     notRead.value = res
   }).catch((error)=>{
         // Handle the error
         console.error(error)
     })
-} 
+
+    
+  } 
+  //calculate the items to be visualized
+  const visibleItems = computed(() => {
+    const start = currentIndex.value * itemsPerPage.value
+    const end = start + itemsPerPage.value
+    return notifications.value.slice(start, end)
+  })
+
+  //calculate the first and the last page to disable/enable the buttons
+  const isFirstPage = computed(() => currentIndex.value === 0);
+  const isLastPage = computed(() => {
+    const maxIndex = Math.ceil(notifications.value.length / itemsPerPage.value) - 1;
+    return currentIndex.value === maxIndex;
+  });
+
+//to show the previous page
+function previous() {
+    if (currentIndex.value > 0) {
+      currentIndex.value--;
+    }
+  }
+
+//to show the next page
+function next() {
+  const maxIndex = Math.ceil(notifications.value.length / itemsPerPage.value) - 1
+  if (currentIndex.value < maxIndex) {
+    currentIndex.value++
+  }
+}
 
 </script>
 
@@ -62,10 +92,12 @@ const fetchData = () => {
     <p id="counter">{{ notRead }}</p>
   </div>
   <div id="containerNotification">
-    <Notification class="notificationElement" v-for="n in notifications" :n="n"/>
+    <Notification class="notificationElement" v-for="n in visibleItems" :n="n"/>
   </div>
-  <!--<button @click="previous">Previous</button>
-  <button @click="next">Next</button>-->
+  <div class="button-container">
+    <button class="prevnext" @click="previous" :disabled="isFirstPage">Precedente</button>
+    <button class="prevnext" @click="next" :disabled="isLastPage">Successivo</button>
+  </div>
   </div>
   <div v-else>
       <LoadingScreen />
@@ -122,5 +154,35 @@ const fetchData = () => {
   display: flex;
   justify-content: flex-end;
 }
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 2%;
+  margin-bottom: 2%;
+
+}
+      
+.prevnext {
+    background-color: #FFC700;
+    border-radius: 10px;
+    color: black;
+    padding: 1% 2%;
+    font-size: large;
+    text-align: center;
+    border: 0px;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  .prevnext:active {
+      background-color: lighten(#FFC700, 30%);
+  }
+
+  .prevnext:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+      box-shadow: none;
+  }
 
 </style>

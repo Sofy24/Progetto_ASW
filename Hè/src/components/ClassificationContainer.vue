@@ -8,6 +8,7 @@ import LoadingScreen from '@/components/LoadingScreen.vue'
 const isDataLoaded = ref<boolean>(false)
 const classification = ref<Classification[]>([])
 
+//to get all the percentages and the names of the municipalities
 const getPercentage = async () => {
   try {
     const data = (await axios.get("http://localhost:3000/classification")).data

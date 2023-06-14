@@ -11,6 +11,7 @@ const bins = ref<StateOfBins[]>([])
 const municipality = ref<string>("")
 const isDataLoaded = ref<boolean>(false)
 
+//get all the states of each bin of the user's municipality
 const getBinState = async () => {
   try {
     sendEmail()

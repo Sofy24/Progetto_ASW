@@ -2,8 +2,8 @@ const Bin = require('../model/Bin');
 
 const handleBinsState = async (req, res) => {
     const { email } = req.body;
-    console.log("email in handle post", email);
     if (!email) return res.status(204).json({ 'message': 'The email of the user is not found' });
+    //get all the info of the bins of user'municipality (determined using the email)
     const binState = await Bin.aggregate([
         {
           $lookup: {

@@ -4,15 +4,14 @@
   import Dialog from 'primevue/dialog'
   import { readNotification} from '@/utils/api'
 
+  //set as read the notification
   function reading() {
     props.n.isRead = false
-    read.value = true
     readNotification(props.n.id)
 }
 
 const props = defineProps(["n"])
 const visible = ref(false)
-const read = ref(props.n.isRead)
 
 </script>
 
@@ -27,9 +26,9 @@ const read = ref(props.n.isRead)
     </div>
   </template>
   <Card class="cards" @click="reading(), visible = true" :style="{ backgroundColor: '#f9f5ba' }">
-    <template #title> Notifica <span v-if="read === false" class="subtitle">"!Da leggere"</span></template>
+    <template #title> Notifica <span v-if="n.isRead === false" class="subtitle">"!Da leggere"</span></template>
     <template #content>
-        <p v-if="n.isRead === true || read === true" >
+        <p v-if="n.isRead === true" >
           {{n.text}}
         </p>
     </template>

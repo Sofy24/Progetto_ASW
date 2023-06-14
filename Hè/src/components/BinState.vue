@@ -7,27 +7,28 @@
   import potature from '../assets/images/bidone_potatura.jpg'
   import olio from '../assets/images/bidone_olio.jpg'
 
+  //computes the correct image for each bin
   function getImg(src:string){
-
-  switch ( src ) {
-    case "carta":
-        return carta
-    case "vetro":
-        return vetro
-    case "plastica e lattine":
-        return plastica
-    case "indifferenziata":
-        return indifferenziata
-    case "organico":
-        return organico
-    case "olio":
-        return olio
-    case "sfralci e potature":
-        return potature
-  }
+    switch ( src ) {
+      case "carta":
+          return carta
+      case "vetro":
+          return vetro
+      case "plastica e lattine":
+          return plastica
+      case "indifferenziata":
+          return indifferenziata
+      case "organico":
+          return organico
+      case "olio":
+          return olio
+      case "sfralci e potature":
+          return potature
+    }
 }
 
   const props = defineProps(["n"])
+  //compute the percentage for the bin
   const percentage = (props.n.actual_kg * 100 / props.n.max_kg).toFixed(2)
   
 </script>
