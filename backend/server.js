@@ -51,7 +51,7 @@ app.use('/user', require('./router/userRoute'));
 app.use('/report', require('./router/reportRoute'));
 app.use('/badge', require('./router/badgeRoute'));
 app.use('/typology', require('./router/typologyRoute'));
-
+app.use('/deposit', require('./router/depositRoute'));
 
 
 module.exports = app;
